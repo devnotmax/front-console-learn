@@ -63,3 +63,9 @@
 
 - Siempre prueba tu código localmente antes de crear un **PR**.
 - Si es posible, automatiza las pruebas con herramientas como **Jest** o **Cypress** para asegurar que todo funcione correctamente.
+
+# 🌟 Actualizaciones Recientes.
+
+## **[15/10/2024]**: Actualización de Hero Component
+- Se añadió el componente **Hero** a la página de inicio para mejorar la presentación de la misma.
+- Este componente incluye una imagen destacada y un breve mensaje de bienvenida.
