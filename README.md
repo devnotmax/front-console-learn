@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌟 Gitflow Workflow para el Proyecto
 
-## Getting Started
+## 1. Rama Principal: `main` 🚀
 
-First, run the development server:
+- La rama `main` siempre debe contener el código limpio y listo para producción.
+- Solo se permiten **merges** de código aprobado, probado y que haya pasado revisión de código (Code Review).
+- ❌ No se debe realizar desarrollo directamente en la rama `main`.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 2. Rama de Desarrollo: `develop` 🛠️ (opcional)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- En caso de tener un flujo de trabajo más grande, puedes añadir la rama `develop` como rama central para integrar todo el trabajo antes de hacer un **merge** final a `main`.
+- Aquí se integran todas las ramas **feature** y **fix** para realizar pruebas antes de producción.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 3. Ramas de Funcionalidades: `feature/[nombre]` ✨
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Cualquier nueva funcionalidad debe desarrollarse en una rama con el formato `feature/[nombre]`.
+- Ejemplo: `feature/login-page` o `feature/appointment-scheduler`.
+- Estas ramas se crean desde `develop` (o `main`) y se mergean nuevamente a `develop` al finalizar.
+- 🔍 Cada cambio debe ser atómico: es mejor subir pequeños cambios que grandes commits de golpe.
 
-## Learn More
+## 4. Ramas de Correcciones: `fix/[nombre]` 🐛
 
-To learn more about Next.js, take a look at the following resources:
+- Para corregir errores, se debe crear una rama con el formato `fix/[nombre]`.
+- Ejemplo: `fix/navbar-responsive` o `fix/password-validation`.
+- Estas ramas se enfocan en arreglar bugs o realizar mejoras rápidas.
+- Al terminar, se hace el **merge** a `develop` (o `main`, según tu flujo).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 5. Ramas de Estilos: `style/[nombre]` 🎨
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Cambios relacionados con ajustes de diseño o mejoras visuales se desarrollan en ramas con el formato `style/[nombre]`.
+- Ejemplo: `style/button-hover-effect` o `style/sidebar-color-tweaks`.
+- Estas ramas son exclusivamente para cambios en el CSS o mejoras visuales sin modificar la lógica.
 
-## Deploy on Vercel
+## 6. Ramas de Documentación: `docs/[nombre]` 📝
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Cualquier modificación o actualización de la documentación del proyecto debe ir en una rama `docs/[nombre]`.
+- Ejemplo: `docs/update-readme` o `docs/gitflow-policy`.
+- Así mantenemos la documentación organizada y versionada.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 7. Commits Claros y Consistentes 🧹
+
+- Asegúrate de que cada commit sea claro y explique lo que se ha cambiado o implementado.
+- Usa un formato uniforme para los mensajes de commits:
+  - **✨ feat**: para nuevas funcionalidades
+  - **🐛 fix**: para correcciones de errores
+  - **🎨 style**: para cambios en la apariencia
+  - **📝 docs**: para cambios en la documentación
+  - **♻️ refactor**: para mejoras en la estructura del código sin cambiar su comportamiento
+  - **🧪 test**: para añadir o modificar pruebas.
+
+## 8. Pull Requests (PRs) y Revisiones de Código 🔍
+
+- Antes de hacer un **merge** a `develop` o `main`, abre un **Pull Request (PR)**.
+- Requiere que al menos un compañero revise el código antes de aceptar el **PR**.
+- 📄 El **PR** debe incluir una descripción clara de los cambios y, si es necesario, capturas de pantalla o ejemplos.
+
+## 9. Mantén la Historia de Git Clara 🧑‍💻
+
+- Usa **squash merges** o **rebase** para limpiar la historia de commits si hay demasiados commits pequeños.
+- Evita **merge commits** innecesarios para mantener una historia de Git lineal y ordenada.
+
+## 10. Pruebas Antes de Merge ✅
+
+- Siempre prueba tu código localmente antes de crear un **PR**.
+- Si es posible, automatiza las pruebas con herramientas como **Jest** o **Cypress** para asegurar que todo funcione correctamente.
