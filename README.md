@@ -69,3 +69,8 @@
 ## **[15/10/2024]**: Actualización de Hero Component
 - Se añadió el componente **Hero** a la página de inicio para mejorar la presentación de la misma.
 - Este componente incluye una imagen destacada y un breve mensaje de bienvenida.
+
+## **[15/10/2024]**: Actualización de Footer Component
+- Se añadió el componente **Footer** a la página de inicio para mejorar la presentación de la misma.
+- Este componente incluye una imagen destacada y un breve mensaje de bienvenida.
+
