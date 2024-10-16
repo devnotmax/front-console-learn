@@ -71,6 +71,4 @@
 - Este componente incluye una imagen destacada y un breve mensaje de bienvenida.
 
 ## **[15/10/2024]**: Actualización de Footer Component
-- Se añadió el componente **Footer** a la página de inicio para mejorar la presentación de la misma.
-- Este componente incluye una imagen destacada y un breve mensaje de bienvenida.
-
+- Este proyecto contiene una actualización del Footer y una sección de reseñas de usuarios para la plataforma de ConsoLearn. La sección de reseñas permite mostrar testimonios de usuarios con sus respectivas calificaciones, mientras que el Footer proporciona enlaces rápidos a redes sociales, cursos, carreras, y otros recursos importantes.
