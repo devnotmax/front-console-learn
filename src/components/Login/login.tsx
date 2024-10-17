@@ -38,7 +38,7 @@ const Login: React.FC = () => {
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
             <div className="text-center mb-6">
-            <i className='bx bxs-graduation' style={{ color: '#ffffff',fontSize: '80px' }}></i>
+            <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
             <h2 className="text-2xl font-bold text-white">Iniciar Sesión en <span className="text-purple-500">ConsoLearn</span></h2>
             </div>
             <form onSubmit={handleLogin}>
