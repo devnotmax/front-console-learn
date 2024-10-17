@@ -29,6 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></link>
       <body className={`${inter.className} ${poppins.className}`}>
       <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
         <Navbar />
