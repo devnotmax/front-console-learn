@@ -8,7 +8,7 @@ export default function Home() {
     <main className="w-full">
       <Hero />
       <Carrousel />
-      <div className="container">
+      <div className="container p-6 mx-auto">
         <UserReview />
       </div>
     </main>
