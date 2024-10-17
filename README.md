@@ -72,3 +72,24 @@
 
 ## **[15/10/2024]**: Actualización de Footer Component
 - Este proyecto contiene una actualización del Footer y una sección de reseñas de usuarios para la plataforma de ConsoLearn. La sección de reseñas permite mostrar testimonios de usuarios con sus respectivas calificaciones, mientras que el Footer proporciona enlaces rápidos a redes sociales, cursos, carreras, y otros recursos importantes.
+
+### **[16/10/2024]**: Inicio de Sesión (Login)
+
+- Los usuarios registrados pueden iniciar sesión proporcionando:
+  - Correo electrónico
+  - Contraseña
+- Validación de datos:
+  - El correo electrónico y la contraseña son validados antes de enviar la solicitud.
+  - En caso de que el correo o la contraseña no coincidan con un usuario registrado, se muestra un mensaje de error.
+
+### **[16/10/2024]**: Registro de Usuarios (Register)
+
+- Los usuarios pueden registrarse proporcionando:
+  - Nombre completo
+  - Correo electrónico
+  - Contraseña (con confirmación)
+  - Aceptación de términos y condiciones
+- Validación de datos:
+  - El campo de correo electrónico verifica el formato correcto.
+  - La contraseña debe coincidir con la confirmación de la contraseña.
+  - Los términos y condiciones deben ser aceptados para completar el registro.
