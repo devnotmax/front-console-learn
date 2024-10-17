@@ -77,7 +77,7 @@ const Register:React.FC = () => {
         <div className='flex items-center justify-center min-h-screen bg-gray-100'>
         <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
         <div className="text-center mb-6">
-            <img src="/graduate.png" alt="Logo" className="mx-auto h-20 w-auto" style={{ filter: 'invert(1)' }} />
+        <i className='bx bxs-graduation' style={{ color: '#ffffff',fontSize: '80px' }}></i>
             <h2 className="text-center text-2xl font-bold text-white mb-4">Regístrate en <span className="text-purple-500">ConsoLearn</span></h2>
         </div>
         {error && <p className="text-red-500 mb-4">{error}</p>}
