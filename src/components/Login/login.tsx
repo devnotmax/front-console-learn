@@ -34,7 +34,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 mt-6 ml-6">
         <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full">
             <div className="text-center mb-6">
             <img src="/graduate.png" alt="Logo" className="mx-auto h-20 w-auto" style={{ filter: 'invert(1)' }} />
