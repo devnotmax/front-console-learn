@@ -10,7 +10,7 @@ interface ProductCardProps {
   reviews: { rating: number }[];
 }
 
-//card reutilizable
+//card
 
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
