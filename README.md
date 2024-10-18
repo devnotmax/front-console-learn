@@ -93,3 +93,14 @@
   - El campo de correo electrónico verifica el formato correcto.
   - La contraseña debe coincidir con la confirmación de la contraseña.
   - Los términos y condiciones deben ser aceptados para completar el registro.
+
+### **[17/10/2024]**: Carrousel con cards de cursos (Carrousel)
+
+- Se añadió el componente **Carrousel** donde se mostrarán los cursos más populares de la plataforma, donde incluiran:
+  - Título del curso
+  - Rate del curso, reflejados en estrellas
+  - Breve Descripción del curso
+- Se añadió el componente **productCard** Que son las cards en las que se vera la informacion de los cursos.
+
+### **[17/10/2024]**: **Hero** en la pagina cursos
+- Se añadió el componente **Hero**
