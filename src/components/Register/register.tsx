@@ -98,6 +98,7 @@ const Register: React.FC = () => {
         <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
         <div className="text-center mb-6">
             <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
+            <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
             <h2 className="text-center text-2xl font-bold text-white mb-4">Regístrate en <span className="text-purple-500">ConsoLearn</span></h2>
         </div>
         {error && <p className="text-red-500 mb-4">{error}</p>}
