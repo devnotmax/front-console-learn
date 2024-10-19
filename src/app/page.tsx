@@ -9,7 +9,7 @@ export default function Home() {
       <Hero />
       <Carrousel />
       <div className="container p-6 mx-auto">
-        <UserReview />
+      <UserReview />
       </div>
     </main>
   );
