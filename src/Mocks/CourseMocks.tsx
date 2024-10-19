@@ -59,7 +59,7 @@ const cursos = [
     description:
       "Aquí podria ir la descripción del cursos, donde se van a detallar algunos temas con un overflow hidden para que puedan tener un pequeño adelanto de lo que podrán ver completo si entran en el detalle",
     technologies: ["Angular", "Routing", "Forms"],
-    price: 49.99,
+    price: 29.99,
     available: true,
     reviews: [
       {
@@ -76,7 +76,7 @@ const cursos = [
     description:
       "Aquí podria ir la descripción del cursos, donde se van a detallar algunos temas con un overflow hidden para que puedan tener un pequeño adelanto de lo que podrán ver completo si entran en el detalle",
     technologies: ["Angular", "Routing", "Forms"],
-    price: 49.99,
+    price: 29.99,
     available: true,
     reviews: [
       {
