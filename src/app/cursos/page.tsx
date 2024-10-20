@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import CourseHero from "@/components/CourseHero/CourseHero";
 import Carousel from "@/components/Carrousel/Carrousel";
-import CourseCard from "@/components/CourseCard/CourseCard";
-import cursos from "@/Mocks/CourseMocks";
 import FilterableProductList from "@/components/Filter/Filter";
 
 const CoursesPage: React.FC = () => {

@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import React from "react";
 import cursos from "@/Mocks/CourseMocks"; // Supongo que este mock tiene la lista de cursos
 import ProductCard from "@/components/ProductCard/ProductCard";
+import { NextArrow, PrevArrow } from "./FlechasCarrusel";
 
 const Carousel = () => {
   const settings = {
@@ -39,6 +40,8 @@ const Carousel = () => {
         },
       },
     ],
+    nextArrow: <NextArrow />, // Flecha personalizada para siguiente
+    prevArrow: <PrevArrow />, // Flecha personalizada para previo
   };
 
   return (

@@ -60,6 +60,28 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  color: white; /* Color de las flechas */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10; /* Asegúrate de que esté por encima de las imágenes */
+}
+
+.carousel-button.left {
+  left: 10px; /* Posición en el lado izquierdo */
+}
+
+.carousel-button.right {
+  right: 10px; /* Posición en el lado derecho */
+}
+
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
