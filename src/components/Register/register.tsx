@@ -98,7 +98,7 @@ const Register: React.FC = () => {
         <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
         <div className="text-center mb-6">
             <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
-            <h2 className="text-center text-2xl font-bold text-white mb-4">Regístrate en <span className="text-purple-500">ConsoLearn</span></h2>
+            <h2 className="text-center text-2xl font-bold text-[var(--principal-text)] mb-4">Regístrate en <span className="text-[var(--primary)]">ConsoLearn</span></h2>
         </div>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {success && <p className="text-green-500 mb-4">{success}</p>}
@@ -153,12 +153,12 @@ const Register: React.FC = () => {
             />
             <span className="text-white">Acepto los términos y condiciones</span>
             </label>
-            <button type="submit" className="w-full p-2 bg-purple-500 text-white rounded">
+            <button type="submit" className="w-full p-2 primary-btn text-white rounded">
             Registrarse
             </button>
         </form>
         <p className="text-center text-white mt-4">
-            ¿Ya tienes una cuenta? <a href="/login" className="text-purple-500">Inicia sesión</a>
+            ¿Ya tienes una cuenta? <a href="/login" className="text-[var(--primary)]">Inicia sesión</a>
         </p>
         </div>        
         </div>

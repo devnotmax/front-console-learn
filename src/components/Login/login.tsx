@@ -100,11 +100,11 @@ const Login: React.FC = () => {
         <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
             <div className="text-center mb-6">
             <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '6rem' }}></i>
-            <h2 className="text-2xl font-bold text-white">Iniciar Sesión en <span className="text-purple-500">ConsoLearn</span></h2>
+            <h2 className="text-2xl font-bold text-[var(--principal-text)]">Iniciar Sesión en <span className="text-[var(--primary)]">ConsoLearn</span></h2>
             </div>
             <form onSubmit={handleLogin}>
             <div className="mb-4">
-                <label className="block text-gray-300 mb-2">Correo Electrónico</label>
+                <label className="block text-[var(--principal-text)] mb-2">Correo Electrónico</label>
                 <input
                 type="email"
                 value={formData.email}
@@ -115,7 +115,7 @@ const Login: React.FC = () => {
                 />
             </div>
             <div className="mb-6">
-                <label className="block text-gray-300 mb-2">Contraseña</label>
+                <label className="block text-[var(--principal-text)] mb-2">Contraseña</label>
                 <input
                 type="password"
                 value={formData.password}
@@ -126,15 +126,15 @@ const Login: React.FC = () => {
                 />
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit" className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition">
+            <button type="submit" className="w-full bg-[var(--primary)] text-white py-2 rounded hover:bg-purple-700 transition">
                 Iniciar Sesión
             </button>
             </form>
             <div className="text-center mt-4">
-            <a href="#" className="text-purple-500 text-sm">¿Olvidaste tu contraseña?</a>
+            <a href="#" className="text-[var(--primary)] text-sm">¿Olvidaste tu contraseña?</a>
             </div>
             <div className="text-center mt-2">
-            <p className="text-white text-sm">¿No tienes una cuenta? <a href="/register" className="text-purple-500">Regístrate</a></p>
+            <p className="text-white text-sm">¿No tienes una cuenta? <a href="/register" className="text-[var(--primary)]">Regístrate</a></p>
             </div>
         </div>
         </div>

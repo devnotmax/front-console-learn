@@ -2,7 +2,7 @@ const Hero: React.FC = () => {
   return (
     <section className="flex justify-center flex-col items-center min-h-[50vh]">
       <h1 className="text-6xl font-bold">
-        Conso<span className="text-[var(--accent-color)]">Learn</span>
+        Conso<span className="text-[var(--primary)]">Learn</span>
       </h1>
       <p className="text-xl text-[var(--foreground)]">
         Tu espacio para dominar el código y la innovación.

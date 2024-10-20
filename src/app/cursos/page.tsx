@@ -16,7 +16,7 @@ const CoursesPage: React.FC = () => {
       <div className="p-4">
         <h2 className="text-2xl font-bold">
           Nuestros cursos{" "}
-          <span className="text-[var(--accent-color)]">
+          <span className="text-[var(--primary)]">
             más populares🔥🔥
           </span>
         </h2>
