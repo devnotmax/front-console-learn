@@ -27,15 +27,15 @@ const Register: React.FC = () => {
         };
     
         const validateForm = () => {
-        if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+        if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword || !formData.termsAccepted || !formData.phone) {
             return 'Todos los campos son obligatorios';
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
             return 'El correo electrónico no es válido';
         }
-        if (formData.password.length < 6) {
-            return 'La contraseña debe tener al menos 6 caracteres';
+        if (formData.password.length < 8) {
+            return 'La contraseña debe tener al menos 8 caracteres';
         }
         if (formData.password !== formData.confirmPassword) {
             return 'Las contraseñas no coinciden';
@@ -43,7 +43,7 @@ const Register: React.FC = () => {
         if (!formData.termsAccepted) {
             return 'Debe aceptar los términos y condiciones';
         }
-        if (isNaN(Number(formData.phone))) {
+        if (!/^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(formData.phone)) {
             return 'El número de teléfono debe ser válido';
         }
         return null;
@@ -63,7 +63,7 @@ const Register: React.FC = () => {
         setLoading(true); // Comenzar la carga
     
         try {
-            const response = await fetch('/api/register', {
+            const response = await fetch('https://video-academy.onrender.com/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,7 +97,6 @@ const Register: React.FC = () => {
         <div className='flex items-center justify-center min-h-screen bg-gray-100'>
         <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
         <div className="text-center mb-6">
-            <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
             <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
             <h2 className="text-center text-2xl font-bold text-white mb-4">Regístrate en <span className="text-purple-500">ConsoLearn</span></h2>
         </div>

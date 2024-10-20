@@ -5,6 +5,7 @@ import "./globals.css";
 // componentes
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import { AuthProvider } from "@/context/AuthContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -30,9 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${poppins.className}`}>
+      <AuthProvider>
         <Navbar />
-        {children}
+          {children}
         <Footer />
+      </AuthProvider>
       </body>
     </html>
   );

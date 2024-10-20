@@ -1,39 +1,99 @@
 "use client";
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../../context/AuthContext'
 import 'boxicons/css/boxicons.min.css';
 
+interface LoginFormState {
+    email: string;
+    password: string;
+}
 
 const Login: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const { login } = useAuth();
+    const [formData, setFormData] = useState<LoginFormState>({
+        email: '',
+        password: '',
+    });
+
+    const [message, setMessage] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [errors, setErrors] = useState<Partial<LoginFormState>>({});
     const router = useRouter();
 
-    const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const validate = () => {
+        const newErrors: Partial<LoginFormState> = {};
+
+        if (!formData.email) {
+            newErrors.email = 'El correo electrónico es requerido';
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = 'El correo electrónico no es válido';
+        }
+
+        if (!formData.password) {
+            newErrors.password = 'La contraseña es requerida';
+        } else if (formData.password.length < 8) {
+            newErrors.password = 'La contraseña debe tener al menos 8 caracteres';
+        }
+
+        return newErrors;
+    };
+
+        const handleLogin = async (e: React.FormEvent) => {
+            e.preventDefault();
+            const validationErrors = validate();
+    
+            if (Object.keys(validationErrors).length > 0) {
+                setErrors(validationErrors);
+                return;
+            } else {
+                setErrors({});
+            }
 
         try {
-        const response = await fetch('https://tu-backend-api.com/api/login', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
+        const response = await fetch('https://video-academy.onrender.com/api/auth', {
+            method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password,
+                }),
         });
 
-        if (!response.ok) {
-            throw new Error('Error en la autenticación');
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            
+            const loggedUser = {
+                id: data.user.id,
+                name: data.user.name,
+                email: data.user.email,
+                phone: data.user.phone,
+                image: data.user.image,
+                role: data.user.role,
+            };
+            setFormData(data);
+            // Usa la función login del contexto de autenticación
+            login(data.user); // Asegúrate de que data.user contiene los datos necesarios
+            localStorage.setItem('token', data.token);
+            setMessage("Inicio de sesión exitoso");
+            setError(null);
+            setFormData({
+                email: '',
+                password: '',
+            });
+            router.push('/')
+        } else {
+            const errorData = await response.json();
+            setError(errorData.message || "Error al iniciar sesión");
         }
-
-        const data = await response.json();
-        console.log('Usuario autenticado:', data);
-        router.push("/");
-
-        } catch (error) {
-        console.error('Error al iniciar sesión:', error);
-        }
-    };
+        
+    } catch (err) {
+        setError("Error al realizar la solicitud. Por favor, inténtalo de nuevo más tarde.");
+    }
+};
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -47,8 +107,8 @@ const Login: React.FC = () => {
                 <label className="block text-gray-300 mb-2">Correo Electrónico</label>
                 <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
                 placeholder="tu@ejemplo.com"
                 required
@@ -58,8 +118,8 @@ const Login: React.FC = () => {
                 <label className="block text-gray-300 mb-2">Contraseña</label>
                 <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
                 placeholder="••••••••"
                 required
