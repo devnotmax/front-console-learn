@@ -7,7 +7,7 @@ export interface Course {
   technologies: string[];
   price: number;
   available: boolean;
-  reviews: Review[];
+  reviews: { rating: number }[];
 }
 
 export default Course;
