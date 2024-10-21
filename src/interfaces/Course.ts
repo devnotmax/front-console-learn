@@ -9,7 +9,6 @@ export interface ICourse {
   technologies: string[];
   price: number;
   available: boolean;
-  reviews: { rating: number }[];
   isAvailable: boolean;
   orderDetails: IOrderDetails[];
   reviews: IReview[];
