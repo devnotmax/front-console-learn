@@ -15,12 +15,13 @@ export interface ErrloginForm {
 export interface registerForm extends loginForm {
   name: string;
   phone: string;
-  image: string;
-  confirmPassword: string;
-  termsAccepted: boolean;
-  courses?: ICourse[];
-  orders?: IOrder[];
-  reviews?: IReview[];
+}
+
+export interface ErrregisterForm {
+  email?: string;
+  password?: string;
+  name?: string;
+  phone?: string;
 }
 
 export interface IuserSession {

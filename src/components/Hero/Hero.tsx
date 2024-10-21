@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Hero: React.FC = () => {
   return (
     <section className="flex justify-center flex-col items-center min-h-[50vh]">
@@ -8,7 +10,9 @@ const Hero: React.FC = () => {
         Tu espacio para dominar el código y la innovación.
       </p>
       <div className="p-2 gap-2 flex">
-        <button className="primary-btn p-2">Explorar cursos</button>
+        <Link href="/cursos">
+          <button className="primary-btn p-2">Explorar cursos</button>
+        </Link>
         <button className="secondary-btn p-2">Contacto</button>
       </div>
     </section>
