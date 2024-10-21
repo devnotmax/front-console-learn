@@ -1,169 +1,283 @@
+// "use client";
+// import React, { ChangeEvent, useState, useEffect } from "react";
+// import { registerForm, ErrregisterForm } from "@/interfaces/Auth";
+// import { validateRegisterForm } from "@/utils/registerValidator";
+// import { RegisterUser } from "@/services/AuthService";
+// import "boxicons/css/boxicons.min.css";
+// import { useRouter } from "next/navigation";
+
+// const Register = () => {
+//   const router = useRouter();
+
+//   const [userData, setUserData] = useState<registerForm>({
+//     name: "",
+//     email: "",
+//     password: "",
+//     phone: "",
+//     confirmPassword: "",
+//     termsAccepted: false,
+//   });
+
+//   const [error, setError] = useState<ErrregisterForm>({
+//     name: "",
+//     email: "",
+//     password: "",
+//     phone: "",
+//     confirmPassword: "",
+//     termsAccepted: false,
+//   });
+//   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+//     setUserData({
+//       ...userData,
+//       [e.target.name]: e.target.value, // Atributo name utilizado para actualizar el estado
+//     });
+//   };
+
+//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     try {
+//       const res = await RegisterUser(userData);
+//       router.push("/login");
+//     } catch (error: any) {
+//       console.error(error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const errors = validateRegisterForm(userData);
+//     setError(errors);
+//   }, [userData]);
+
+//   return (
+//     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+//       <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
+//         <div className="text-center mb-6">
+//           <i
+//             className="bx bxs-graduation"
+//             style={{ color: "#ffffff", fontSize: "5rem" }}
+//           ></i>
+//           <i
+//             className="bx bxs-graduation"
+//             style={{ color: "#ffffff", fontSize: "5rem" }}
+//           ></i>
+//           <h2 className="text-center text-2xl font-bold text-white mb-4">
+//             Regístrate en <span className="text-purple-500">ConsoLearn</span>
+//           </h2>
+//         </div>
+//         <form onSubmit={handleSubmit}>
+//           <input
+//             type="text"
+//             name="name"
+//             placeholder="Nombre Completo"
+//             value={userData.name}
+//             onChange={handleChange}
+//             className="w-full p-2 mb-4 rounded"
+//           />
+//           <input
+//             type="text"
+//             name="phone"
+//             placeholder="Numero"
+//             value={userData.phone}
+//             onChange={handleChange}
+//             className="w-full p-2 mb-4 rounded"
+//           />
+//           <input
+//             type="email"
+//             name="email"
+//             placeholder="Correo Electrónico"
+//             value={userData.email}
+//             onChange={handleChange}
+//             className="w-full p-2 mb-4 rounded"
+//           />
+//           <input
+//             type="password"
+//             name="password"
+//             placeholder="Contraseña"
+//             value={userData.password}
+//             onChange={handleChange}
+//             className="w-full p-2 mb-4 rounded"
+//           />
+//           <input
+//             type="password"
+//             name="confirmPassword"
+//             placeholder="Confirmar Contraseña"
+//             value={userData.confirmPassword}
+//             onChange={handleChange}
+//             className="w-full p-2 mb-4 rounded"
+//           />
+//           <label className="flex items-center mb-4">
+//             <input
+//               type="checkbox"
+//               name="termsAccepted"
+//               checked={userData.termsAccepted}
+//               onChange={handleChange}
+//               className="mr-2"
+//             />
+//             <span className="text-white">
+//               Acepto los términos y condiciones
+//             </span>
+//           </label>
+//           <button
+//             type="submit"
+//             className="w-full p-2 bg-purple-500 text-white rounded"
+//           >
+//             Registrarse
+//           </button>
+//         </form>
+//         <p className="text-center text-white mt-4">
+//           ¿Ya tienes una cuenta?{" "}
+//           <a href="/login" className="text-purple-500">
+//             Inicia sesión
+//           </a>
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Register;
+
 "use client";
-import React, { useState } from 'react';
-import { registerForm } from '@/interfaces/Auth';
-import 'boxicons/css/boxicons.min.css';
+import React, { ChangeEvent, useState, useEffect } from "react";
+import { registerForm, ErrregisterForm } from "@/interfaces/Auth";
+import { validateRegisterForm } from "@/utils/registerValidator";
+import { RegisterUser } from "@/services/AuthService"; // Asegúrate de que esta ruta sea correcta
+import "boxicons/css/boxicons.min.css";
+import { useRouter } from "next/navigation";
 
-const Register: React.FC = () => {
-    const [formData, setFormData] = useState<registerForm>({
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        confirmPassword: '',
-        termsAccepted: false,
-        });
-    
-        const [error, setError] = useState('');
-        const [success, setSuccess] = useState('');
-        const [loading, setLoading] = useState(false); // Indicador de carga
-    
-        const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = event.target;
-    
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: type === 'checkbox' ? checked : value,
-        }));
-        };
-    
-        const validateForm = () => {
-        if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-            return 'Todos los campos son obligatorios';
-        }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            return 'El correo electrónico no es válido';
-        }
-        if (formData.password.length < 6) {
-            return 'La contraseña debe tener al menos 6 caracteres';
-        }
-        if (formData.password !== formData.confirmPassword) {
-            return 'Las contraseñas no coinciden';
-        }
-        if (!formData.termsAccepted) {
-            return 'Debe aceptar los términos y condiciones';
-        }
-        if (isNaN(Number(formData.phone))) {
-            return 'El número de teléfono debe ser válido';
-        }
-        return null;
-        };
-    
-        const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        setError('');
-        setSuccess('');
-    
-        const validationError = validateForm();
-        if (validationError) {
-            setError(validationError);
-            return;
-        }
-    
-        setLoading(true); // Comenzar la carga
-    
-        try {
-            const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: formData.name,
-                email: formData.email,
-                phone: Number(formData.phone),
-                password: formData.password,
-            }),
-            });
-    
-            const data = await response.json();
-    
-            if (response.ok) {
-            setSuccess('Registro exitoso');
-            setError('');
-            } else {
-            setError(data.message || 'Error en el registro, intente nuevamente');
-            setSuccess('');
-            }
-        } catch (err) {
-            setError('Error en el registro, intente nuevamente');
-            setSuccess('');
-        } finally {
-            setLoading(false); // Finalizar la carga
-        }
-    };
+const Register = () => {
+  const router = useRouter();
 
-    return (
-        <div className='flex items-center justify-center min-h-screen bg-gray-100'>
-        <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
+  const [userData, setUserData] = useState<registerForm>({
+    name: "",
+    email: "",
+    password: "",
+    phone: "", // Inicializa con el prefijo
+  });
+
+  const [error, setError] = useState<ErrregisterForm>({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setUserData({
+      ...userData,
+      [name]: type === "checkbox" ? checked : value, // Maneja el checkbox correctamente
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      console.log(userData);
+      const res = await RegisterUser(userData);
+      alert("Registro exitoso");
+      router.push("/login");
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const errors = validateRegisterForm(userData);
+    setError(errors);
+  }, [userData]);
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
         <div className="text-center mb-6">
-            <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
-            <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
-            <h2 className="text-center text-2xl font-bold text-white mb-4">Regístrate en <span className="text-purple-500">ConsoLearn</span></h2>
+          <i
+            className="bx bxs-graduation"
+            style={{ color: "#ffffff", fontSize: "5rem" }}
+          ></i>
+          <h2 className="text-center text-2xl font-bold text-white mb-4">
+            Regístrate en <span className="text-purple-500">ConsoLearn</span>
+          </h2>
         </div>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        {success && <p className="text-green-500 mb-4">{success}</p>}
         <form onSubmit={handleSubmit}>
-            <input
+          <input
             type="text"
             name="name"
             placeholder="Nombre Completo"
-            value={formData.name}
+            value={userData.name}
             onChange={handleChange}
             className="w-full p-2 mb-4 rounded"
-            />
-            <input
+          />
+          {error.name && <p className="text-red-500">{error.name}</p>}
+
+          <input
             type="text"
             name="phone"
-            placeholder="Numero"
-            value={formData.phone}
+            placeholder="Número (ej: +543813887102)"
+            value={userData.phone}
             onChange={handleChange}
             className="w-full p-2 mb-4 rounded"
-            />
-            <input
+          />
+          {error.phone && <p className="text-red-500">{error.phone}</p>}
+
+          <input
             type="email"
             name="email"
             placeholder="Correo Electrónico"
-            value={formData.email}
+            value={userData.email}
             onChange={handleChange}
             className="w-full p-2 mb-4 rounded"
-            />
-            <input
+          />
+          {error.email && <p className="text-red-500">{error.email}</p>}
+
+          <input
             type="password"
             name="password"
             placeholder="Contraseña"
-            value={formData.password}
+            value={userData.password}
             onChange={handleChange}
             className="w-full p-2 mb-4 rounded"
-            />
-            <input
+          />
+          {error.password && <p className="text-red-500">{error.password}</p>}
+
+          {/* <input
             type="password"
             name="confirmPassword"
             placeholder="Confirmar Contraseña"
-            value={formData.confirmPassword}
+            value={userData.confirmPassword}
             onChange={handleChange}
             className="w-full p-2 mb-4 rounded"
-            />
-            <label className="flex items-center mb-4">
+          />
+          {error.confirmPassword && <p className="text-red-500">{error.confirmPassword}</p>} */}
+
+          {/* <label className="flex items-center mb-4">
             <input
-                type="checkbox"
-                name="termsAccepted"
-                checked={formData.termsAccepted}
-                onChange={handleChange}
-                className="mr-2"
+              type="checkbox"
+              name="termsAccepted"
+              checked={userData.termsAccepted}
+              onChange={handleChange}
+              className="mr-2"
             />
             <span className="text-white">Acepto los términos y condiciones</span>
-            </label>
-            <button type="submit" className="w-full p-2 bg-purple-500 text-white rounded">
+          </label>
+          {error.termsAccepted && <p className="text-red-500">{error.termsAccepted}</p>} */}
+
+          <button
+            type="submit"
+            className="w-full p-2 bg-purple-500 text-white rounded"
+          >
             Registrarse
-            </button>
+          </button>
         </form>
         <p className="text-center text-white mt-4">
-            ¿Ya tienes una cuenta? <a href="/login" className="text-purple-500">Inicia sesión</a>
+          ¿Ya tienes una cuenta?{" "}
+          <a href="/login" className="text-purple-500">
+            Inicia sesión
+          </a>
         </p>
-        </div>        
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Register;
