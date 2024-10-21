@@ -19,23 +19,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [dataUser, setDataUser] = useState<IuserSession | null>(null);
 
   useEffect(() => {
+    const storedUser = localStorage.getItem("userSession");
+    if (storedUser) {
+      setDataUser(JSON.parse(storedUser)); // Cargar los datos del usuario en el estado global
+    }
+  }, []);
+  
+
+  useEffect(() => {
     if (dataUser) {
       localStorage.setItem("userSession", JSON.stringify(dataUser));
+    } else {
+      localStorage.removeItem("userSession");
     }
   }, [dataUser]);
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.localStorage) {
-      const data = localStorage.getItem("userSession");
-      if (data) {
-        setDataUser(JSON.parse(data));
-      }
-    }
-  }, []);
-
   const logout = () => {
-    setDataUser(null);
-    localStorage.removeItem("userSession");
+    setDataUser(null); // Limpia el estado de usuario
   };
 
   return (
@@ -44,8 +44,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     </AuthContext.Provider>
   );
 };
-
-export { AuthContext };
 
 export const useAuth = () => {
   return useContext(AuthContext);

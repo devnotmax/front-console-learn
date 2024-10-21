@@ -206,8 +206,7 @@ const cursos = [
         "rating": 5,
       },
     ],
-  }
-=======
+  },
     {
       "id": "course-uuid-1",
       "thumbnail": "https://estradawebgroup.com//ImagesUpload/cursojavascript(1).jpg",

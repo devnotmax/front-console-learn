@@ -1,6 +1,7 @@
 // components/Navbar.tsx
 import ActiveLink from "@/helpers/activeLink";
 import Link from "next/link";
+import UserWidget from "../userWidget/userWidget";
 
 const Navbar = () => {
   return (
@@ -27,13 +28,7 @@ const Navbar = () => {
 
         {/* Botones */}
         <div className="flex space-x-3">
-          <Link href="/login">
-            <button className="secondary-btn py-1 px-2">Iniciar sesión</button>
-          </Link>
-
-          <Link href="/register">
-            <button className="primary-btn py-1 px-2">Registrarse</button>
-          </Link>
+          <UserWidget />
         </div>
       </div>
     </nav>
