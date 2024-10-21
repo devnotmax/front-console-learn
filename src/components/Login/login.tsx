@@ -1,84 +1,145 @@
 "use client";
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import 'boxicons/css/boxicons.min.css';
 
+//hooks
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+//assets
+import "boxicons/css/boxicons.min.css";
+
+//context
+import { useAuth } from "@/contexts/authContext";
+
+//interfaces
+import { loginForm, ErrloginForm } from "@/interfaces/Auth";
+import { validateLogin } from "@/utils/loginValidators";
+import { LoginUser } from "@/services/AuthService";
 
 const Login: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const router = useRouter();
+  const router = useRouter();
+  const { setDataUser } = useAuth();
 
-    const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault();
+  const [userData, setUserData] = useState<loginForm>({
+    email: "",
+    password: "",
+  });
 
-        try {
-        const response = await fetch('https://tu-backend-api.com/api/login', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
+  const [errorUser, setErrorUser] = useState<ErrloginForm>({
+    email: "",
+    password: "",
+  });
 
-        if (!response.ok) {
-            throw new Error('Error en la autenticación');
-        }
+  //Estado para poder mostrar la contraseña
+  const [showPassword, setShowPassword] = useState(false);
 
-        const data = await response.json();
-        console.log('Usuario autenticado:', data);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await LoginUser(userData);
+      setDataUser(res);
+      document.cookie = `userSession=${JSON.stringify(res)}; path=/`;
+      if (res && res.user) {
+        //Aqui deberiamos poner una alerta de que inicio sesión
         router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-        } catch (error) {
-        console.error('Error al iniciar sesión:', error);
-        }
-    };
+  useEffect(() => {
+    const errors = validateLogin(userData);
+    setErrorUser(errors);
+  }, [userData]);
 
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
-            <div className="text-center mb-6">
-            <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '6rem' }}></i>
-            <h2 className="text-2xl font-bold text-white">Iniciar Sesión en <span className="text-purple-500">ConsoLearn</span></h2>
-            </div>
-            <form onSubmit={handleLogin}>
-            <div className="mb-4">
-                <label className="block text-gray-300 mb-2">Correo Electrónico</label>
-                <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
-                placeholder="tu@ejemplo.com"
-                required
-                />
-            </div>
-            <div className="mb-6">
-                <label className="block text-gray-300 mb-2">Contraseña</label>
-                <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
-                placeholder="••••••••"
-                required
-                />
-            </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit" className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition">
-                Iniciar Sesión
-            </button>
-            </form>
-            <div className="text-center mt-4">
-            <a href="#" className="text-purple-500 text-sm">¿Olvidaste tu contraseña?</a>
-            </div>
-            <div className="text-center mt-2">
-            <p className="text-white text-sm">¿No tienes una cuenta? <a href="/register" className="text-purple-500">Regístrate</a></p>
-            </div>
+  // Función para alternar la visibilidad de la contraseña
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
+        <div className="text-center mb-6">
+          <i
+            className="bx bxs-graduation"
+            style={{ color: "#ffffff", fontSize: "6rem" }}
+          ></i>
+          <h2 className="text-2xl font-bold text-white">
+            Iniciar Sesión en{" "}
+            <span className="text-purple-500">ConsoLearn</span>
+          </h2>
         </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-300 mb-2">
+              Correo Electrónico
+            </label>
+            <input
+              name="email"
+              type="email"
+              id="email"
+              value={userData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
+              placeholder="tu@ejemplo.com"
+              required
+            />
+            {errorUser.email && (
+              <p className="text-sm text-red-500 mt-1">{errorUser.email}</p>
+            )}
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-300 mb-2">Contraseña</label>
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              value={userData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
+              placeholder="••••••••"
+              required
+            />
+            <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="text-sm text-[var(--foreground)] mt-2"
+          >
+            {showPassword ? "Ocultar" : "Mostrar"} Contraseña
+          </button>
+            {errorUser.password && (
+              <p className="text-sm text-red-500 mt-1">{errorUser.password}</p>
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition"
+          >
+            Iniciar Sesión
+          </button>
+        </form>
+        <div className="text-center mt-4">
         </div>
-    );
+        <div className="text-center mt-2">
+          <p className="text-white text-sm">
+            ¿No tienes una cuenta?{" "}
+            <Link href="/Register" className="text-purple-500">
+              Regístrate
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

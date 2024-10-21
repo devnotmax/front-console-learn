@@ -1,4 +1,5 @@
 import Course from "@/interfaces/Course";
+import { Course } from "@/interfaces/ProductCard";
 import React from "react";
 
 const CourseCard: React.FC<Course> = ({

@@ -1,5 +1,10 @@
+"use client";
+
+import React, { useState } from "react";
 import CourseHero from "@/components/CourseHero/CourseHero";
 import Carousel from "@/components/Carrousel/Carrousel";
+import CourseCard from "@/components/CourseCard/CourseCard";
+import cursos from "@/Mocks/CourseMocks";
 import FilterableProductList from "@/components/Filter/Filter";
 
 const CoursesPage: React.FC = () => {
@@ -13,7 +18,11 @@ const CoursesPage: React.FC = () => {
       <div className="p-4">
         <h2 className="text-2xl font-bold">
           Nuestros cursos{" "}
+
           <span className="text-[var(--primary)]">
+
+          <span className="text-[var(--accent-color)]">
+
             más populares🔥🔥
           </span>
         </h2>

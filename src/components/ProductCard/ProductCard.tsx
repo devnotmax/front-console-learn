@@ -1,14 +1,7 @@
 // ProductCard.tsx
 import Link from "next/link";
 import React from "react";
-
-interface ProductCardProps {
-  id: string;
-  thumbnail: string;
-  title: string;
-  description: string;
-  reviews: { rating: number }[];
-}
+import { ProductCardProps } from "@/interfaces/ProductCard";
 
 //card
 
