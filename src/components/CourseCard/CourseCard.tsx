@@ -1,4 +1,4 @@
-import Course from "@/interfaces/Course";
+
 import { Course } from "@/interfaces/ProductCard";
 import React from "react";
 
