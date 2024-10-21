@@ -8,6 +8,8 @@ export interface ICourse {
   thumbnail: string;
   technologies: string[];
   price: number;
+  available: boolean;
+  reviews: { rating: number }[];
   isAvailable: boolean;
   orderDetails: IOrderDetails[];
   reviews: IReview[];

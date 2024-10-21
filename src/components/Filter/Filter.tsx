@@ -1,3 +1,7 @@
+"use client";
+import React, { useState } from "react";
+import CourseCard from "../CourseCard/CourseCard"; // Asumiendo que está en otro archivo
+import Course from "@/interfaces/Course";
 import React, { useState } from "react";
 import CourseCard from "../CourseCard/CourseCard"; // Asumiendo que está en otro archivo
 import { Course } from "@/interfaces/ProductCard";

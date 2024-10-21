@@ -35,6 +35,7 @@ a {
   font-size: 1rem;
 }
 
+
 .primary-btn:hover {
   background-color: var(--primary);
   transition: all 0.1s ease;
@@ -59,6 +60,32 @@ body {
   background: var(--background); */
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.card {
+  width: 20vw; /* Ancho del card (20% del ancho de la pantalla) */
+  height: 30vh; /* Alto del card (30% del alto de la pantalla) */
+}
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  color: white; /* Color de las flechas */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10; /* Asegúrate de que esté por encima de las imágenes */
+}
+
+.carousel-button.left {
+  left: 10px; /* Posición en el lado izquierdo */
+}
+
+.carousel-button.right {
+  right: 10px; /* Posición en el lado derecho */
+}
+
+
 
 @layer utilities {
   .text-balance {
@@ -96,7 +123,7 @@ body {
     }
   }
   
-  @screen 2xl {
+  @screen  2xl {
     .container {
       max-width: 1536px;
     }
