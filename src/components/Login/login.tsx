@@ -30,7 +30,7 @@ const Login: React.FC = () => {
     password: "",
   });
 
-  //Estado para poder mostrar la contraseña
+  // Estado para poder mostrar la contraseña
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,14 +44,26 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       const res = await LoginUser(userData);
-      setDataUser(res);
-      document.cookie = `userSession=${JSON.stringify(res)}; path=/`;
-      if (res && res.user) {
-        //Aqui deberiamos poner una alerta de que inicio sesión
+
+      console.log("Respuesta completa del servidor:", res); // Mostrar la respuesta para depuración
+
+      // Verificamos si la respuesta contiene el token
+      if (res && res.token) {
+        setDataUser(res); // Guarda los datos del usuario (puedes guardar el token si es necesario)
+        document.cookie = `userSession=${JSON.stringify(res)}; path=/`; // Guarda la sesión en una cookie
+
+        // Alerta de éxito
+        alert(res.message || "Inicio de sesión exitoso");
+        console.log("Inicio de sesión exitoso");
+
+        // Redirigir a la página de inicio
         router.push("/");
+      } else {
+        alert("Error: No se encontró el token en la respuesta.");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error de inicio de sesión:", error);
+      alert("Error al iniciar sesión. Por favor, intenta de nuevo.");
     }
   };
 
@@ -110,12 +122,12 @@ const Login: React.FC = () => {
               required
             />
             <button
-            type="button"
-            onClick={togglePasswordVisibility}
-            className="text-sm text-[var(--foreground)] mt-2"
-          >
-            {showPassword ? "Ocultar" : "Mostrar"} Contraseña
-          </button>
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="text-sm text-[var(--foreground)] mt-2"
+            >
+              {showPassword ? "Ocultar" : "Mostrar"} Contraseña
+            </button>
             {errorUser.password && (
               <p className="text-sm text-red-500 mt-1">{errorUser.password}</p>
             )}
@@ -127,8 +139,7 @@ const Login: React.FC = () => {
             Iniciar Sesión
           </button>
         </form>
-        <div className="text-center mt-4">
-        </div>
+        <div className="text-center mt-4"></div>
         <div className="text-center mt-2">
           <p className="text-white text-sm">
             ¿No tienes una cuenta?{" "}

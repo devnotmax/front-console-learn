@@ -19,7 +19,7 @@ const CoursesPage: React.FC = () => {
         <h2 className="text-2xl font-bold">
           Nuestros cursos{" "}
 
-          <span className="text-[var(--primary)]">
+          <span className="text-[var(--primary)]"></span>
 
           <span className="text-[var(--accent-color)]">
 
