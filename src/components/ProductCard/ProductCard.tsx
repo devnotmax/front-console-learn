@@ -13,7 +13,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   // reviews,
 }) => {
   return (
-    <div className="w-64 h-96 flex-shrink-0 p-4 rounded-lg">
+    <div className="w-full h-96 flex-shrink-0 p-4 rounded-lg">
   {/* <Link href={`/product/${id}`}> */}
     <div className="block bg-gray-200 hover:bg-gray-300 rounded-lg overflow-hidden transition-transform transform hover:scale-105 h-full">
       <div className="w-full h-48">
