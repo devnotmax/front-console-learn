@@ -6,6 +6,7 @@ import Carousel from "@/components/Carrousel/Carrousel";
 import Courses from "@/components/CoursePage/Courses";
 
 
+
 const CoursesPage: React.FC = () => {
 
   return (
