@@ -7,12 +7,10 @@ const CourseCard: React.FC<CourseProps> = ({
     thumbnail,
     title,
     price,
-    available,
     technologies,
     isAvailable,
     description
 }) => {
-  // Calcular la calificación promedio de las reviews
 
 return (
 <div className="max-w-xs rounded-lg shadow-lg bg-white p-4 m-4">
