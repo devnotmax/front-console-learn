@@ -163,11 +163,22 @@ const Register = () => {
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
+
+    // Actualiza los datos del usuario independientemente de los errores
     setUserData({
       ...userData,
-      [name]: type === "checkbox" ? checked : value, // Maneja el checkbox correctamente
+      [name]: value,
     });
+
+    // Valida el formulario con los nuevos datos
+    const errors = validateRegisterForm({
+      ...userData,
+      [name]: value,
+    });
+
+    // Actualiza los errores si los hay
+    setError(errors);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -182,10 +193,10 @@ const Register = () => {
     }
   };
 
-  useEffect(() => {
-    const errors = validateRegisterForm(userData);
-    setError(errors);
-  }, [userData]);
+  // useEffect(() => {
+  //   const errors = validateRegisterForm(userData);
+  //   setError(errors);
+  // }, [userData]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
