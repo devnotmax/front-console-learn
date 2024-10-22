@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import CourseHero from "@/components/CourseHero/CourseHero";
 import Carousel from "@/components/Carrousel/Carrousel";
-import FilterableProductList from "@/components/Filter/Filter";
+import Courses from "@/components/CoursePage/Courses";
+
 
 const CoursesPage: React.FC = () => {
 
@@ -26,7 +27,7 @@ const CoursesPage: React.FC = () => {
       <Carousel />
 
       {/* Cards de cursos populares */} 
-      <FilterableProductList />
+      <Courses />
     </main>
   );
 };

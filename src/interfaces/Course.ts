@@ -15,3 +15,14 @@ export interface ICourse {
   users: IUser[];
   videos: any; //luego va a ser video[]
 }
+
+export interface CourseProps {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+  technologies: string[];
+  price: number;
+  available: boolean;
+  isAvailable: boolean;
+}
