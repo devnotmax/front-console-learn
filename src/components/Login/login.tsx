@@ -33,13 +33,38 @@ const Login: React.FC = () => {
   // Estado para poder mostrar la contraseña
   const [showPassword, setShowPassword] = useState(false);
 
+  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const errors = validateLogin({
+  //     ...userData,
+  //     [e.target.name]: e.target.value,
+  //   });
+  //   if (errors) {
+  //     setErrorUser(errors);
+  //   } else {
+  //     setUserData({
+  //       ...userData,
+  //       [e.target.name]: e.target.value,
+  //     });
+  //   }
+  // };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    // Actualiza los datos del usuario independientemente de los errores
     setUserData({
       ...userData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
-  };
 
+    // Valida el formulario con los nuevos datos
+    const errors = validateLogin({
+      ...userData,
+      [name]: value,
+    });
+
+    // Actualiza los errores si los hay
+    setErrorUser(errors);
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -67,10 +92,7 @@ const Login: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const errors = validateLogin(userData);
-    setErrorUser(errors);
-  }, [userData]);
+
 
   // Función para alternar la visibilidad de la contraseña
   const togglePasswordVisibility = () => {
