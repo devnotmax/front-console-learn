@@ -3,7 +3,7 @@ export interface ProductCardProps {
     thumbnail: string;
     title: string;
     description: string;
-    reviews: { rating: number }[];
+    // reviews: { rating: number }[];
 }
 
 export interface Course {

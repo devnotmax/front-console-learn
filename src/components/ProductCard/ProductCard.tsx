@@ -10,7 +10,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   thumbnail,
   title,
   description,
-  reviews,
+  // reviews,
 }) => {
   return (
     <div className="w-64 h-96 flex-shrink-0 p-4 rounded-lg">
@@ -26,9 +26,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-4 bg-[var(--primary)] text-white h-full">
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-bold">{title}</h3>
-          <p className="text-lg">
+          {/* <p className="text-lg">
             {reviews.length > 0 ? reviews[0].rating : "N/A"} ⭐
-          </p>
+          </p> */}
         </div>
         <p className="text-sm mt-2 line-clamp-3">
           {description}
