@@ -2,10 +2,16 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
 import { registerForm, ErrregisterForm } from "@/interfaces/Auth";
 import { validateRegisterForm } from "@/utils/registerValidator";
-import { RegisterUser } from "@/services/AuthService"; // Asegúrate de que esta ruta sea correcta
+import { RegisterUser } from "@/services/AuthService";
 import "boxicons/css/boxicons.min.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
+//components
+import EmailInput from "@/components/Inputs/email";
+import PasswordInput from "@/components/Inputs/password";
+import NameInput from "@/components/Inputs/name";
+import PhoneNumberInput from "@/components/Inputs/phone";
 
 const Register = () => {
   const router = useRouter();
@@ -14,51 +20,62 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    phone: "", // Inicializa con el prefijo
-  });
-
-  const [error, setError] = useState<ErrregisterForm>({
-    name: "",
-    email: "",
-    password: "",
     phone: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const [isFormValid, setIsFormValid] = useState({
+    name: false,
+    email: false,
+    password: false,
+    phone: false,
+  });
 
-    // Actualiza los datos del usuario independientemente de los errores
-    setUserData({
-      ...userData,
-      [name]: value,
-    });
+  const handleEmailValidation = (isValid: boolean, value: string) => {
+    setIsFormValid((prev) => ({ ...prev, email: isValid }));
+    setUserData((prev) => ({ ...prev, email: value }));
+  };
 
-    // Valida el formulario con los nuevos datos
-    const errors = validateRegisterForm({
-      ...userData,
-      [name]: value,
-    });
+  const handlePasswordValidation = (isValid: boolean, value: string) => {
+    setIsFormValid((prev) => ({ ...prev, password: isValid }));
+    setUserData((prev) => ({ ...prev, password: value }));
+  };
 
-    // Actualiza los errores si los hay
-    setError(errors);
+  const handleNameValidation = (isValid: boolean, value: string) => {
+    setIsFormValid((prev) => ({ ...prev, name: isValid }));
+    setUserData((prev) => ({ ...prev, name: value }));
+  };
+
+  const handlePhoneValidation = (isValid: boolean, value: string) => {
+    setIsFormValid((prev) => ({ ...prev, phone: isValid }));
+    setUserData((prev) => ({ ...prev, phone: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (
+      !isFormValid.email ||
+      !isFormValid.password ||
+      !isFormValid.name ||
+      !isFormValid.phone
+    ) {
+      alert("Please fill out all fields correctly");
+      return;
+    }
+
     try {
-      console.log(userData);
       const res = await RegisterUser(userData);
-      alert("Registro exitoso");
-      router.push("/login");
-    } catch (error: any) {
-      console.error(error);
+      if (res && res.token) {
+        document.cookie = `userSession=${JSON.stringify(res)}; path=/`;
+        alert(res.message || "Registration successful");
+        router.push("/");
+      } else {
+        alert("Error: No token found in the response.");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert(error || "Failed to register. Please try again.");
     }
   };
-
-  // useEffect(() => {
-  //   const errors = validateRegisterForm(userData);
-  //   setError(errors);
-  // }, [userData]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -74,65 +91,12 @@ const Register = () => {
           </h2>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="mb-1">
-            <label className="block text-[var(--secondary-text)] mb-2">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              value={userData.name}
-              onChange={handleChange}
-              className="w-full p-2 mb-4 rounded"
-            />
-            {error.name && <p className="text-red-500">{error.name}</p>}
-          </div>
+          <NameInput onValid={handleNameValidation} />
+          <EmailInput onValid={handleEmailValidation} />
 
-          <div className="mb-1">
-            <label className="block text-[var(--secondary-text)] mb-2">
-              Phone
-            </label>
-            <input
-              type="text"
-              name="phone"
-              placeholder="Number (ej: +543813887102)"
-              value={userData.phone}
-              onChange={handleChange}
-              className="w-full p-2 mb-4 rounded"
-            />
-            {error.phone && <p className="text-red-500">{error.phone}</p>}
-          </div>
+          <PhoneNumberInput onValid={handlePhoneValidation} />
 
-          <div className="mb-1">
-            <label className="block text-[var(--secondary-text)] mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="you@example.com"
-              value={userData.email}
-              onChange={handleChange}
-              className="w-full p-2 mb-4 rounded"
-            />
-            {error.email && <p className="text-red-500">{error.email}</p>}
-          </div>
-
-          <div className="mb-1">
-            <label className="block text-[var(--secondary-text)] mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              value={userData.password}
-              onChange={handleChange}
-              className="w-full p-2 mb-4 rounded"
-            />
-            {error.password && <p className="text-red-500">{error.password}</p>}
-          </div>
+          <PasswordInput onValid={handlePasswordValidation} />
 
           <button
             type="submit"
