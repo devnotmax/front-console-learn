@@ -73,6 +73,7 @@ const Register = () => {
       }
     } catch (error) {
       console.error("Registration error:", error);
+      console.log(userData)
       alert(error || "Failed to register. Please try again.");
     }
   };
@@ -86,7 +87,7 @@ const Register = () => {
             style={{ color: "var(--principal-text)", fontSize: "6rem" }}
           ></i>
           <h2 className="text-2xl font-bold text-[var(--principal-text)]">
-            Regístrate en{" "}
+            Sign Up to{" "}
             <span className="text-[var(--primary)]">ConsoLearn</span>
           </h2>
         </div>
