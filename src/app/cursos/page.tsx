@@ -10,7 +10,7 @@ import Courses from "@/components/CoursePage/Courses";
 const CoursesPage: React.FC = () => {
 
   return (
-    <main className="w-full h-full">
+    <main className="w-full h-full font-inter">
       {/* Hero section del curso */}
       <CourseHero />
 

@@ -3,17 +3,19 @@ import Link from "next/link";
 const Hero: React.FC = () => {
   return (
     <section className="flex justify-center flex-col items-center min-h-[50vh]">
-      <h1 className="text-6xl font-bold">
-        Conso<span className="text-[var(--accent-color)]">Learn</span>
+      <h1 className="text-6xl font-bold ">
+        Conso<span className="text-[var(--accent-color)] text-7xl font-fira-code">learn</span>
       </h1>
       <p className="text-xl text-[var(--foreground)]">
-        Tu espacio para dominar el código y la innovación.
+        Your space to master code and innovation.
       </p>
       <div className="p-2 gap-2 flex">
         <Link href="/cursos">
-          <button className="primary-btn p-2">Explorar cursos</button>
+          <button className="primary-btn p-2">Explore courses</button>
         </Link>
-        <button className="secondary-btn p-2">Contacto</button>
+        <Link href={"/contacto"}>
+          <button className="secondary-btn p-2">Contact</button>
+        </Link>
       </div>
     </section>
   );

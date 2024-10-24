@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Inter } from "next/font/google";
+import { Poppins, Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
 
 //provider
@@ -20,6 +20,12 @@ const inter = Inter({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
+const firaCode = Fira_Code({
+  subsets: ["latin"],
+  variable: "--font-fira-code",
+  weight: ["300", "400", "500", "600", "700",],
+});
+
 export const metadata: Metadata = {
   title: "ConsoLearn",
   description: "La mejor plataforma de cursos despues de Henry",
@@ -33,7 +39,7 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="en">
-        <body className={`${inter.className} ${poppins.className}`}>
+        <body className={`${inter.className} ${poppins.className} ${firaCode.className}`}>
           <Navbar />
           {children}
           <Footer />

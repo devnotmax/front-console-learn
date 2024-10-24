@@ -5,12 +5,12 @@ import UserWidget from "../userWidget/userWidget";
 
 const Navbar = () => {
   return (
-    <nav className="bg-[var(--background)] text-[var(--principal-text)] h-20 flex justify-between items-center px-4">
+    <nav className="bg-[var(--background)] text-[var(--principal-text)] font-bold font-poppins h-20 flex justify-between items-center px-4">
       {/* logo */}
-      <div>
+      <div className="flex items-center justify-center">
         <Link href="/">
-          <h1 className="text-3xl font-bold text-[var(--primary)]">
-            ConsoLearn
+          <h1 className="text-3xl font-bold font-fira-code text-white flex items-center justify-center">
+            ConsoLearn <i className='bx bx-code-alt text-[var(--accent-color)]'></i>
           </h1>
         </Link>
       </div>
@@ -18,12 +18,11 @@ const Navbar = () => {
       {/* menu */}
       <div className="flex space-x-4 justify-center items-center">
         <ul className="flex space-x-4">
-          <ActiveLink href="/">Inicio</ActiveLink>
-          <ActiveLink href="/cursos">Cursos</ActiveLink>
-          <ActiveLink href="/comunidad">Comunidad</ActiveLink>
-          <ActiveLink href="/nosotros">Nosotros</ActiveLink>
-          <ActiveLink href="/pricing">Pricing</ActiveLink>
-          <ActiveLink href="/contacto">Contacto</ActiveLink>
+          <ActiveLink href="/">Home</ActiveLink>
+          <ActiveLink href="/cursos">Courses</ActiveLink>
+          <ActiveLink href="/comunidad">Comunity</ActiveLink>
+          <ActiveLink href="/nosotros">About us</ActiveLink>
+          <ActiveLink href="/contacto">Contact</ActiveLink>
         </ul>
 
         {/* Botones */}
