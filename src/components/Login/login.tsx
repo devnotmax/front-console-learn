@@ -92,30 +92,101 @@ const Login: React.FC = () => {
     }
   };
 
-
-
   // Función para alternar la visibilidad de la contraseña
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  // return (
+  //   <div className="flex items-center justify-center min-h-screen bg-gray-100">
+  //     <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
+  //       <div className="text-center mb-6">
+  //         <i
+  //           className="bx bxs-graduation"
+  //           style={{ color: "#ffffff", fontSize: "6rem" }}
+  //         ></i>
+  //         <h2 className="text-2xl font-bold text-white">
+  //           Iniciar Sesión en{" "}
+  //           <span className="text-purple-500">ConsoLearn</span>
+  //         </h2>
+  //       </div>
+  //       <form onSubmit={handleSubmit}>
+  //         <div className="mb-4">
+  //           <label className="block text-gray-300 mb-2">
+  //             Correo Electrónico
+  //           </label>
+  //           <input
+  //             name="email"
+  //             type="email"
+  //             id="email"
+  //             value={userData.email}
+  //             onChange={handleChange}
+  //             className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
+  //             placeholder="tu@ejemplo.com"
+  //             required
+  //           />
+  //           {errorUser.email && (
+  //             <p className="text-sm text-red-500 mt-1">{errorUser.email}</p>
+  //           )}
+  //         </div>
+  //         <div className="mb-6">
+  //           <label className="block text-gray-300 mb-2">Contraseña</label>
+  //           <input
+  //             name="password"
+  //             type={showPassword ? "text" : "password"}
+  //             id="password"
+  //             value={userData.password}
+  //             onChange={handleChange}
+  //             className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
+  //             placeholder="••••••••"
+  //             required
+  //           />
+  //           <button
+  //             type="button"
+  //             onClick={togglePasswordVisibility}
+  //             className="text-sm text-[var(--foreground)] mt-2"
+  //           >
+  //             {showPassword ? "Ocultar" : "Mostrar"} Contraseña
+  //           </button>
+  //           {errorUser.password && (
+  //             <p className="text-sm text-red-500 mt-1">{errorUser.password}</p>
+  //           )}
+  //         </div>
+  //         <button
+  //           type="submit"
+  //           className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition"
+  //         >
+  //           Iniciar Sesión
+  //         </button>
+  //       </form>
+  //       <div className="text-center mt-4"></div>
+  //       <div className="text-center mt-2">
+  //         <p className="text-white text-sm">
+  //           ¿No tienes una cuenta?{" "}
+  //           <Link href="/register" className="text-purple-500">
+  //             Regístrate
+  //           </Link>
+  //         </p>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="bg-[var(--foreground)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
         <div className="text-center mb-6">
           <i
             className="bx bxs-graduation"
-            style={{ color: "#ffffff", fontSize: "6rem" }}
+            style={{ color: "var(--principal-text)", fontSize: "6rem" }}
           ></i>
-          <h2 className="text-2xl font-bold text-white">
-            Iniciar Sesión en{" "}
-            <span className="text-purple-500">ConsoLearn</span>
+          <h2 className="text-2xl font-bold text-[var(--principal-text)]">
+            Log in to <span className="text-[var(--primary)]">ConsoLearn</span>
           </h2>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-300 mb-2">
-              Correo Electrónico
+            <label className="block text-[var(--secondary-text)] mb-2">
+              Email
             </label>
             <input
               name="email"
@@ -123,8 +194,8 @@ const Login: React.FC = () => {
               id="email"
               value={userData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
-              placeholder="tu@ejemplo.com"
+              className="w-full px-4 py-2 border border-[var(--secondary-text)] rounded bg-[var(--background)] text-[var(--principal-text)]"
+              placeholder="you@example.com"
               required
             />
             {errorUser.email && (
@@ -132,41 +203,54 @@ const Login: React.FC = () => {
             )}
           </div>
           <div className="mb-6">
-            <label className="block text-gray-300 mb-2">Contraseña</label>
+            <label className="block text-[var(--secondary-text)] mb-2">
+              Password
+            </label>
             <input
               name="password"
               type={showPassword ? "text" : "password"}
               id="password"
               value={userData.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-600 rounded bg-white text-black"
+              className="w-full px-4 py-2 border border-[var(--secondary-text)] rounded bg-[var(--background)] text-[var(--principal-text)]"
               placeholder="••••••••"
               required
             />
             <button
               type="button"
               onClick={togglePasswordVisibility}
-              className="text-sm text-[var(--foreground)] mt-2"
+              className="flex items-center text-sm text-[var(--accent-color)] mt-2"
             >
-              {showPassword ? "Ocultar" : "Mostrar"} Contraseña
+              {showPassword ? (
+                <>
+                  <i className="bx bx-hide mr-2 text-[1rem]"></i>
+                  Hide password
+                </>
+              ) : (
+                <>
+                  <i className="bx bx-show mr-2 text-[1rem]"></i>
+                  Show password
+                </>
+              )}
             </button>
+
             {errorUser.password && (
               <p className="text-sm text-red-500 mt-1">{errorUser.password}</p>
             )}
           </div>
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition"
+            className="w-full bg-[var(--primary)] text-white py-2 rounded hover:bg-[var(--accent-color)] transition"
           >
-            Iniciar Sesión
+            Sign in
           </button>
         </form>
         <div className="text-center mt-4"></div>
         <div className="text-center mt-2">
-          <p className="text-white text-sm">
-            ¿No tienes una cuenta?{" "}
-            <Link href="/register" className="text-purple-500">
-              Regístrate
+          <p className="text-[var(--principal-text)] text-sm">
+            You don't have an account?{" "}
+            <Link href="/register" className="text-[var(--secondary)]">
+              Sign up
             </Link>
           </p>
         </div>
