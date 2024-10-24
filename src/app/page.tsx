@@ -5,7 +5,7 @@ import UserReview from "@/components/UserReview/UserReviews";
 
 export default function Home() {
   return (
-    <main className="w-full">
+    <main className="w-full font-poppins">
       <Hero />
       <Carrousel />
       <div className="container p-6 mx-auto">

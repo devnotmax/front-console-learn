@@ -1,84 +1,3 @@
-// "use client";
-
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-// import Slider from "react-slick";
-// import React, { useState, useEffect } from "react";
-// import cursos from "@/Mocks/CourseMocks"; // Supongo que este mock tiene la lista de cursos
-// import ProductCard from "@/components/ProductCard/ProductCard";
-// import { NextArrow, PrevArrow } from "./FlechasCarrusel";
-// import { getCourses } from "@/services/CourseServices";
-
-// const Carousel = () => {
-//   const [courses, setCourses] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchCourses = async () => {
-//       try {
-//         const data = await getCourses(); // Llamada al servicio
-//         setCourses(data); // Guardar los cursos en el estado
-//       } catch (error) {
-//         console.error("Error al obtener los cursos:", error);
-//       } finally {
-//         setLoading(false); // Cambiar el estado de carga
-//       }
-//     };
-//   const settings = {
-//     dots: false,
-//     infinite: true,
-//     autoplay: true,
-//     speed: 500,
-//     autoplayspeed: 500,
-//     slidesToShow: 4, // Número de productos por slide
-//     slidesToScroll: 1,
-//     responsive: [
-//       {
-//         breakpoint: 1024, // Para pantallas más pequeñas
-//         settings: {
-//           slidesToShow: 3,
-//           slidesToScroll: 1,
-//         },
-//       },
-//       {
-//         breakpoint: 768, // Para dispositivos móviles
-//         settings: {
-//           slidesToShow: 2,
-//           slidesToScroll: 1,
-//         },
-//       },
-//       {
-//         breakpoint: 480, // Para pantallas más pequeñas aún
-//         settings: {
-//           slidesToShow: 1,
-//           slidesToScroll: 1,
-//         },
-//       },
-//     ],
-//     nextArrow: <NextArrow />, // Flecha personalizada para siguiente
-//     prevArrow: <PrevArrow />, // Flecha personalizada para previo
-//   };
-
-//   return (
-//     <div className="w-full mx-auto bg-gray-100 p-5">
-//       <Slider className="container" {...settings}>
-//         {cursos.map((course) => (
-//           <div key={course.id} className="p-2 card">
-//             <ProductCard
-//               id={course.id}
-//               thumbnail={course.thumbnail}
-//               title={course.title}
-//               description={course.description}
-//               reviews={course.reviews}
-//             />
-//           </div>
-//         ))}
-//       </Slider>
-//     </div>
-//   );
-// };
-
-// export default Carousel;
 "use client";
 
 import "slick-carousel/slick/slick.css";
@@ -158,7 +77,7 @@ const Carousel = () => {
   }
 
   return (
-    <div className="w-full mx-auto bg-gray-100 p-5">
+    <div className="w-full mx-auto bg-slate-100 shadow-lg p-5">
       <Slider className="container" {...settings}>
         {courses.map((course) => (
           <Link href={course.id} className="p-2 card">

@@ -23,11 +23,11 @@ const UserWidget = () => {
         // Si no está logueado, mostrar los botones de iniciar sesión y registrarse
         <>
           <Link href="/login">
-            <button className="secondary-btn py-1 px-2">Iniciar sesión</button>
+            <button className="secondary-btn py-1 px-2">Sign in</button>
           </Link>
 
           <Link href="/register">
-            <button className="primary-btn py-1 px-2">Registrarse</button>
+            <button className="secondary-btn py-1 px-2">Sign up</button>
           </Link>
         </>
       )}
