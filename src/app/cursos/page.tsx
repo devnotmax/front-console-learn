@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState } from "react";
 import CourseHero from "@/components/CourseHero/CourseHero";
@@ -27,7 +26,7 @@ const CoursesPage: React.FC = () => {
       {/* Carousel de cursos populares */}
       <Carousel />
 
-      {/* Cards de cursos populares */} 
+      {/* Sección de cursos */}
       <Courses />
     </main>
   );
