@@ -1,7 +1,7 @@
 import React from "react";
 import Hero from "@/components/Hero/Hero";
 import Carrousel from "@/components/Carrousel/Carrousel";
-import UserReview from "@/components/UserReview/UserReviews";
+import UserReview from "@/components/UserReview/userReview";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
       <Hero />
       <Carrousel />
       <div className="container p-6 mx-auto">
-      <UserReview />
+        <UserReview />
       </div>
     </main>
   );
