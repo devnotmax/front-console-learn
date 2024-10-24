@@ -1,3 +1,134 @@
+// "use client";
+
+// import React, { useEffect, useState } from "react";
+// import CourseCard from "../CourseCard/CourseCard";
+// import { ICourse } from "@/interfaces/Course";
+// import {
+//   getCourses,
+//   filterByTechnology,
+//   OrderByPrice,
+//   filterByTechnologyAndPrice,
+// } from "@/services/CourseServices";
+
+// import SearchBar from "@/components/SearchBar/SearchBar";
+
+// const Courses: React.FC = () => {
+//   const [courses, setCourses] = useState<ICourse[]>([]);
+//   const [technologyFilter, setTechnologyFilter] = useState<string>("");
+//   const [priceFilter, setPriceFilter] = useState<boolean | null>(null);
+
+//   const fetchCourses = async () => {
+//     try {
+//       let data: ICourse[] = [];
+
+//       // Si ambos filtros están activos, combinarlos
+//       if (technologyFilter && priceFilter !== null) {
+//         // Pasar directamente priceFilter como booleano
+//         data = await filterByTechnologyAndPrice(technologyFilter, priceFilter);
+//       } else if (technologyFilter) {
+//         data = await filterByTechnology(technologyFilter);
+//       } else if (priceFilter !== null) {
+//         // Pasar directamente priceFilter como booleano
+//         data = await OrderByPrice(priceFilter);
+//       } else {
+//         data = await getCourses();
+//       }
+
+//       if (Array.isArray(data)) {
+//         setCourses(data);
+//       } else {
+//         console.error("Los datos obtenidos no son un arreglo:", data);
+//         setCourses([]); // Evitar el error si no es un array
+//       }
+//     } catch (error) {
+//       console.error("Error al obtener los cursos:", error);
+//       setCourses([]); // Evitar el error si falla la llamada
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchCourses();
+//   }, [technologyFilter, priceFilter]);
+
+//   return (
+//     <div className="container mx-auto p-4">
+//       {/* Filtros */}
+//       <div className="flex w-full justify-center items-center gap-4 p-4">
+//         <SearchBar />
+//         <div className=" flex items-center space-between w-full gap-4">
+//           {/* Filtro por tecnología */}
+//           <div className="flex justify-center items-center">
+//             <select
+//               id="technologyFilter"
+//               value={technologyFilter}
+//               onChange={(e) => setTechnologyFilter(e.target.value)}
+//               className="p-2 bg-slate-100 shadow-md border rounded-lg flex justify-center items-center"
+//             >
+//               <option value="">Categories</option>
+//               <option value="React">React</option>
+//               <option value="HTML">HTML</option>
+//               <option value="TypeScript">TypeScript</option>
+//               <option value="Node.js">Nodejs</option>
+//               <option value="Express">Express</option>
+//               <option value="CSS">CSS</option>
+//               <option value="Tailwind">Tailwind</option>
+//               <option value="Front-end">Frontend</option>
+//               {/* Agregar más tecnologías si es necesario */}
+//             </select>
+//           </div>
+
+//           <div className="flex justify-center items-center">
+//             <div className="flex justify-center items-center gap-4">
+//               <button
+//                 onClick={() => setPriceFilter(true)}
+//                 className={`p-2 border rounded-lg flex justify-center items-center shadow-md ${
+//                   priceFilter === true
+//                     ? "bg-[var(--accent-color)] text-white"
+//                     : "bg-slate-100 text-black"
+//                 }`}
+//               >
+//                 Lower price <i className="bx bx-sort-down text-[1.2rem]"></i>
+//               </button>
+//               <button
+//                 onClick={() => setPriceFilter(false)}
+//                 className={`p-2 border rounded-lg flex justify-center items-center shadow-md ${
+//                   priceFilter === false
+//                     ? "bg-[var(--accent-color)] text-white"
+//                     : "bg-slate-100 text-black"
+//                 }`}
+//               >
+//                 Higher price <i className="bx bx-sort-up text-[1.2rem]"></i>
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Renderizado de los cursos */}
+//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+//         {courses.length > 0 ? (
+//           courses.map((course) => (
+//             <CourseCard
+//               key={course.id}
+//               id={course.id}
+//               thumbnail={course.thumbnail}
+//               title={course.title}
+//               price={course.price}
+//               technologies={course.technologies}
+//               description={course.description}
+//               isAvailable={course.isAvailable}
+//             />
+//           ))
+//         ) : (
+//           <p>No courses found.</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Courses;
+"use client";
 import React, { useEffect, useState } from "react";
 import CourseCard from "../CourseCard/CourseCard";
 import { ICourse } from "@/interfaces/Course";
@@ -5,19 +136,23 @@ import {
   getCourses,
   filterByTechnology,
   OrderByPrice,
+  filterByTechnologyAndPrice,
 } from "@/services/CourseServices";
+
+import SearchBar from "@/components/SearchBar/SearchBar";
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [technologyFilter, setTechnologyFilter] = useState<string>("");
   const [priceFilter, setPriceFilter] = useState<boolean | null>(null);
 
-  // Función para obtener cursos dependiendo de los filtros seleccionados
   const fetchCourses = async () => {
     try {
       let data: ICourse[] = [];
 
-      if (technologyFilter) {
+      if (technologyFilter && priceFilter !== null) {
+        data = await filterByTechnologyAndPrice(technologyFilter, priceFilter);
+      } else if (technologyFilter) {
         data = await filterByTechnology(technologyFilter);
       } else if (priceFilter !== null) {
         data = await OrderByPrice(priceFilter);
@@ -25,16 +160,15 @@ const Courses: React.FC = () => {
         data = await getCourses();
       }
 
-      // Validar si la respuesta es un array
       if (Array.isArray(data)) {
         setCourses(data);
       } else {
         console.error("Los datos obtenidos no son un arreglo:", data);
-        setCourses([]); // Evitar el error si no es un array
+        setCourses([]);
       }
     } catch (error) {
       console.error("Error al obtener los cursos:", error);
-      setCourses([]); // Evitar el error si falla la llamada
+      setCourses([]);
     }
   };
 
@@ -43,65 +177,92 @@ const Courses: React.FC = () => {
   }, [technologyFilter, priceFilter]);
 
   return (
-    <div className="container mx-auto p-4">
-      {/* Filtros */}
-      <div className="mb-4">
-        {/* Filtro por tecnología */}
-        <label htmlFor="technologyFilter">Filter by Technology:</label>
-        <select
-          id="technologyFilter"
-          value={technologyFilter}
-          onChange={(e) => setTechnologyFilter(e.target.value)}
-          className="ml-2 p-2 border rounded"
-        >
-          <option value="">All</option>
-          <option value="React">React</option>
-          <option value="HTML">HTML</option>
-          <option value="TypeScript">TypeScript</option>
-          <option value="Node.js">Nodejs</option>
-          <option value="Express">Express</option>
-          <option value="CSS">CSS</option>
-          <option value="Tailwind">Tailwind</option>
-
-          {/* Agregar más tecnologías si es necesario */}
-        </select>
-
-        {/* Filtro por precio */}
-        <label htmlFor="priceFilter" className="ml-4">
-          Order by Price:
-        </label>
-        <select
-          id="priceFilter"
-          value={priceFilter === null ? "" : priceFilter ? "asc" : "desc"}
-          onChange={(e) =>
-            setPriceFilter(e.target.value === "asc" ? true : false)
-          }
-          className="ml-2 p-2 border rounded"
-        >
-          <option value="">All</option>
-          <option value="asc">Lower price</option>
-          <option value="desc">Higher price</option>
-        </select>
+    <div className="grid grid-cols-4 gap-4 p-4">
+      {/* SideBar */}
+      <div className="col-span-1 h-full bg-slate-100 p-4 rounded-lg shadow-md">
+        <h2 className="text-lg font-bold mb-4">SideBar</h2>
+        <ul className="space-y-4">
+          <li>
+            <a href="#">tag 1</a>
+          </li>
+          <li>
+            <a href="#">tag 2</a>
+          </li>
+          <li>
+            <a href="#">tag 3</a>
+          </li>
+          <li>
+            <a href="#">tag 4</a>
+          </li>
+        </ul>
       </div>
 
-      {/* Renderizado de los cursos */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {courses.length > 0 ? (
-          courses.map((course) => (
-            <CourseCard
-              key={course.id}
-              id={course.id}
-              thumbnail={course.thumbnail}
-              title={course.title}
-              price={course.price}
-              technologies={course.technologies}
-              description={course.description}
-              isAvailable={course.isAvailable}
-            />
-          ))
-        ) : (
-          <p>No courses found.</p>
-        )}
+      {/* Contenido Principal */}
+      <div className="col-span-3 grid gap-4">
+        {/* Filtros y barra de búsqueda */}
+        <div className="flex w-full justify-center items-center gap-4">
+          <SearchBar />
+          <div className="flex justify-center items-center">
+            <select
+              id="technologyFilter"
+              value={technologyFilter}
+              onChange={(e) => setTechnologyFilter(e.target.value)}
+              className="p-2 bg-slate-100 shadow-md border rounded-lg w-full"
+            >
+              <option value="">Categories</option>
+              <option value="React">React</option>
+              <option value="HTML">HTML</option>
+              <option value="TypeScript">TypeScript</option>
+              <option value="Node.js">Nodejs</option>
+              <option value="Express">Express</option>
+              <option value="CSS">CSS</option>
+              <option value="Tailwind">Tailwind</option>
+              <option value="Front-end">Frontend</option>
+            </select>
+          </div>
+          <div className="flex justify-center items-center gap-4">
+            <button
+              onClick={() => setPriceFilter(true)}
+              className={`p-2 border rounded-lg flex justify-center items-center shadow-md ${
+                priceFilter === true
+                  ? "bg-[var(--accent-color)] text-white"
+                  : "bg-slate-100 text-black"
+              }`}
+            >
+              Lower price <i className="bx bx-sort-down text-[1.2rem]"></i>
+            </button>
+            <button
+              onClick={() => setPriceFilter(false)}
+              className={`p-2 border rounded-lg flex justify-center items-center shadow-md ${
+                priceFilter === false
+                  ? "bg-[var(--accent-color)] text-white"
+                  : "bg-slate-100 text-black"
+              }`}
+            >
+              Higher price <i className="bx bx-sort-up text-[1.2rem]"></i>
+            </button>
+          </div>
+        </div>
+
+        {/* Renderizado de los cursos */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {courses.length > 0 ? (
+            courses.map((course) => (
+              <CourseCard
+                key={course.id}
+                id={course.id}
+                thumbnail={course.thumbnail}
+                title={course.title}
+                price={course.price}
+                technologies={course.technologies}
+                description={course.description}
+                isAvailable={course.isAvailable}
+              />
+            ))
+          ) : (
+            <p>No courses found.</p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <div className="w-full h-96 flex-shrink-0 p-4 rounded-lg relative group">
-      <div className="block hover:bg-[var(--foreground)] rounded-lg overflow-hidden h-full">
+      <Link href={`/product/${id}`} className="block hover:bg-[var(--foreground)] rounded-lg overflow-hidden h-full transition-transform transform hover:scale-105">
         {/* Contenedor de la imagen con el overlay */}
         <div className="relative w-full h-48 bg-white">
           <img
@@ -34,30 +34,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <p className="text-sm mt-2 text-[var(--secondary-text)] line-clamp-3">
             {description}
           </p>
-    <div className="w-full h-96 flex-shrink-0 p-4 rounded-lg">
-  <Link href={`/product/${id}`}>
-    <div className="block bg-gray-200 hover:bg-gray-300 rounded-lg overflow-hidden transition-transform transform hover:scale-105 h-full">
-      <div className="w-full h-48">
-        <img
-          src={thumbnail}
-          alt={title}
-          className="w-full h-full object-cover rounded-t-lg"
-        />
-      </div>
-      <div className="p-4 bg-[var(--primary)] text-white h-full">
-        <div className="flex justify-between items-center">
-          <h3 className="text-lg font-bold">{title}</h3>
-          {/* <p className="text-lg">
-            {reviews.length > 0 ? reviews[0].rating : "N/A"} ⭐
-          </p> */}
         </div>
-      </div>
+      </Link>
     </div>
   );
-  </Link>
-</div>
-
-);
 };
 
 export default ProductCard;

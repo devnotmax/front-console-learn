@@ -8,7 +8,7 @@ interface CourseDetailProps {
 
 const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
     return (
-        <div className="container mx-auto px-4 py-6">
+        <div className="container mx-auto px-4 py-6 font-inter">
             {/* Course Header */}
             <div className="flex">
                 <div className="w-1/3">
