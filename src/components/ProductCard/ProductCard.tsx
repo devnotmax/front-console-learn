@@ -10,7 +10,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <div className="w-full h-96 flex-shrink-0 p-4 rounded-lg relative group">
-      <Link href={`/product/${id}`} className="block hover:bg-[var(--foreground)] rounded-lg overflow-hidden h-full transition-transform transform hover:scale-105">
+      <Link href={`/course/${id}`} className="block hover:bg-[var(--foreground)] rounded-lg overflow-hidden h-full transition-transform transform hover:scale-105">
         {/* Contenedor de la imagen con el overlay */}
         <div className="relative w-full h-48 bg-white">
           <img

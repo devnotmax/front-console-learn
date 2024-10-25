@@ -13,5 +13,5 @@ export interface Course {
     technologies: string[];
     price: number;
     available: boolean;
-    reviews: { rating: number }[];
+    rating: number;
 }
