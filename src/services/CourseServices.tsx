@@ -103,4 +103,20 @@ export const filterByTechnologyAndPrice = async (
       return [];
     }
   };
-  
+
+  export const searchCourses = async (searchTerm: string): Promise<ICourse[]> => {
+    try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const data = await fetch(`${apiUrl}/courses?search=${searchTerm}`);
+
+    if (Array.isArray(data)) {
+      return data;
+    } else {
+      console.error("Los datos obtenidos no son un arreglo:", data);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error al filtrar los datos de los cursos:", error);
+    return [];
+  }
+};
