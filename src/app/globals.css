@@ -2,19 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 :root {
-  /* Paleta de colores no del todo definida */
-  --background: #28262c;
-  --principal-text: #f9f5ff;
-  --secondary-text: #000100;
-  --primary: #998fc7;
-  --secondary: #d4c2fc;
-  --accent-color: #731dd8;
-  --foreground: #aaaaaa;
+  /* Paleta dark */
+  --background: #121212; /* Negro suave para el fondo */
+  --principal-text: #e0e0e0; /* Gris claro para el texto principal */
+  --secondary-text: #b0b0b0; /* Gris medio para el texto secundario */
+  --primary: #d10d58; /* Lila suave como color principal */
+  --secondary: #03dac5; /* Verde azulado neón para contrastar */
+  --accent-color: #ff4081; /* Rosa vibrante para resaltar */
+  --card-color: #bb00abc4; /* Rosa vibrante para resaltar */
+  --foreground: #1f1f1f; /* Gris oscuro para elementos de fondo */
+
+  /* Fuentes */
+  --font-poppins: 'Poppins', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-fira-code: 'Fira Code', monospace;
 }
 
 
 
+/* Estilos globales */
+.font-poppins {
+  font-family: var(--font-poppins);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-fira-code {
+  font-family: var(--font-fira-code);
+}
 /* global.css */
 .isActive {
   background-color: var(--principal-text); /* Fondo blanco */
@@ -48,16 +68,36 @@ a {
 }
 
 .secondary-btn {
-  background-color: var(--principal-text);
-  color: var(--secondary-text);
+  background-color: var(--accent-color);
+  color: var(--principal-text);
   border-radius: 0.75rem;
   font-size: 1rem;
 }
 
-body {
-  /* color: var(--foreground);
-  background: var(--background); */
-  font-family: Arial, Helvetica, sans-serif;
+
+
+.card {
+  width: 20vw; /* Ancho del card (20% del ancho de la pantalla) */
+  height: 30vh; /* Alto del card (30% del alto de la pantalla) */
+}
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  color: white; /* Color de las flechas */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10; /* Asegúrate de que esté por encima de las imágenes */
+}
+
+.carousel-button.left {
+  left: 10px; /* Posición en el lado izquierdo */
+}
+
+.carousel-button.right {
+  right: 10px; /* Posición en el lado derecho */
 }
 
 @layer utilities {
@@ -71,31 +111,31 @@ body {
     @apply mx-auto px-4 sm:px-6 lg:px-8;
     max-width: 100%;
   }
-  
+
   @screen sm {
     .container {
       max-width: 640px;
     }
   }
-  
+
   @screen md {
     .container {
       max-width: 768px;
     }
   }
-  
+
   @screen lg {
     .container {
       max-width: 1024px;
     }
   }
-  
+
   @screen xl {
     .container {
       max-width: 1280px;
     }
   }
-  
+
   @screen 2xl {
     .container {
       max-width: 1536px;
