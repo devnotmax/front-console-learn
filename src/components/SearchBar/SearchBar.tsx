@@ -19,6 +19,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       onSearch(searchTerm);  // Realizar búsqueda cuando se presiona "Enter"
+      console.log("Enter pressed");
+      e.preventDefault();
+      console.log("Search term:", searchTerm);
     }
   };
 
