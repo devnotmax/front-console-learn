@@ -10,7 +10,7 @@ export interface ICourse {
   price: number;
   isAvailable: boolean;
   orderDetails: IOrderDetails[];
-  rating: number;
+  reviews: IReview[];
   users: IUser[];
   videos: any; //luego va a ser video[]
 }
@@ -23,5 +23,4 @@ export interface CourseProps {
   technologies: string[];
   price: number;
   isAvailable: boolean;
-  rating: number;
 }

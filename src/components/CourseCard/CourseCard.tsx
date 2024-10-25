@@ -9,7 +9,6 @@ const CourseCard: React.FC<CourseProps> = ({
   technologies,
   isAvailable,
   description,
-  rating
 }) => {
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -32,10 +31,9 @@ const CourseCard: React.FC<CourseProps> = ({
           className="w-full h-full object-contain"
         />
       </div>
-      <div className="mt-4 p-2 rounded-lg ">
-        <h3 className="text-lg font-semibold text-[var(--foreground)]">{title}</h3>
-        <p className="text-[var(--primary)] text-lg font-medium"><span className="text-[var(--foreground)] text-lg">$</span> {price}</p>
-        <p className=" flex justify-center sm:justify-start mt-1">{renderStars(rating)}</p>
+      <div className="mt-4">
+        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+        <p className="text-gray-600 font-medium">${price}</p>
         <div className="flex items-center justify-between mt-2">
           <span
             className={`text-sm ${
@@ -49,12 +47,16 @@ const CourseCard: React.FC<CourseProps> = ({
           {technologies.map((tech, index) => (
             <span
               key={index}
-              className="bg-[var(--primary)] opacity-60 text-slate-100 text-xs font-semibold px-2.5 py-1 rounded-full"
+              className="bg-[var(--card-color)] opacity-60 text-slate-100 text-xs font-semibold px-2.5 py-1 rounded-full"
             >
               {"#" + tech}
             </span>
           ))}
         </div>
+
+        {/* <button className="w-full bg-purple-600 text-white font-bold py-2 px-4 rounded-lg mt-4 hover:bg-purple-700 transition-colors">
+        Ver detalle
+      </button> */}
       </div>
     </div>
   );

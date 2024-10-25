@@ -143,7 +143,6 @@ const Courses: React.FC = () => {
                 technologies={course.technologies}
                 description={course.description}
                 isAvailable={course.isAvailable}
-                rating={course.rating}
               />
             ))
           ) : (

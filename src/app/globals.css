@@ -5,21 +5,22 @@
 
 
 :root {
-  /* Paleta dark */
-  --background: #121212; /* Negro suave para el fondo */
-  --principal-text: #e0e0e0; /* Gris claro para el texto principal */
-  --secondary-text: #b0b0b0; /* Gris medio para el texto secundario */
-  --primary: #d10d58; /* Lila suave como color principal */
-  --secondary: #03dac5; /* Verde azulado neón para contrastar */
-  --accent-color: #ff4081; /* Rosa vibrante para resaltar */
-  --card-color: #bb00abc4; /* Rosa vibrante para resaltar */
-  --foreground: #1f1f1f; /* Gris oscuro para elementos de fondo */
+  /* Paleta dark alternativa */
+  --background: #0d1117; /* Azul oscuro profundo para el fondo */
+  --principal-text: #c9d1d9; /* Gris claro para el texto principal */
+  --secondary-text: #8b949e; /* Gris medio para el texto secundario */
+  --primary: #58a6ff; /* Azul claro para el color principal */
+  --secondary: #f85f73; /* Rosa fuerte para contrastar */
+  --accent-color: #1f6feb; /* Azul vibrante para resaltar */
+  --card-color: #21262d; /* Gris oscuro con un toque azulado para las tarjetas */
+  --foreground: #161b22; /* Gris muy oscuro para elementos de fondo */
 
   /* Fuentes */
   --font-poppins: 'Poppins', sans-serif;
   --font-inter: 'Inter', sans-serif;
   --font-fira-code: 'Fira Code', monospace;
 }
+
 
 
 

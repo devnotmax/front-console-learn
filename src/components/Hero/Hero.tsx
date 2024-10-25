@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Hero: React.FC = () => {
   return (
-    <section className="flex justify-center flex-col items-center min-h-[50vh]">
+    <section className="flex justify-center flex-col items-center min-h-[40vh]">
       <h1 className="text-6xl font-bold ">
         Conso<span className="text-[var(--accent-color)] text-7xl font-fira-code">learn</span>
       </h1>
