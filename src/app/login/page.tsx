@@ -2,7 +2,7 @@ import Login from "@/components/Login/login";
 
 const login = () => {
     return (
-        <section>
+        <section className="w-full h-full font-inter">
             <Login/>
         </section>
     );

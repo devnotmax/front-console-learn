@@ -1,169 +1,123 @@
 "use client";
-import React, { useState } from 'react';
-import { registerForm } from '@/interfaces/Auth';
-import 'boxicons/css/boxicons.min.css';
+import React, { ChangeEvent, useState, useEffect } from "react";
+import { registerForm, ErrregisterForm } from "@/interfaces/Auth";
+import { validateRegisterForm } from "@/utils/registerValidator";
+import { RegisterUser } from "@/services/AuthService";
+import "boxicons/css/boxicons.min.css";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const Register: React.FC = () => {
-    const [formData, setFormData] = useState<registerForm>({
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        confirmPassword: '',
-        termsAccepted: false,
-        });
-    
-        const [error, setError] = useState('');
-        const [success, setSuccess] = useState('');
-        const [loading, setLoading] = useState(false); // Indicador de carga
-    
-        const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = event.target;
-    
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: type === 'checkbox' ? checked : value,
-        }));
-        };
-    
-        const validateForm = () => {
-        if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-            return 'Todos los campos son obligatorios';
-        }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            return 'El correo electrónico no es válido';
-        }
-        if (formData.password.length < 6) {
-            return 'La contraseña debe tener al menos 6 caracteres';
-        }
-        if (formData.password !== formData.confirmPassword) {
-            return 'Las contraseñas no coinciden';
-        }
-        if (!formData.termsAccepted) {
-            return 'Debe aceptar los términos y condiciones';
-        }
-        if (isNaN(Number(formData.phone))) {
-            return 'El número de teléfono debe ser válido';
-        }
-        return null;
-        };
-    
-        const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        setError('');
-        setSuccess('');
-    
-        const validationError = validateForm();
-        if (validationError) {
-            setError(validationError);
-            return;
-        }
-    
-        setLoading(true); // Comenzar la carga
-    
-        try {
-            const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: formData.name,
-                email: formData.email,
-                phone: Number(formData.phone),
-                password: formData.password,
-            }),
-            });
-    
-            const data = await response.json();
-    
-            if (response.ok) {
-            setSuccess('Registro exitoso');
-            setError('');
-            } else {
-            setError(data.message || 'Error en el registro, intente nuevamente');
-            setSuccess('');
-            }
-        } catch (err) {
-            setError('Error en el registro, intente nuevamente');
-            setSuccess('');
-        } finally {
-            setLoading(false); // Finalizar la carga
-        }
-    };
+//components
+import EmailInput from "@/components/Inputs/email";
+import PasswordInput from "@/components/Inputs/password";
+import NameInput from "@/components/Inputs/name";
+import PhoneNumberInput from "@/components/Inputs/phone";
 
-    return (
-        <div className='flex items-center justify-center min-h-screen bg-gray-100'>
-        <div className="bg-[var(--background)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
+const Register = () => {
+  const router = useRouter();
+
+  const [userData, setUserData] = useState<registerForm>({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+  });
+
+  const [isFormValid, setIsFormValid] = useState({
+    name: false,
+    email: false,
+    password: false,
+    phone: false,
+  });
+
+  const handleEmailValidation = (isValid: boolean, value: string) => {
+    setIsFormValid((prev) => ({ ...prev, email: isValid }));
+    setUserData((prev) => ({ ...prev, email: value }));
+  };
+
+  const handlePasswordValidation = (isValid: boolean, value: string) => {
+    setIsFormValid((prev) => ({ ...prev, password: isValid }));
+    setUserData((prev) => ({ ...prev, password: value }));
+  };
+
+  const handleNameValidation = (isValid: boolean, value: string) => {
+    setIsFormValid((prev) => ({ ...prev, name: isValid }));
+    setUserData((prev) => ({ ...prev, name: value }));
+  };
+
+  const handlePhoneValidation = (isValid: boolean, value: string) => {
+    setIsFormValid((prev) => ({ ...prev, phone: isValid }));
+    setUserData((prev) => ({ ...prev, phone: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      !isFormValid.email ||
+      !isFormValid.password ||
+      !isFormValid.name ||
+      !isFormValid.phone
+    ) {
+      alert("Please fill out all fields correctly");
+      return;
+    }
+
+    try {
+      const res = await RegisterUser(userData);
+      if (res && res.token) {
+        document.cookie = `userSession=${JSON.stringify(res)}; path=/`;
+        alert(res.message || "Registration successful");
+        router.push("/");
+      } else {
+        alert("Error: No token found in the response.");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      console.log(userData)
+      alert(error || "Failed to register. Please try again.");
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-[var(--foreground)] p-8 rounded-lg shadow-lg max-w-md w-full my-6">
         <div className="text-center mb-6">
-            <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
-            <i className='bx bxs-graduation' style={{ color: '#ffffff', fontSize: '5rem' }}></i>
-            <h2 className="text-center text-2xl font-bold text-white mb-4">Regístrate en <span className="text-purple-500">ConsoLearn</span></h2>
+          <i
+            className="bx bxs-graduation"
+            style={{ color: "var(--principal-text)", fontSize: "6rem" }}
+          ></i>
+          <h2 className="text-2xl font-bold text-[var(--principal-text)]">
+            Sign Up to{" "}
+            <span className="text-[var(--primary)]">ConsoLearn</span>
+          </h2>
         </div>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        {success && <p className="text-green-500 mb-4">{success}</p>}
         <form onSubmit={handleSubmit}>
-            <input
-            type="text"
-            name="name"
-            placeholder="Nombre Completo"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full p-2 mb-4 rounded"
-            />
-            <input
-            type="text"
-            name="phone"
-            placeholder="Numero"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full p-2 mb-4 rounded"
-            />
-            <input
-            type="email"
-            name="email"
-            placeholder="Correo Electrónico"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full p-2 mb-4 rounded"
-            />
-            <input
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full p-2 mb-4 rounded"
-            />
-            <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirmar Contraseña"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="w-full p-2 mb-4 rounded"
-            />
-            <label className="flex items-center mb-4">
-            <input
-                type="checkbox"
-                name="termsAccepted"
-                checked={formData.termsAccepted}
-                onChange={handleChange}
-                className="mr-2"
-            />
-            <span className="text-white">Acepto los términos y condiciones</span>
-            </label>
-            <button type="submit" className="w-full p-2 bg-purple-500 text-white rounded">
-            Registrarse
-            </button>
+          <NameInput onValid={handleNameValidation} />
+          <EmailInput onValid={handleEmailValidation} />
+
+          <PhoneNumberInput onValid={handlePhoneValidation} />
+
+          <PasswordInput onValid={handlePasswordValidation} />
+
+          <button
+            type="submit"
+            className="w-full p-2 bg-[var(--primary)] text-white rounded"
+          >
+            Register
+          </button>
         </form>
-        <p className="text-center text-white mt-4">
-            ¿Ya tienes una cuenta? <a href="/login" className="text-purple-500">Inicia sesión</a>
-        </p>
-        </div>        
+        <div className="text-center mt-4"></div>
+        <div className="text-center mt-2">
+          <p className="text-[var(--principal-text)] text-sm">
+            You already have an account?{" "}
+            <Link href="/login" className="text-[var(--secondary)]">
+              Sign in
+            </Link>
+          </p>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Register;
