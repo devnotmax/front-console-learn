@@ -3,40 +3,11 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import cursos from "@/Mocks/CourseMocks"; // Supongo que este mock tiene la lista de cursos
 import ProductCard from "@/components/ProductCard/ProductCard";
-import { NextArrow, PrevArrow } from "./FlechasCarrusel";
-import { getCourses } from "@/services/CourseServices";
-import Link from "next/link";
-
-// Define la interfaz para los datos del curso
-interface Course {
-  id: string;
-  thumbnail: string;
-  title: string;
-  description: string;
-  // reviews: { rating: number }[];
-}
 
 const Carousel = () => {
-  const [courses, setCourses] = useState<Course[]>([]); // Especifica que courses es un array de Course
-  const [isLoading, setIsLoading] = useState(true); // Estado de carga
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const data = await getCourses(); // Llamada al servicio
-        setCourses(data); // Guardar los cursos en el estado
-      } catch (error) {
-        console.error("Error al obtener los cursos:", error);
-      } finally {
-        setIsLoading(false); // Cambiar el estado de carga
-      }
-    };
-
-    fetchCourses(); // Llamar a la función para obtener los datos al montar el componente
-  }, []); // Se ejecuta una sola vez cuando se monta el componente
-
   const settings = {
     dots: false,
     infinite: true,
@@ -68,27 +39,21 @@ const Carousel = () => {
         },
       },
     ],
-    nextArrow: <NextArrow />, // Flecha personalizada para siguiente
-    prevArrow: <PrevArrow />, // Flecha personalizada para previo
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>; // Mostrar un mensaje de carga
-  }
-
   return (
-    <div className="w-full mx-auto bg-slate-100 shadow-lg p-5">
+    <div className="w-full mx-auto bg-gray-100 p-5">
       <Slider className="container" {...settings}>
-        {courses.map((course) => (
-          <Link href={course.id} className="p-2 card">
+        {cursos.map((course) => (
+          <div key={course.id} className="p-2"> 
             <ProductCard
               id={course.id}
               thumbnail={course.thumbnail}
               title={course.title}
               description={course.description}
-              // reviews={course.reviews}
+              reviews={course.reviews}
             />
-          </Link>
+          </div>
         ))}
       </Slider>
     </div>
