@@ -1,98 +1,59 @@
 "use client";
-import React, { useState } from "react";
-import { useAuth } from "@/contexts/authContext";
-import Image from "next/image";
-import { uploadProfileImage } from "@/services/userService";
+// pages/profile.tsx
+import React, { useState } from 'react';
+import { useAuth } from '@/contexts/authContext';
+import ProfileOrders from '@/components/ProfileOrder/ProfileOrders';
+// import ProfileCourses from '@/components/ProfileCourses';
+// import ProfileCertifications from '@/components/ProfileCertifications';
+import Image from 'next/image';
 
-interface IUser {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-    image: string;
-  };
-}
+const ProfilePage = () => {
 
-const UserWidget = () => {
-  const { dataUser, setDataUser } = useAuth(); // Ensure these are provided by your context
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false); // Add a loading state for feedback
-  const [uploadError, setUploadError] = useState<string | null>(null); // Add error state
-
-  // Handle the file input change
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedImage(e.target.files[0]);
-      setUploadError(null); // Clear any previous errors
-    }
-  };
-
-  // Upload the selected image
-  const handleUpload = async () => {
-    if (selectedImage) {
-      setIsUploading(true);
-      try {
-        // Upload the image and get the URL
-        const imageUrl = await uploadProfileImage(selectedImage);
-        // Update user data with new image URL
-        setDataUser({ ...dataUser, user: { ...dataUser.user, image: imageUrl } });
-        setSelectedImage(null); // Reset selected image
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        setUploadError("Failed to upload image. Please try again.");
-      } finally {
-        setIsUploading(false);
-      }
-    }
-  };
+  const { dataUser } = useAuth();
+  const [activeTab, setActiveTab] = useState('Órdenes');
 
   return (
-    <div className="space-x-2 w-full h-screen p-12 flex flex-col items-center gap-4">
-      {/* User Information */}
-      <div className="w-full h-1/4 bg-[var(--background)] rounded-lg">
-        <div className="grid grid-cols-10 grid-rows-2">
-          <div className="row-span-2 p-4">
-            {dataUser?.user.image ? (
-              <Image
-                src={dataUser.user.image}
-                alt="User Image"
-                width={150}
-                height={150}
-                className="rounded-full"
-              />
-            ) : (
-              <p>No image available</p>
-            )}
-          </div>
-          <div className="col-span-9 row-span-2 text-white p-8">
-            <h2 className="text-2xl font-semibold">{dataUser?.user.name}</h2>
-            <p className="text-sm text-[var(--foreground)]">{dataUser?.user.email}</p>
-            <p className="text-sm text-[var(--foreground)]">{dataUser?.user.phone}</p>
-          </div>
+    <div className="max-w-4xl mx-auto p-6 bg-[var(--background)] rounded-lg text-[var(--principal-text)] mb-8 mt-8">
+      <div className="flex items-center space-x-4 mb-6">
+        {dataUser?.user.image ? (
+          <Image
+            src={dataUser.user.image}
+            alt="Profile Picture"
+            width={100}
+            height={100}
+            className="rounded-full"
+          />
+        ) : (
+          <div className="w-24 h-24 bg-[var(--principal-text)] rounded-full"></div>
+        )}
+        <div>
+          <h2 className="text-2xl font-semibold">{dataUser?.user.name}</h2>
+          <p className="text-[var(--secondary-text)]">@{dataUser?.user.email}</p>
         </div>
       </div>
 
-      {/* Image Upload Section */}
-      <div className="w-full h-3/4 bg-[var(--background)] rounded-lg p-4 text-white">
-        <h3 className="text-xl font-medium">My Orders</h3>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-        
-        <button
-          onClick={handleUpload}
-          disabled={isUploading} // Disable button when uploading
-          className={`mt-4 p-2 rounded-md ${
-            isUploading ? "bg-gray-400" : "bg-[var(--accent-color)] text-white"
-          }`}
-        >
-          {isUploading ? "Uploading..." : "Update Profile Picture"}
-        </button>
+      <div className="flex space-x-4 mb-4 border-b border-[var(--secondary-text)]">
+        {['Órdenes', 'Mis cursos', 'Mis certificaciones'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`py-2 px-4 ${
+              activeTab === tab ? 'text-[var(--accent-color)] border-b-2 border-[var(--accent-color)]' : 'text-[var(--principal-text)]'
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
-        {/* Display error message if upload fails */}
-        {uploadError && <p className="mt-2 text-red-500">{uploadError}</p>}
+      {/* Render content based on active tab */}
+      <div>
+        {activeTab === 'Órdenes' && <ProfileOrders />}
+        {activeTab === 'Mis cursos'  }
+        {activeTab === 'Mis certificaciones'  }
       </div>
     </div>
   );
 };
 
-export default UserWidget;
+export default ProfilePage;
