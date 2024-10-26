@@ -14,14 +14,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   useEffect(() => {
-    // Ejecutar búsqueda en tiempo real
-    onSearch(searchTerm);
-    setNoResults(false);
+    const delayDebounce = setTimeout(() => {
+      onSearch(searchTerm);
+      setNoResults(false);
 
-    if (searchTerm === "") {
-      setNoResults(true);
-    }
+      if (searchTerm === "") {
+        setNoResults(true);
+      }
+    }, 500); // Retraso de 500ms antes de ejecutar la búsqueda
 
+    return () => clearTimeout(delayDebounce); // Limpia el temporizador al desmontar o cambiar el término de búsqueda
   }, [searchTerm, onSearch]);
 
   return (
@@ -41,8 +43,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         <i className="bx bx-search"></i>
       </button>      
     </div>
-    
-      
   );
 };
 
