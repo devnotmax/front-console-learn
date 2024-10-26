@@ -13,6 +13,7 @@ export interface ErrloginForm {
 }
 
 export interface registerForm extends loginForm {
+  id: string;
   name: string;
   phone: string;
   image?: string;
