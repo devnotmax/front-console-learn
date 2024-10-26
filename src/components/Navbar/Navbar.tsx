@@ -19,10 +19,10 @@ const Navbar = () => {
       <div className="flex space-x-4 justify-center items-center">
         <ul className="flex space-x-4">
           <ActiveLink href="/">Home</ActiveLink>
-          <ActiveLink href="/cursos">Courses</ActiveLink>
-          <ActiveLink href="/comunidad">Comunity</ActiveLink>
-          <ActiveLink href="/nosotros">About us</ActiveLink>
-          <ActiveLink href="/contacto">Contact</ActiveLink>
+          <ActiveLink href="/course">Courses</ActiveLink>
+          <ActiveLink href="/comunity">Comunity</ActiveLink>
+          <ActiveLink href="/about">About us</ActiveLink>
+          <ActiveLink href="/contact">Contact</ActiveLink>
         </ul>
 
         {/* Botones */}

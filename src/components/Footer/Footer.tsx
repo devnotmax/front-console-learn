@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   FaFacebookF,
   FaTwitter,
@@ -15,38 +16,38 @@ const Footer = () => {
             ConsoLearn
           </h1>
           <div className="flex space-x-4">
-            <a
+            <Link
               href="https://facebook.com"
-              target="_blank"
+              // target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--principal-text)] hover:text-[var(--primary)]"
             >
               <FaFacebookF />
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://twitter.com"
-              target="_blank"
+              // target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--principal-text)] hover:text-[var(--primary)]"
             >
               <FaTwitter />
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://instagram.com"
-              target="_blank"
+              // target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--principal-text)] hover:text-[var(--primary)]"
             >
               <FaInstagram />
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://linkedin.com"
-              target="_blank"
+              // target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--principal-text)] hover:text-[var(--primary)]"
             >
               <FaLinkedinIn />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -57,36 +58,36 @@ const Footer = () => {
           </h2>
           <ul className="space-y-1">
             <li>
-              <a
+              <Link
                 href="/cursos/ui-design"
                 className="hover:text-[var(--primary)]"
               >
                 UI Design
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/cursos/ux-design"
                 className="hover:text-[var(--primary)]"
               >
                 UX Design
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/cursos/wireframing"
                 className="hover:text-[var(--primary)]"
               >
                 Wireframing
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/cursos/diagramming"
                 className="hover:text-[var(--primary)]"
               >
                 Diagramming
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -98,36 +99,36 @@ const Footer = () => {
           </h2>
           <ul className="space-y-1">
             <li>
-              <a
+              <Link
                 href="/carreras/design"
                 className="hover:text-[var(--primary)]"
               >
                 Design
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/carreras/prototyping"
                 className="hover:text-[var(--primary)]"
               >
                 Prototyping
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/carreras/dev-features"
                 className="hover:text-[var(--primary)]"
               >
                 Development Features
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/carreras/design-systems"
                 className="hover:text-[var(--primary)]"
               >
                 Design Systems
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -139,24 +140,24 @@ const Footer = () => {
           </h2>
           <ul className="space-y-1">
             <li>
-              <a href="/blog" className="hover:text-[var(--primary)]">
+              <Link href="/blog" className="hover:text-[var(--primary)]">
                 Blog
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/best-practices" className="hover:text-[var(--primary)]">
+              <Link href="/best-practices" className="hover:text-[var(--primary)]">
                 Best Practices
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/colors" className="hover:text-[var(--primary)]">
+              <Link href="/colors" className="hover:text-[var(--primary)]">
                 Colors
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/support" className="hover:text-[var(--primary)]">
+              <Link href="/support" className="hover:text-[var(--primary)]">
                 Support
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
