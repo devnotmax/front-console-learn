@@ -18,6 +18,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     onSearch(searchTerm);
     setNoResults(false);
 
+    if (searchTerm === "") {
+      setNoResults(true);
+    }
+
   }, [searchTerm, onSearch]);
 
   return (
@@ -29,16 +33,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         onChange={handleInputChange}  // Detectar cambios en el input
         className="flex-grow p-1 text-lg border-none outline-none bg-slate-100"
       />
-      {noResults ? (
-        <p className="text-center text-[var(--secondary-text)]">No se encontraron cursos.</p>
-      ) : (
+      
       <button
         onClick={() => onSearch(searchTerm)}  // También buscar cuando se haga click
-        className="p-1 px-2 text-white text-base rounded-lg ml-2 bg-[var(--accent-color)]"
+        className="p-1 px-2 text-[var(--principal-text)] text-base rounded-lg ml-2 bg-[var(--accent-color)]"
       >
         <i className="bx bx-search"></i>
-      </button>
-      )}      
+      </button>      
     </div>
     
       
