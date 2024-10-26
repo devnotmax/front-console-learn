@@ -6,24 +6,19 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [noResults, setNoResults] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    e.preventDefault();
   };
 
   useEffect(() => {
     // Ejecutar búsqueda en tiempo real
     onSearch(searchTerm);
-  }, [searchTerm, onSearch]);
+    setNoResults(false);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      onSearch(searchTerm);  // Realizar búsqueda cuando se presiona "Enter"
-      console.log("Enter pressed");
-      e.preventDefault();
-      console.log("Search term:", searchTerm);
-    }
-  };
+  }, [searchTerm, onSearch]);
 
   return (
     <div className="flex items-center h-10 justify-center border rounded-md p-1 shadow-sm w-2/4 bg-slate-100">
@@ -32,16 +27,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         placeholder="Search..."
         value={searchTerm}
         onChange={handleInputChange}  // Detectar cambios en el input
-        onKeyDown={handleKeyDown}    // Detectar cuando se presiona "Enter"
         className="flex-grow p-1 text-lg border-none outline-none bg-slate-100"
       />
+      {noResults ? (
+        <p className="text-center text-[var(--secondary-text)]">No se encontraron cursos.</p>
+      ) : (
       <button
         onClick={() => onSearch(searchTerm)}  // También buscar cuando se haga click
         className="p-1 px-2 text-white text-base rounded-lg ml-2 bg-[var(--accent-color)]"
       >
         <i className="bx bx-search"></i>
       </button>
+      )}      
     </div>
+    
+      
   );
 };
 

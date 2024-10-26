@@ -9,6 +9,7 @@ import {
   filterByTechnologyAndPrice,
 } from "@/services/CourseServices";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import Link from "next/link";
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<ICourse[]>([]);
@@ -69,16 +70,16 @@ const Courses: React.FC = () => {
         <h2 className="text-lg font-bold mb-4">SideBar</h2>
         <ul className="space-y-4">
           <li>
-            <a href="#">tag 1</a>
+            <Link href="#">tag 1</Link>
           </li>
           <li>
-            <a href="#">tag 2</a>
+            <Link href="#">tag 2</Link>
           </li>
           <li>
-            <a href="#">tag 3</a>
+            <Link href="#">tag 3</Link>
           </li>
           <li>
-            <a href="#">tag 4</a>
+            <Link href="#">tag 4</Link>
           </li>
         </ul>
       </div>
