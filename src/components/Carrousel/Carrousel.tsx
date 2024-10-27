@@ -84,7 +84,7 @@ const Carousel = () => {
     <div className="w-full mx-auto bg-slate-100 shadow-lg p-5">
       <Slider className="container" {...settings}>
         {courses.map((course) => (
-          <Link href={course.id} className="p-2 card">
+          <Link key={course.id} href={course.id} className="p-2 card">
             <ProductCard
               id={course.id}
               thumbnail={course.thumbnail}

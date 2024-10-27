@@ -119,4 +119,6 @@ export const filterByTechnologyAndPrice = async (
     console.error("Error al filtrar los datos de los cursos:", error);
     return [];
   }
+
+  
 };

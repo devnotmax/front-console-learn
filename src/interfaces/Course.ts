@@ -1,6 +1,7 @@
 import { IOrderDetails } from "./Orders";
 import { IUser } from "./User";
 import { IReview } from "./Review";
+
 export interface ICourse {
   id: string;
   title: string;

@@ -56,6 +56,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+export const getAuthToken = () => {
+  const storedUser = localStorage.getItem("userSession");
+  const dataUser = storedUser ? JSON.parse(storedUser) : null;
+  return dataUser?.token || ""; // Ajusta según la propiedad que contiene el token
+};
+
+
 export const useAuth = () => {
   return useContext(AuthContext);
 };
