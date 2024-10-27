@@ -66,6 +66,8 @@ import React, { useState } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import ProfileOrders from '@/components/ProfileOrder/ProfileOrders';
 import Image from 'next/image';
+import ProfileCourses from '@/components/ProfileCourse/ProfileCourse';
+import ProfileCertifications from '@/components/ProfileCertifications/ProfileCertifications';
 
 const ProfilePage = () => {
   const { dataUser, updateUserImage } = useAuth(); // Asegúrate de tener una función para actualizar la imagen
@@ -86,26 +88,6 @@ const ProfilePage = () => {
 
     const formData = new FormData();
     formData.append('profileImage', selectedImage);
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/upload`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${dataUser?.token}`, // Asegúrate de enviar el token de autenticación si es necesario
-        },
-      });
-      const data = await response.json();
-
-      if (response.ok && data.profileImageUrl) {
-        // Actualiza la imagen en el frontend con la URL devuelta por el backend
-        updateUserImage(data.profileImageUrl);
-      } else {
-        console.error('Error al actualizar la imagen:', data.message);
-      }
-    } catch (error) {
-      console.error('Error al subir la imagen:', error);
-    }
   };
 
   return (
@@ -138,15 +120,15 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <input type="file" onChange={handleImageChange} />
         <button onClick={handleImageUpload} className="mt-2 p-2 bg-[var(--accent-color)] rounded-lg">
           Actualizar imagen
         </button>
-      </div>
+      </div> */}
 
       <div className="flex space-x-4 mb-4 border-b border-[var(--secondary-text)]">
-        {['Órdenes', 'Mis cursos', 'Mis certificaciones'].map((tab) => (
+        {['Orders', 'My courses', 'My certifications'].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -160,9 +142,9 @@ const ProfilePage = () => {
       </div>
 
       <div>
-        {activeTab === 'Órdenes' && <ProfileOrders />}
-        {activeTab === 'Mis cursos'}
-        {activeTab === 'Mis certificaciones'}
+        {activeTab === 'Orders' && <ProfileOrders />}
+        {activeTab === 'My courses' && <ProfileCourses/>}
+        {activeTab === 'My certifications' && <ProfileCertifications/>}
       </div>
     </div>
   );

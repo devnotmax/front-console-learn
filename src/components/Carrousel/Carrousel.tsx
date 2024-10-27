@@ -73,8 +73,12 @@ const Carousel = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>; // Mostrar un mensaje de carga
-  }
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[var(--accent-color)]"></div>
+      </div>
+    );
+  }  
 
   return (
     <div className="w-full mx-auto bg-slate-100 shadow-lg p-5">
