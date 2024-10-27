@@ -133,6 +133,7 @@ const Courses: React.FC = () => {
 
         {/* Renderizado de los cursos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          
           {filteredCourses.length > 0 ? (
             filteredCourses.map((course) => (
               <CourseCard
