@@ -31,18 +31,6 @@ export const filterByTechnology = async (
   }
 };
 
-// export const OrderByPrice = async (priceSelector: boolean): Promise<Course> => {
-//   try {
-//     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-//     const res = await fetch(`${apiUrl}/course?priceSelector=${priceSelector}`);
-//     const data = await res.json();
-//     return data;
-//   } catch (error) {
-//     console.error("Error al filtrar los datos de los cursos:", error);
-//     return {} as Course;
-//   }
-// };
-
 export const getCourseById = async (id: string): Promise<Course | null> => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
