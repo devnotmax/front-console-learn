@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="en">
-        <body className={`${inter.className} ${poppins.className} ${firaCode.className}`}>
+        <body className={`${inter.className} ${poppins.className}`}>
           <Navbar />
           {children}
           <Footer />

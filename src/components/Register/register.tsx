@@ -64,13 +64,11 @@ const Register = () => {
 
     try {
       const res = await RegisterUser(userData);
-      if (res && res.token) {
+      if (res) {
         document.cookie = `userSession=${JSON.stringify(res)}; path=/`;
         alert(res.message || "Registration successful");
-        router.push("/");
-      } else {
-        alert("Error: No token found in the response.");
-      }
+        router.push("/login");
+      } 
     } catch (error) {
       console.error("Registration error:", error);
       console.log(userData)
