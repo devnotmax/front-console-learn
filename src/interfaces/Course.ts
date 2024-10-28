@@ -13,7 +13,7 @@ export interface ICourse {
   orderDetails: IOrderDetails[];
   reviews: IReview[];
   users: IUser[];
-  videos: any; //luego va a ser video[]
+  // videos: any; //luego va a ser video[]
 }
 
 export interface CourseProps {

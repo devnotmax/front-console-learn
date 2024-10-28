@@ -1,5 +1,6 @@
 import { ICourse } from "@/interfaces/Course";
 import { Course } from "@/interfaces/ProductCard";
+import { getAuthToken } from "@/contexts/authContext";
 
 export const getCourses = async () => {
   try {
@@ -70,30 +71,30 @@ export const OrderByPrice = async (
 };
 
 export const filterByTechnologyAndPrice = async (
-    technology: string,
-    priceSelector: true | false // Ahora acepta "asc" o "desc"
-  ): Promise<ICourse[]> => {
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(
-        `${apiUrl}/course?priceSelector=${priceSelector}&technologies=${technology}`
-      );
-      const data = await res.json();
-      
-      if (Array.isArray(data)) {
-        return data;
-      } else {
-        console.error("Los datos obtenidos no son un arreglo:", data);
-        return [];
-      }
-    } catch (error) {
-      console.error("Error al filtrar los datos de los cursos:", error);
+  technology: string,
+  priceSelector: true | false // Ahora acepta "asc" o "desc"
+): Promise<ICourse[]> => {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(
+      `${apiUrl}/course?priceSelector=${priceSelector}&technologies=${technology}`
+    );
+    const data = await res.json();
+
+    if (Array.isArray(data)) {
+      return data;
+    } else {
+      console.error("Los datos obtenidos no son un arreglo:", data);
       return [];
     }
-  };
+  } catch (error) {
+    console.error("Error al filtrar los datos de los cursos:", error);
+    return [];
+  }
+};
 
-  export const searchCourses = async (searchTerm: string): Promise<ICourse[]> => {
-    try {
+export const searchCourses = async (searchTerm: string): Promise<ICourse[]> => {
+  try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const data = await fetch(`${apiUrl}/courses?search=${searchTerm}`);
 
@@ -107,6 +108,30 @@ export const filterByTechnologyAndPrice = async (
     console.error("Error al filtrar los datos de los cursos:", error);
     return [];
   }
+};
 
-  
+export const getMyCourses = async (): Promise<ICourse[]> => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const token = getAuthToken();
+
+  const res = await fetch(`${apiUrl}/course/My-Courses`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    console.error("Error al obtener los cursos:", res.statusText);
+    return [];
+  }
+
+  const data = await res.json();
+  if (Array.isArray(data)) {
+    return data;
+  } else {
+    console.error("Los datos obtenidos no son un arreglo:", data);
+    return [];
+  }
 };

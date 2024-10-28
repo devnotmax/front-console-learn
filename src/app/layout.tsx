@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Inter, Fira_Code } from "next/font/google";
+import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 
 //provider
@@ -18,12 +18,6 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
-
-const firaCode = Fira_Code({
-  subsets: ["latin"],
-  variable: "--font-fira-code",
-  weight: ["300", "400", "500", "600", "700",],
 });
 
 export const metadata: Metadata = {

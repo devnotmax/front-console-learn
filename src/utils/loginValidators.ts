@@ -1,7 +1,7 @@
 import { loginForm, ErrloginForm } from "@/interfaces/Auth";
 
 export const validateLogin = (formData: loginForm) => {
-  let errors: ErrloginForm = {};
+  const errors: ErrloginForm = {};
 
   if (!formData.email) {
     errors.email = "Email is required";
