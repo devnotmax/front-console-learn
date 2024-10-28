@@ -4,6 +4,7 @@ import { Course } from "@/interfaces/ProductCard";
 import UserReview from "../UserReview/userReview";
 import { buyCourse, payOrder } from "@/services/BuyServices";
 import { useAuth } from "@/contexts/authContext";
+import { useRouter } from "next/navigation";
 
 interface CourseDetailProps {
   course: Course;
@@ -11,7 +12,7 @@ interface CourseDetailProps {
 
 const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
   const { dataUser } = useAuth();
-
+  const router = useRouter();
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <span
@@ -27,7 +28,8 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
 
   const handleBuyCourse = async () => {
     if (!dataUser) {
-      Swal.fire("Error", "Debes iniciar sesión para comprar este curso.", "error");
+      Swal.fire("Error", "Please login to buy the course.", "error");
+      router.push("/login");
       return;
     }
     try {
@@ -36,38 +38,42 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
 
       if (response.data && response.data.id) {
         Swal.fire({
-          title: "Orden generada con éxito",
-          text: "¿Deseas proceder al pago?",
+          title: "Order generated successfully",
+          text: "Do you want to proceed to payment?",
           icon: "success",
           showCancelButton: true,
-          confirmButtonText: "Pagar ahora",
-          cancelButtonText: "Cancelar",
+          confirmButtonText: "Pay Now",
+          cancelButtonText: "Cancel",
         }).then(async (result) => {
           if (result.isConfirmed) {
             await handlePayOrder(response.data.id);
           }
         });
       } else {
-        console.error("No se recibió un ID de orden válido");
+        console.error("No valid order ID received");
       }
     } catch (error) {
-      console.error("Error al comprar el curso:", error);
-      Swal.fire("Error", "Hubo un problema al generar la orden.", "error");
+      console.error("Error when purchasing the course", error);
+      Swal.fire("Error", "There was a problem generating the order.", "error");
     }
   };
 
   const handlePayOrder = async (orderId: string) => {
     try {
       const response = await payOrder(orderId);
-      console.log("Redirigiendo al checkout:", response.url);
+      console.log("Redirecting to checkout:", response.url);
       if (response.url) {
         window.open(response.url, "_blank");
       } else {
         console.error("URL de checkout no encontrada en la respuesta");
       }
     } catch (error) {
-      console.error("Error al procesar el pago:", error);
-      Swal.fire("Error", "No se pudo procesar el pago.", "error");
+      console.error("Error when processing the payment:", error);
+      Swal.fire(
+        "Error",
+        "There was a problem processing the payment.",
+        "error"
+      );
     }
   };
 
