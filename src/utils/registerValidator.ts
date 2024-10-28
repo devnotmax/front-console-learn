@@ -1,7 +1,7 @@
 import { registerForm, ErrregisterForm } from "@/interfaces/Auth";
 
 export const validateRegisterForm = (values: registerForm) => {
-  let errors: ErrregisterForm = {};
+  const errors: ErrregisterForm = {};
 
   if (!values.name) {
     errors.name = "El campo de nombre no puede estar vacío";

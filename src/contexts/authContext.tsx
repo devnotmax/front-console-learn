@@ -7,12 +7,14 @@ interface AuthContextProps {
   dataUser: IuserSession | null;
   setDataUser: (dataUser: IuserSession | null) => void;
   logout: () => void;
+  updateUserImage: (image: string) => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
   dataUser: null,
   setDataUser: () => {},
   logout: () => {},
+  updateUserImage: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -38,12 +40,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setDataUser(null); // Limpia el estado de usuario
   };
 
+  const updateUserImage = (image: string) => {
+    if (dataUser) {
+      setDataUser({
+        ...dataUser,
+        user: { ...dataUser.user, image },
+      });
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ dataUser, setDataUser, logout }}>
+    <AuthContext.Provider value={{ dataUser, setDataUser, logout, updateUserImage }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export const getAuthToken = () => {
+  const storedUser = localStorage.getItem("userSession");
+  const dataUser = storedUser ? JSON.parse(storedUser) : null;
+  return dataUser?.token || ""; // Ajusta según la propiedad que contiene el token
+};
+
 
 export const useAuth = () => {
   return useContext(AuthContext);

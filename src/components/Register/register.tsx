@@ -1,16 +1,17 @@
 "use client";
-import React, { ChangeEvent, useState, useEffect } from "react";
-import { registerForm, ErrregisterForm } from "@/interfaces/Auth";
-import { validateRegisterForm } from "@/utils/registerValidator";
+import React, { useState } from "react";
+import { registerForm } from "@/interfaces/Auth";
 import { RegisterUser } from "@/services/AuthService";
 import "boxicons/css/boxicons.min.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 //components
 import EmailInput from "@/components/Inputs/email";
-import PasswordInput from "@/components/Inputs/password";
-import NameInput from "@/components/Inputs/name";
+import PasswordInput from "@/components/Inputs/Password";
+import NameInput from "@/components/Inputs/Name";
 import PhoneNumberInput from "@/components/Inputs/phone";
 
 const Register = () => {
@@ -58,23 +59,33 @@ const Register = () => {
       !isFormValid.name ||
       !isFormValid.phone
     ) {
-      alert("Please fill out all fields correctly");
+      Swal.fire({
+        icon: "warning",
+        title: "Incomplete Form",
+        text: "Please fill out all fields correctly.",
+      });
       return;
     }
 
     try {
       const res = await RegisterUser(userData);
-      if (res && res.token) {
+      if (res) {
         document.cookie = `userSession=${JSON.stringify(res)}; path=/`;
-        alert(res.message || "Registration successful");
-        router.push("/");
-      } else {
-        alert("Error: No token found in the response.");
+        Swal.fire({
+          icon: "success",
+          title: "Registration Successful",
+          text: res.message || "Welcome to ConsoLearn!",
+        }).then(() => {
+          router.push("/login");
+        });
       }
     } catch (error) {
       console.error("Registration error:", error);
-      console.log(userData)
-      alert(error || "Failed to register. Please try again.");
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: "Failed to register. Please try again.",
+      });
     }
   };
 
@@ -94,11 +105,8 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <NameInput onValid={handleNameValidation} />
           <EmailInput onValid={handleEmailValidation} />
-
           <PhoneNumberInput onValid={handlePhoneValidation} />
-
           <PasswordInput onValid={handlePasswordValidation} />
-
           <button
             type="submit"
             className="w-full p-2 bg-[var(--primary)] text-white rounded"

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["img.freepik.com"], // Agrega el dominio aquí
+    domains: ["upload.wikimedia.org", "res.cloudinary.com"], // Agrega ambos dominios aquí
   },
 };
 

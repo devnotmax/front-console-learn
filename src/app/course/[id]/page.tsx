@@ -4,7 +4,6 @@ import { useParams } from 'next/navigation'; // Asegúrate de usar la librería 
 import { getCourseById } from '@/services/CourseServices';
 import CourseDetail from '@/components/CourseDetail/CourseDetail';
 import { Course } from '@/interfaces/ProductCard';
-import UserReview from '@/components/UserReview/userReview';
 
 const CoursePage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Usamos el id de la URL

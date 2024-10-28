@@ -8,13 +8,15 @@ import {
   OrderByPrice,
   filterByTechnologyAndPrice,
 } from "@/services/CourseServices";
-
 import SearchBar from "@/components/SearchBar/SearchBar";
+import Link from "next/link";
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<ICourse[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);  // Cursos filtrados
   const [technologyFilter, setTechnologyFilter] = useState<string>("");
   const [priceFilter, setPriceFilter] = useState<boolean | null>(null);
+  // const [searchTerm, setSearchTerm] = useState<string>("");
 
   const fetchCourses = async () => {
     try {
@@ -32,19 +34,34 @@ const Courses: React.FC = () => {
 
       if (Array.isArray(data)) {
         setCourses(data);
+        setFilteredCourses(data);  // Al inicio, mostrar todos los cursos
       } else {
         console.error("Los datos obtenidos no son un arreglo:", data);
         setCourses([]);
+        setFilteredCourses([]);
       }
     } catch (error) {
       console.error("Error al obtener los cursos:", error);
       setCourses([]);
+      setFilteredCourses([]);
     }
   };
 
   useEffect(() => {
     fetchCourses();
   }, [technologyFilter, priceFilter]);
+
+  // Función para manejar la búsqueda ignorando mayúsculas/minúsculas
+  const handleSearch = (searchTerm: string) => {
+    const searchResults = courses.filter(
+      (course) =>
+        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.technologies.some((tech) =>
+          tech.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    );
+    setFilteredCourses(searchResults);  // Actualizar los cursos filtrados
+  };
 
   return (
     <div className="grid grid-cols-4 gap-4 p-4">
@@ -53,16 +70,16 @@ const Courses: React.FC = () => {
         <h2 className="text-lg font-bold mb-4">SideBar</h2>
         <ul className="space-y-4">
           <li>
-            <a href="#">tag 1</a>
+            <Link href="#">tag 1</Link>
           </li>
           <li>
-            <a href="#">tag 2</a>
+            <Link href="#">tag 2</Link>
           </li>
           <li>
-            <a href="#">tag 3</a>
+            <Link href="#">tag 3</Link>
           </li>
           <li>
-            <a href="#">tag 4</a>
+            <Link href="#">tag 4</Link>
           </li>
         </ul>
       </div>
@@ -71,7 +88,7 @@ const Courses: React.FC = () => {
       <div className="col-span-3 grid gap-4">
         {/* Filtros y barra de búsqueda */}
         <div className="flex w-full justify-center items-center gap-4">
-          <SearchBar />
+          <SearchBar onSearch={handleSearch} />  {/* Pasar la función de búsqueda */}
           <div className="flex justify-center items-center">
             <select
               id="technologyFilter"
@@ -116,8 +133,9 @@ const Courses: React.FC = () => {
 
         {/* Renderizado de los cursos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {courses.length > 0 ? (
-            courses.map((course) => (
+          
+          {filteredCourses.length > 0 ? (
+            filteredCourses.map((course) => (
               <CourseCard
                 key={course.id}
                 id={course.id}
@@ -127,7 +145,6 @@ const Courses: React.FC = () => {
                 technologies={course.technologies}
                 description={course.description}
                 isAvailable={course.isAvailable}
-                rating={course.rating}
               />
             ))
           ) : (
