@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/authContext";
 
-const PaymentSuccess = () => {
+const PaymentContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { dataUser } = useAuth();
@@ -31,6 +31,14 @@ const PaymentSuccess = () => {
         Go to Course Content
       </button>
     </div>
+  );
+};
+
+const PaymentSuccess = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentContent />
+    </Suspense>
   );
 };
 
