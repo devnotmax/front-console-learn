@@ -2,11 +2,11 @@
 
 import React, { useState, ChangeEvent } from "react";
 
-interface nameInputProps {
+interface NameInputProps {
   onValid: (isValid: boolean, value: string) => void;
 }
 
-const nameInput = ({ onValid }: nameInputProps) => {
+const NameInput = ({ onValid }: NameInputProps) => {
   const [value, setValue] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState("");
@@ -52,4 +52,4 @@ const nameInput = ({ onValid }: nameInputProps) => {
   );
 };
 
-export default nameInput;
+export default NameInput;

@@ -1,6 +1,6 @@
-import { ICourse } from "./Course";
-import { IOrder } from "./Orders";
-import { IReview } from "./Review";
+// import { ICourse } from "./Course";
+// import { IOrder } from "./Orders";
+// import { IReview } from "./Review";
 
 export interface loginForm {
   email: string;

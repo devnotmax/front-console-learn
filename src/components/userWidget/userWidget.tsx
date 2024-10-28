@@ -22,7 +22,7 @@ const UserWidget = () => {
         // Si el usuario está logueado, mostrar un mensaje de bienvenida
         <>
           <Link href="/profile">
-            <button className="secondary-btn py-1 px-2 flex items-center justify-center"><i className='bx bxs-user' style={{ fontSize: "1rem" }}></i> Mi perfil</button>
+            <button className="secondary-btn py-1 px-2 flex items-center justify-center"><i className='bx bxs-user' style={{ fontSize: "1rem" }}></i> Profile</button>
           </Link>
           <button className="secondary-btn py-1 px-2" onClick={handleLogout}><i className='bx bx-log-out' style={{ fontSize: "1rem" }}></i></button>
         </>

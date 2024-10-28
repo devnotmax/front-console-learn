@@ -2,11 +2,11 @@
 
 import React, { useState, ChangeEvent } from "react";
 
-interface passwordInputProps {
+interface PasswordInputProps {
     onValid: (isValid: boolean, value: string) => void;
 }
 
-const passwordInput = ({ onValid }: passwordInputProps) => {
+const PasswordInput = ({ onValid }: PasswordInputProps) => {
     const [value, setValue] = useState("");
     const [error, setError] = useState("");
     const [isValid, setIsValid] = useState(false);
@@ -78,4 +78,4 @@ const passwordInput = ({ onValid }: passwordInputProps) => {
 
 }
 
-export default passwordInput;
+export default PasswordInput;

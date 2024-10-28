@@ -16,7 +16,7 @@ const Courses: React.FC = () => {
   const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);  // Cursos filtrados
   const [technologyFilter, setTechnologyFilter] = useState<string>("");
   const [priceFilter, setPriceFilter] = useState<boolean | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  // const [searchTerm, setSearchTerm] = useState<string>("");
 
   const fetchCourses = async () => {
     try {

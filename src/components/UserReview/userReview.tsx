@@ -2,22 +2,22 @@ import React from "react";
 import reseñasMock from "@/Mocks/ReviewMocks";
 
 // Definir la interfaz para el tipo de reseña
-interface User {
-    id: string;
-    name: string;
-    image: string;
-}
+// interface User {
+//     id: string;
+//     name: string;
+//     image: string;
+// }
 
-interface Review {
-    id: string;
-    content: string;
-    rating: number;
-    user: User;
-}
+// interface Review {
+//     id: string;
+//     content: string;
+//     rating: number;
+//     user: User;
+// }
 
-interface UserReviewProps {
-    review: Review[]
-}
+// interface UserReviewProps {
+//     review: Review[]
+// }
 
 const UserReview: React.FC = () => {
 const renderStars = (rating: number) => {

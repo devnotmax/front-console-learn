@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import CourseHero from "@/components/CourseHero/CourseHero";
 import Carousel from "@/components/Carrousel/Carrousel";
 import Courses from "@/components/CoursePage/Courses";

@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css"; // Asegúrate de importar los estilos
@@ -10,7 +8,6 @@ interface PhoneInputProps {
 
 const PhoneNumberInput: React.FC<PhoneInputProps> = ({ onValid }) => {
   const [value, setValue] = useState("");
-  const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState("");
 
   const validatePhone = (phone: string) => {
@@ -24,11 +21,9 @@ const PhoneNumberInput: React.FC<PhoneInputProps> = ({ onValid }) => {
 
     if (!validatePhone(phone)) {
       setError("Invalid phone number");
-      setIsValid(false);
       onValid(false, phone);
     } else {
       setError("");
-      setIsValid(true);
       onValid(true, phone);
     }
   };

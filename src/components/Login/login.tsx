@@ -1,7 +1,7 @@
 "use client";
 
 //hooks
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -12,15 +12,18 @@ import "boxicons/css/boxicons.min.css";
 import { useAuth } from "@/contexts/authContext";
 
 //interfaces
-import { loginForm, ErrloginForm } from "@/interfaces/Auth";
-import { validateLogin } from "@/utils/loginValidators";
+import { loginForm } from "@/interfaces/Auth";
+
 
 //services
 import { LoginUser } from "@/services/AuthService";
 
 //components
 import EmailInput from "@/components/Inputs/email";
-import PasswordInput from "@/components/Inputs/password";
+import PasswordInput from "@/components/Inputs/Password";
+
+// SweetAlert2
+import Swal from "sweetalert2";
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -49,7 +52,11 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isFormValid.email || !isFormValid.password) {
-      alert("Please fill out all fields correctly");
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Input",
+        text: "Please fill out all fields correctly",
+      });
       return;
     }
 
@@ -58,14 +65,27 @@ const Login: React.FC = () => {
       if (res && res.token) {
         setDataUser(res);
         document.cookie = `userSession=${JSON.stringify(res)}; path=/`;
-        alert(res.message || "Login successful");
-        router.push("/");
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: res.message || "Welcome back!",
+        }).then(() => {
+          router.push("/");
+        });
       } else {
-        alert("Error: No token found in the response.");
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: "No token found in the response.",
+        });
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Failed to login. Please try again.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to login. Please try again.",
+      });
     }
   };
 
@@ -94,7 +114,7 @@ const Login: React.FC = () => {
         <div className="text-center mt-4"></div>
         <div className="text-center mt-2">
           <p className="text-[var(--principal-text)] text-sm">
-            You don't have an account?{" "}
+            You don&apos;t have an account?{" "}
             <Link href="/register" className="text-[var(--secondary)]">
               Sign up
             </Link>
