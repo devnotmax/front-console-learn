@@ -2,6 +2,8 @@
 // import { IOrder } from "./Orders";
 // import { IReview } from "./Review";
 
+import { ICourse } from "./Course";
+
 export interface loginForm {
   email: string;
   password: string;
@@ -19,6 +21,7 @@ export interface registerForm extends loginForm {
 }
 export interface IUser extends registerForm {
   id: string; // Agregamos el ID solo para el usuario en sesión
+  courses: ICourse[];
 }
 
 export interface ErrregisterForm {
@@ -33,3 +36,4 @@ export interface IuserSession {
   user: IUser; // Ahora usa la interfaz que tiene `id`
   token: string;
 }
+
