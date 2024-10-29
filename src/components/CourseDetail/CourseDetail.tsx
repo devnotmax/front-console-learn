@@ -98,13 +98,14 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
     <div className="container mx-auto px-4 py-6 font-inter">
       {/* Course Header */}
       <div className="flex">
-        <div className="w-1/3">
+        {/* Course Image */}
+        <div className="w-64 h-64 rounded-lg overflow-hidden shadow-lg">
           <img
-            src={course.thumbnail}
-            alt={course.title}
-            className="rounded-lg shadow-lg"
-          />
-        </div>
+          src={course.thumbnail}
+          alt={course.title}
+          className="w-full h-full object-cover"
+    />
+  </div>
         <div className="w-2/3 pl-8">
           <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
 
