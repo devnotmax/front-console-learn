@@ -101,11 +101,11 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
         {/* Course Image */}
         <div className="w-64 h-64 rounded-lg overflow-hidden shadow-lg">
           <img
-          src={course.thumbnail}
-          alt={course.title}
-          className="w-full h-full object-cover"
-    />
-  </div>
+            src={course.thumbnail}
+            alt={course.title}
+            className="w-full h-full object-contain"
+          />
+        </div>
         <div className="w-2/3 pl-8">
           <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
 
