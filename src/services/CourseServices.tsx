@@ -1,5 +1,4 @@
 import { ICourse } from "@/interfaces/Course";
-import { Course } from "@/interfaces/ProductCard";
 import { getAuthToken } from "@/contexts/authContext";
 
 export const getCourses = async () => {
@@ -32,7 +31,23 @@ export const filterByTechnology = async (
   }
 };
 
-export const getCourseById = async (id: string): Promise<Course | null> => {
+// export const getCourseById = async (id: string): Promise<ICourse | null> => {
+//   try {
+//     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+//     const response = await fetch(`${apiUrl}/course/${id}`);
+//     if (!response.ok) {
+//       console.error("Error fetching course:", response.statusText);
+//       throw new Error("Error fetching course data");
+//     }
+//     const course: Course = await response.json();
+//     return course;
+//   } catch (error) {
+//     console.error("Error fetching course:", error);
+//     return null;
+//   }
+// };
+
+export const getCourseById = async (id: string): Promise<ICourse | null> => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const response = await fetch(`${apiUrl}/course/${id}`);
@@ -40,7 +55,7 @@ export const getCourseById = async (id: string): Promise<Course | null> => {
       console.error("Error fetching course:", response.statusText);
       throw new Error("Error fetching course data");
     }
-    const course: Course = await response.json();
+    const course: ICourse = await response.json(); // Asegura que el objeto coincide con ICourse
     return course;
   } catch (error) {
     console.error("Error fetching course:", error);
