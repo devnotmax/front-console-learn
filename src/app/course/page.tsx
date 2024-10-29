@@ -14,9 +14,9 @@ return (
     {/* Sección de cursos más populares */}
     <div className="p-4">
     <h2 className="text-2xl font-bold">
-        Nuestros cursos{" "}
+        Our{" "}
         <span className="text-[var(--accent-color)]">
-        más populares🔥🔥
+        Most Popular Courses🔥🔥
         </span>
     </h2>
     </div>
