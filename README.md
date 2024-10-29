@@ -1,3 +1,49 @@
+# Consolearn 🎓
+
+
+## Descripción
+
+Consolearn es una plataforma de cursos donde los usuarios pueden registrarse, iniciar sesión y acceder a una variedad de cursos. La plataforma permite a los usuarios:
+
+- **Registrarse e iniciar sesión** utilizando autenticaciones internas y externas (Auth0 con Google).
+- **Subir cursos** a la plataforma, que pueden ser gratuitos o de pago.
+- **Escribir reseñas** y calificar cursos con estrellas.
+- **Añadir cursos a favoritos** y gestionar sus órdenes (pendientes y pagadas).
+- **Visualizar contenido de cursos** en formato de video, con la opción de marcar videos como completados.
+
+Además, se implementa la plataforma de **Stripe** para gestionar pagos y un **panel de administración** para gestionar usuarios y cursos.
+
+## Tecnologías Utilizadas
+
+- **Frontend:** Next.js, React, TypeScript, Tailwind CSS
+- **Backend:** Prisma, PostgreSQL
+- **Estado global:** Context API
+- **Autenticación:** Auth0
+- **Pagos:** Stripe
+
+## Instalación
+
+Para ejecutar este proyecto localmente, sigue estos pasos:
+
+1. Clona el repositorio:
+   ```bash
+   git clone (https://github.com/devnotmax/front-console-learn)
+
+2. Clona el repositorio:
+   ```bash
+   cd front-console-learn
+
+3. Instala las dependencias:
+   ```bash
+   npm install
+
+4. Comando para correr el proyecto:
+   ```bash
+   npm run dev
+5. Abre tu navegador y visita *http://localhost:3000* para ver el proyecto
+
+
+
 # 🌟 Gitflow Workflow para el Proyecto
 
 ## 1. Rama Principal: `main` 🚀
@@ -64,6 +110,34 @@
 - Siempre prueba tu código localmente antes de crear un **PR**.
 - Si es posible, automatiza las pruebas con herramientas como **Jest** o **Cypress** para asegurar que todo funcione correctamente.
 
+# Contribuciones
+
+¡Las contribuciones son bienvenidas! Si deseas contribuir a este proyecto, por favor sigue estos pasos:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama (`git checkout -b feature/nueva-caracteristica`).
+3. Realiza tus cambios y haz commit (`git commit -m 'Añadir nueva característica'`).
+4. Envía un pull request.
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+## Contacto
+
+Si tienes preguntas o sugerencias, no dudes en contactarme a través de:
+
+- **Email:** develop.maxsj@gmail.com
+- **LinkedIn:** [machifrias](https://www.linkedin.com/in/machifrias/)
+
+## Authors
+
+- [@devnotmax](https://www.github.com/devnotmax)
+- [@Moncada16](https://github.com/Moncada16)
+
+
+
+
 # 🌟 Actualizaciones Recientes.
 
 ## **[15/10/2024]**: Actualización de Hero Component
@@ -104,3 +178,40 @@
 
 ### **[17/10/2024]**: **Hero** en la pagina cursos
 - Se añadió el componente **Hero**
+
+### **[19/10/2024]**: **Cambios sugeridos en la demo**
+- Unificacion de idioma.
+- Correccion de las validaciones, ahora los inputs tienen validaciones independientes lo que nos permite manejar mejor la experiencia de usuario.
+-Cambios de la paleta de colores y algunos estilos.
+
+### **[21/10/2024]**: **Cousepage**
+- Seccion donde se pueden ver todos los cursos disponibles en la pagina
+- Mejora de los filtros
+
+### **[22/10/2024]**: **Detalle de los cursos** /course/[id]
+- Detalle de los cursos, donde incluimos mas informacion acerca del mismo, y un boton para la compra de cursos y añadirlo a favoritos.
+
+### **[22/10/2024]**: **Boton de compra**
+- Creacion de los servicios y logica del boton de compra, aun sin checkout a stripe
+
+### **[23/10/2024]**: **Filtros mejorados, añadi una busqueda**
+-Creacion de la interfaz grafica, concretamente la barra de busqueda
+
+### **[25/10/2024]**: **Boton de compra**
+- El componente del boton de compra actualiza con exito el estado de la orden de pendiente a pagado y ya puedo hacer el checkout a stripe
+
+### **[26/10/2024]**: **Mejora del profile**
+- ahora en el profile el usuario puede ver sus ordenes pendientes y pagadas, ver sus detalles, y tambien pagar las ordenes que no fueron pagadas todavia.
+- getOrders(), me trae todas las ordenes del usuario pasandonle el token
+
+### **[27/10/2024]**: **Alertas agregadas con SweetAlert2**
+- Alertas de compras agregadas, contextos para obtener el token y pasarle el token a los servicios que lo necesitaban como el de la comprobacion de la compra.
+
+### **[28/10/2024]**: **BUILD PASO LISTO PARA EL PRIMER DEPLOY!**
+- Build ejecutado correctamente ya existe deploy en vercel.
+
+### **[29/10/2024]**: **El curso ya ha sido comprado. (Evita que el usuario compre de nuevo el mismo curso)**
+- Agregue una validacion, si el usuario ya compro un curso le saldra un aviso de que ya compro el curso, en vez del boton de compra. ademas agregue el boton para ver el contenido del curso.
+
+
+

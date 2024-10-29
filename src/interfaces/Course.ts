@@ -2,7 +2,8 @@ import { IOrderDetails } from "./Orders";
 import { IUser } from "./User";
 import { IReview } from "./Review";
 
-export interface ICourse {
+// Asegúrate de que ICourse tenga todas las propiedades de Course
+export interface Course {
   id: string;
   title: string;
   description: string;
@@ -10,11 +11,19 @@ export interface ICourse {
   technologies: string[];
   price: number;
   isAvailable: boolean;
+  available: boolean; // Asegúrate de incluir esto
+  rating: number; // Asegúrate de incluir esto
   orderDetails: IOrderDetails[];
   reviews: IReview[];
   users: IUser[];
-  // videos: any; //luego va a ser video[]
 }
+
+export interface ICourse extends CourseProps {
+  available: boolean; // Asegúrate de incluir esta propiedad también
+  rating: number; // Asegúrate de incluir esta propiedad también
+  // Resto de propiedades...
+}
+
 
 export interface CourseProps {
   id: string;

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { Course } from "@/interfaces/ProductCard";
 import UserReview from "../UserReview/userReview";
 import { buyCourse, payOrder } from "@/services/BuyServices";
+import { getMyCourses } from "@/services/CourseServices";
 import { useAuth } from "@/contexts/authContext";
 import { useRouter } from "next/navigation";
 
@@ -13,6 +14,22 @@ interface CourseDetailProps {
 const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
   const { dataUser } = useAuth();
   const router = useRouter();
+  const [isPurchased, setIsPurchased] = useState(false);
+
+  useEffect(() => {
+    // Función para verificar si el curso ha sido comprado
+    const checkIfPurchased = async () => {
+      if (dataUser) {
+        const purchasedCourses = await getMyCourses();
+        const purchased = purchasedCourses.some(
+          (purchasedCourse) => purchasedCourse.id === course.id
+        );
+        setIsPurchased(purchased);
+      }
+    };
+    checkIfPurchased();
+  }, [dataUser, course.id]);
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <span
@@ -94,7 +111,9 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
           {/* Tags */}
           <div className="flex items-center space-x-2">
             <span className="bg-[var(--primary)] text-[var(--principal-text)] text-xs font-semibold px-2 py-1 rounded-full">
-              {course.technologies}
+              {Array.isArray(course.technologies)
+                ? course.technologies.join(", ")
+                : course.technologies}
             </span>
           </div>
 
@@ -106,13 +125,25 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
             {renderStars(course.rating)}
           </div>
 
-          {/* Purchase Button */}
-          <button
-            className="mt-4 bg-[var(--background)] text-white py-2 px-6 rounded-lg hover:bg-[var(--primary)]"
-            onClick={handleBuyCourse}
-          >
-            Buy course
-          </button>
+          {/* Purchase Button or Purchased Message */}
+          {isPurchased ? (
+            <div>
+              <div className="mt-4 text-green-200 font-semibold opacity-45">
+                <span className="bg-green-700 p-2 rounded-lg">
+                  Course already purchased
+                </span>
+              </div>
+              {/* Watch course Button */}
+              <button onClick={() => router.push(`/course/${course.id}/content`)} className="mt-4 bg-[var(--background)] text-white py-2 px-6 rounded-lg hover:bg-[var(--primary)] flex justify-center items-center gap-1">Watch course <i className='bx bxs-log-in-circle text-xl'></i></button>
+            </div>
+          ) : (
+            <button
+              className="mt-4 bg-[var(--background)] text-white py-2 px-6 rounded-lg hover:bg-[var(--primary)]"
+              onClick={handleBuyCourse}
+            >
+              Buy course
+            </button>
+          )}
 
           {/* FAQ Section */}
           <div className="mt-6 border-t pt-4">
