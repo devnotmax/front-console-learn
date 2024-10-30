@@ -25,7 +25,7 @@ return <div>Loading...</div>;
 }
 
 if (!course) {
-return <div>No se encontró el curso.</div>;
+return <div>The course was not found.</div>;
 }
 
 return <CourseDetail course={course} />;
