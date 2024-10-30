@@ -73,11 +73,11 @@ const ProfileOrders = () => {
           <tbody>
             {orders.map((order) => (
               <tr key={order.id} className="bg-[#39425fab] rounded-lg">
-                <td className="p-2 text-[var(--primary)]">{order.id}</td>
-                <td className="p-2 text-[var(--primary)]">
+                <td className="p-2 text-[var(--principal-text)]">{order.id}</td>
+                <td className="p-2 text-[var(--principal-text)]">
                   {order.course.title}
                 </td>
-                <td className="p-2 text-[var(--primary)]">
+                <td className="p-2 text-[var(--principal-text)]">
                   {new Date(order.createdAt).toLocaleDateString()}
                 </td>
                 <td className="p-2">
