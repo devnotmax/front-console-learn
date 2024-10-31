@@ -1,5 +1,5 @@
-// interfaces/Course.ts
 
+// interfaces/Course.ts
 import { IOrderDetails } from "./Orders";
 import { IUser } from "./User";
 import { IReview } from "./Review";
@@ -9,8 +9,9 @@ export interface IVideo {
   id: string;
   title: string;
   description: string;
-  vimeoId: string; // Cambia `url` a `vimeoId` para trabajar con Vimeo API
+  url: string; // Cambia `url` a `vimeoId` para trabajar con Vimeo API
   courseId: string;
+  duration: string;
 }
 
 // Define la interfaz base para un curso
@@ -24,7 +25,7 @@ export interface Course {
   isAvailable: boolean; // Estado de disponibilidad del curso
   available: boolean; // Estado de disponibilidad del curso
   rating: number; // Rating del curso
-  orderDetails: IOrderDetails[];
+  orderDetails: IOrderDetails[]; // Aquí mantén el array de detalles de orden
   reviews: IReview[];
   users: IUser[];
 }
@@ -32,6 +33,7 @@ export interface Course {
 // Interfaz extendida para el curso que incluye videos
 export interface ICourse extends Course {
   videos: IVideo[];
+  orderStatus?: string; // Agrega orderStatus aquí si es necesario
 }
 
 // Asegúrate de que CourseProps tenga solo las propiedades compartidas
