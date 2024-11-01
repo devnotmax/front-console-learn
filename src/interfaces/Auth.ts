@@ -22,6 +22,8 @@ export interface registerForm extends loginForm {
 export interface IUser extends registerForm {
   id: string; // Agregamos el ID solo para el usuario en sesión
   courses: ICourse[];
+  image: string;
+  role: "ADMIN" | "USER";
 }
 
 export interface ErrregisterForm {
@@ -35,5 +37,6 @@ export interface IuserSession {
   login: boolean;
   user: IUser; // Ahora usa la interfaz que tiene `id`
   token: string;
+
 }
 
