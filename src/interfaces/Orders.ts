@@ -9,6 +9,7 @@ export interface IOrder {
   createdAt: Date;
 }
 
+// Agrega esto en la interfaz IOrderDetails
 export interface IOrderDetails {
   id: string;
   order: IOrder;
@@ -17,4 +18,6 @@ export interface IOrderDetails {
   courseId: string;
   quantity: number;
   price: number;
+  orderStatus: "Pending" | "Paid"; // Agrega el campo aquí
 }
+
