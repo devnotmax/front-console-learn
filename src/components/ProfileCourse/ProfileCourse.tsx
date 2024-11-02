@@ -40,8 +40,8 @@ const ProfileCourses = () => {
           <tbody>
             {courses.map((course) => (
               <tr key={course.id} className="bg-[#39425fab] rounded-lg">
-                <td className="p-2 text-[var(--primary)]">{course.id}</td>
-                <td className="p-2 text-[var(--primary)]">{course.title}</td>
+                <td className="p-2 text-[var(--principal-text))]">{course.id}</td>
+                <td className="p-2 text-[var(--principal-text)]">{course.title}</td>
                 <td className="p-2">
                   {course.technologies.map((tech) => (
                     <div key={tech} className="gap-2 flex">
