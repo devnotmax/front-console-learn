@@ -1,9 +1,7 @@
 // "use client";
 // import React, { useState } from "react";
-// import { useAuth } from "@/contexts/authContext";
 // import { createCourse } from "@/services/CourseServices";
 
-// // Definir las props del modal
 // interface CourseModalProps {
 //   isOpen: boolean;
 //   onClose: () => void;
@@ -17,7 +15,7 @@
 //   const [technologies, setTechnologies] = useState<string[]>([]);
 //   const [inputValue, setInputValue] = useState('');
 //   const [image, setImage] = useState<File | null>(null);
-//   const [price, setPrice] = useState<number | ''>(''); // Nuevo estado para el precio
+//   const [price, setPrice] = useState<number | ''>('');
 
 //   const handleAddTechnology = (e: React.FormEvent) => {
 //     e.preventDefault();
@@ -37,19 +35,26 @@
 //     }
 //   };
 
-//   const handleSubmit = (e: React.FormEvent) => {
+//   const handleSubmit = async (e: React.FormEvent) => {
 //     e.preventDefault();
-//     const newCourse = {
-//       title: courseTitle,
-//       description,
-//       technologies,
-//       image,
-//       price,
-//     };
-    
-//     createCourse(newCourse);
-//     console.log(newCourse);
-//     onClose(); // Cerrar el modal después de crear el curso
+
+//     // Crear un FormData para enviar el archivo de imagen y otros datos
+//     const formData = new FormData();
+//     formData.append("title", courseTitle);
+//     formData.append("description", description);
+//     formData.append("price", String(price));
+//     if (image) {
+//       formData.append("image", image);
+//     }
+
+//     // Pasar `technologies` como un parámetro adicional al crear el curso
+//     try {
+//       await createCourse(formData, technologies);
+//       console.log("Curso creado exitosamente", FormData);
+//     //   onClose();
+//     } catch (error) {
+//       console.error("Error al crear el curso:", error);
+//     }
 //   };
 
 //   return (
@@ -115,7 +120,6 @@
 //                 onChange={(e) => setInputValue(e.target.value)}
 //                 className="block w-full p-2 border border-gray-300 rounded-md"
 //                 placeholder="Add a technology"
-//                 required
 //               />
 //               <button
 //                 type="button"
@@ -174,20 +178,22 @@ interface CourseModalProps {
 }
 
 const CourseModal: React.FC<CourseModalProps> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  const [courseTitle, setCourseTitle] = useState('');
-  const [description, setDescription] = useState('');
+  // Mueve los hooks de estado aquí
+  const [courseTitle, setCourseTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [technologies, setTechnologies] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [image, setImage] = useState<File | null>(null);
-  const [price, setPrice] = useState<number | ''>('');
+  const [price, setPrice] = useState<number | "">("");
+
+  // Asegúrate de que el retorno condicional venga después de los hooks
+  if (!isOpen) return null;
 
   const handleAddTechnology = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputValue && !technologies.includes(inputValue)) {
       setTechnologies([...technologies, inputValue]);
-      setInputValue('');
+      setInputValue("");
     }
   };
 
@@ -213,11 +219,10 @@ const CourseModal: React.FC<CourseModalProps> = ({ isOpen, onClose }) => {
       formData.append("image", image);
     }
 
-    // Pasar `technologies` como un parámetro adicional al crear el curso
     try {
       await createCourse(formData, technologies);
-      console.log("Curso creado exitosamente", FormData);
-    //   onClose();
+      console.log("Curso creado exitosamente");
+      //   onClose();
     } catch (error) {
       console.error("Error al crear el curso:", error);
     }
@@ -235,6 +240,7 @@ const CourseModal: React.FC<CourseModalProps> = ({ isOpen, onClose }) => {
         <h2 className="text-lg font-bold mb-4">Add New Course</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
+            {" "}
             <label className="block text-sm font-medium text-gray-700">
               Course Title
             </label>

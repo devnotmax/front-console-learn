@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from "react";
 import ProfileInfo from "./ProfileInfo";
 import CourseModal from "./CourseModal"; // Asegúrate de importar el modal

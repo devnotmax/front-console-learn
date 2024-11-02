@@ -1,7 +1,6 @@
 "use client";
 
-import { IuserSession, loginForm } from "@/interfaces/Auth";
-import { LoginUser } from "@/services/AuthService";
+import { IuserSession } from "@/interfaces/Auth";
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 interface AuthContextProps {
@@ -10,16 +9,6 @@ interface AuthContextProps {
   logout: () => void;
   updateUserImage: (image: string) => void;
   isLoading: boolean; // Nuevo indicador de carga
-}
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  phone: string;
-  image: string;
-  role: "ADMIN" | "USER";
-  token: string;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -33,24 +22,6 @@ const AuthContext = createContext<AuthContextProps>({
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [dataUser, setDataUser] = useState<IuserSession | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Nuevo estado para el indicador de carga
-
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>,
-    userData: loginForm
-  ) => {
-    e.preventDefault();
-    try {
-      const res = await LoginUser(userData); // Llama a `LoginUser` para obtener los datos del usuario
-      if (res && res.token) {
-        setDataUser(res); // Almacena el usuario y su rol en `dataUser`
-        document.cookie = `userSession=${JSON.stringify(res)}; path=/`; // Guarda la sesión en la cookie
-        // Redirige o realiza otras acciones si es necesario
-      }
-    } catch (error) {
-      console.error("Error en el inicio de sesión:", error);
-      // Aquí puedes manejar el error, mostrar una alerta, etc.
-    }
-  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("userSession");
