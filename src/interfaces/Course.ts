@@ -46,3 +46,10 @@ export interface CourseProps {
   price: number;
   isAvailable: boolean;
 }
+
+export interface courseForm {
+  title: string;
+  description: string;
+  image: File | null; // Change this to accept the File type
+  price: number | "";
+}
