@@ -2,13 +2,30 @@
 
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
-import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { getPaidOrders } from "@/services/OrderService"; // Asegúrate de que la ruta sea correcta
 import { IUser } from "@/interfaces/Auth";
 import { ICourse } from "@/interfaces/Course";
 
 // Registramos los componentes necesarios para Chart.js
-Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+Chart.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface Order {
   id: string;
@@ -45,16 +62,21 @@ const PurchaseStatistics = () => {
   const loadPaidOrders = async () => {
     try {
       const orders: Order[] = await getPaidOrders(); // Asegúrate de que getPaidOrders devuelva un tipo Order[]
-      const labels = orders.map(order => order.date); // Ajusta 'date' según la estructura de tu API
-      const data = orders.map(order => order.quantity); // Ajusta 'quantity' según la estructura de tu API
+      const labels = orders.map((order) => order.date); // Ajusta 'date' según la estructura de tu API
+      const data = orders.map((order) => order.quantity); // Ajusta 'quantity' según la estructura de tu API
 
-      setPurchaseData(prevData => ({
+      setPurchaseData((prevData) => ({
         ...prevData,
         labels,
         datasets: [{ ...prevData.datasets[0], data }],
       }));
-    } catch (error: any) { // Captura el error como 'any' para poder acceder a su mensaje
-      setError(error.message);
+    } catch (error: unknown) {
+      // Cambia a 'unknown'
+      if (error instanceof Error) {
+        setError(error.message); // Accede a message solo si error es de tipo Error
+      } else {
+        setError("An unknown error occurred");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -65,7 +87,9 @@ const PurchaseStatistics = () => {
   }, []);
 
   if (isLoading) {
-    return <div className="flex items-center justify-center h-full">Cargando...</div>;
+    return (
+      <div className="flex items-center justify-center h-full">Cargando...</div>
+    );
   }
 
   if (error) {
@@ -78,7 +102,9 @@ const PurchaseStatistics = () => {
 
   return (
     <div className="w-full p-4 border-black border-opacity-15 rounded-xl border-[3px] bg-white shadow-md">
-      <h3 className="text-2xl font-semibold text-center mb-4">Estadísticas de Compras de Cursos</h3>
+      <h3 className="text-2xl font-semibold text-center mb-4">
+        Estadísticas de Compras de Cursos
+      </h3>
       <Line
         data={purchaseData}
         options={{
@@ -118,5 +144,3 @@ const PurchaseStatistics = () => {
 };
 
 export default PurchaseStatistics;
-
-

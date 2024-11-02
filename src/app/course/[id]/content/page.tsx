@@ -62,7 +62,7 @@ const CourseContent: React.FC = () => {
   const router = useRouter();
   const { dataUser, isLoading } = useAuth();
   const [hasAccess, setHasAccess] = useState(false);
-  const [courseData, setCourseData] = useState<ICourse | null>(mockCourseData); // Asignar datos mock
+  const [courseData] = useState<ICourse | null>(mockCourseData); // Quita 'setCourseData'
   const [currentVideo, setCurrentVideo] = useState<IVideo | null>(
     courseData?.videos[0] || null
   ); // Video actual

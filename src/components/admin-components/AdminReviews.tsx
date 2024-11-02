@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import UserReview from "../UserReview/userReview";
 
 const AdminReviews = () => {
   // Datos simulados de reseñas
