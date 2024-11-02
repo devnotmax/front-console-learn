@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getOrders } from "@/services/OrderService";
+import { getOrders, cancelOrder } from "@/services/OrderService";
 import { useAuth } from "@/contexts/authContext";
 import { payOrder } from "@/services/BuyServices";
 import { ICourse } from "@/interfaces/Course";
@@ -24,7 +24,7 @@ const ProfileOrders = () => {
     const fetchOrders = async () => {
       if (dataUser) {
         try {
-          const userOrders = await getOrders(dataUser.user.id);
+          const userOrders = await getOrders();
           setOrders(userOrders);
         } catch (error) {
           console.error("Error fetching orders:", error);
@@ -36,6 +36,16 @@ const ProfileOrders = () => {
 
     fetchOrders();
   }, [dataUser]);
+
+  const handleCancelOrder = async (orderId: string) => {
+    try {
+      await cancelOrder(orderId);
+      const updatedOrders = orders.filter((order) => order.id !== orderId);
+      setOrders(updatedOrders);
+    } catch (error) {
+      console.error("Error canceling order:", error);
+    }
+  };
 
   const handlePayOrder = async (orderId: string) => {
     try {
@@ -63,7 +73,6 @@ const ProfileOrders = () => {
         <table className="w-full text-left">
           <thead className="bg-[var(--foreground)]">
             <tr>
-              <th className="p-2 text-[var(--secondary-text)]">Nº Order</th>
               <th className="p-2 text-[var(--secondary-text)]">Course</th>
               <th className="p-2 text-[var(--secondary-text)]">Date</th>
               <th className="p-2 text-[var(--secondary-text)]">Status</th>
@@ -73,7 +82,6 @@ const ProfileOrders = () => {
           <tbody>
             {orders.map((order) => (
               <tr key={order.id} className="bg-[#39425fab] rounded-lg">
-                <td className="p-2 text-[var(--primary)]">{order.id}</td>
                 <td className="p-2 text-[var(--primary)]">
                   {order.course.title}
                 </td>
@@ -105,14 +113,26 @@ const ProfileOrders = () => {
                       </button>
                     </Link>
                   ) : (
-                    <button
-                      className="w-24 h-8 px-4 py-1 text-xs rounded-lg bg-green-700 flex justify-center items-center text-center hover:bg-[var(--card-color)]"
-                      onClick={() => handlePayOrder(order.id)}
-                    >
-                      <p className="text-[var(--principal-text)] flex justify-center items-center text-center text-sm">
-                        Checkout<i className="bx bx-money text-base"></i>
-                      </p>
-                    </button>
+                    <>
+                      <div className="flex gap-2">
+                        <button
+                          className="w-24 h-8 px-4 py-1 text-xs rounded-lg bg-green-700 flex justify-center items-center text-center hover:bg-[var(--card-color)]"
+                          onClick={() => handlePayOrder(order.id)}
+                        >
+                          <p className="text-[var(--principal-text)] flex justify-center items-center text-center text-sm">
+                            Checkout<i className="bx bx-money text-base"></i>
+                          </p>
+                        </button>
+                        <button
+                          onClick={() => handleCancelOrder(order.id)}
+                          className="w-24 h-8 px-4 py-1 text-xs rounded-lg bg-red-700 flex justify-center items-center text-center hover:bg-[var(--card-color)]"
+                        >
+                          <p className="text-[var(--principal-text)] flex justify-center items-center text-center text-sm">
+                            Cancel
+                          </p>
+                        </button>
+                      </div>
+                    </>
                   )}
                 </td>
               </tr>
