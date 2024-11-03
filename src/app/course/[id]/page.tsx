@@ -41,22 +41,5 @@ const CoursePage: React.FC = () => {
   return <CourseDetail course={course} />;
 };
 
-export default CoursePage;
-fetchCourse();
-}, [id]);
-
-if (loading) {
-return <div>Loading...</div>;
-}
-
-if (!course) {
-return <div>The course was not found.</div>;
-}
-
-return <CourseDetail course={course} />;
-
-
-};
-
 
 export default CoursePage;
