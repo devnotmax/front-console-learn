@@ -31,22 +31,6 @@ export const filterByTechnology = async (
   }
 };
 
-// export const getCourseById = async (id: string): Promise<ICourse | null> => {
-//   try {
-//     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-//     const response = await fetch(`${apiUrl}/course/${id}`);
-//     if (!response.ok) {
-//       console.error("Error fetching course:", response.statusText);
-//       throw new Error("Error fetching course data");
-//     }
-//     const course: Course = await response.json();
-//     return course;
-//   } catch (error) {
-//     console.error("Error fetching course:", error);
-//     return null;
-//   }
-// };
-
 export const getCourseById = async (id: string): Promise<ICourse | null> => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -149,4 +133,34 @@ export const getMyCourses = async (): Promise<ICourse[]> => {
     console.error("Los datos obtenidos no son un arreglo:", data);
     return [];
   }
+};
+
+export const createCourse = async (
+  formData: FormData,
+  technologies: string[]
+): Promise<ICourse> => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const token = getAuthToken();
+
+  // Construir la URL con las tecnologías como parámetros de consulta
+  const queryParams = technologies
+    .map((tech) => `technologies=${encodeURIComponent(tech)}`)
+    .join("&");
+  const urlWithParams = `${apiUrl}/course?${queryParams}`;
+
+  const res = await fetch(urlWithParams, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!res.ok) {
+    console.error("Error al crear el curso:", res.statusText);
+    throw new Error("Error al crear el curso");
+  }
+
+  const data = await res.json();
+  return data;
 };
