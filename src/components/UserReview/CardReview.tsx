@@ -4,6 +4,7 @@ import { Review } from "./ReviewList";
 import { useAuth } from "@/contexts/authContext";
 import { deleteReview } from "@/services/reviewService";
 import Swal from "sweetalert2";
+import { time } from "console";
 
 interface CardReviewProps {
     review: Review;
@@ -51,7 +52,7 @@ const CardReview: React.FC<CardReviewProps> = ({ review, onDelete }) => {
             </div>
             <p className="text-sm font-semibold">Course: {review.course.title}</p>
             <p className="text-sm font-medium text-[var(--foreground)]">{review.content}</p>
-            <p className="text-sm text-[var(--primary)] font-semibold">Date: {new Date(review.createdAt).toLocaleDateString()}</p>
+            <p className="text-sm text-[var(--primary)] font-semibold">Date: {new Date(review.createdAt).toLocaleTimeString( "en-US", {year: 'numeric', month: 'long', day: 'numeric'} )}</p>
             
             {/* Condicional para mostrar el botón de eliminar si es ADMIN o el creador de la reseña */}
             {dataUser?.user.role === "ADMIN" || dataUser?.user.id === review.userId ?  (
