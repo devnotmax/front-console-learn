@@ -139,6 +139,7 @@ const ProfileOrders = () => {
                       </div>
                     </>
                   )}
+                  </td>
                 </td>
               </tr>
             ))}
