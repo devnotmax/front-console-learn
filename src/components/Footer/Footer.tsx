@@ -59,40 +59,40 @@ const Footer = () => {
           <ul className="space-y-1">
             <li>
               <Link
-                href="/cursos/ui-design"
+                href="/course/538868e1-7bae-4ed3-8684-6126275317aa"
                 className="hover:text-[var(--primary)]"
               >
-                UI Design
+                React Development 
               </Link>
             </li>
             <li>
               <Link
-                href="/cursos/ux-design"
+                href="/course/a43290e7-4b0d-49da-a16e-a15168ad7beb"
                 className="hover:text-[var(--primary)]"
               >
-                UX Design
+                Python for Beginners
               </Link>
             </li>
             <li>
               <Link
-                href="/cursos/wireframing"
+                href="/course/041474fb-f409-4e1f-9e24-d8a88652cc6e"
                 className="hover:text-[var(--primary)]"
               >
-                Wireframing
+                Django Web Development
               </Link>
             </li>
             <li>
               <Link
-                href="/cursos/diagramming"
+                href="/course/b31b0aa9-5339-43f5-ad55-04e905c13130"
                 className="hover:text-[var(--primary)]"
               >
-                Diagramming
+                Basic Web Development
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Carreras */}
+        {/* Carreras
         <div>
           <h2 className="font-semibold text-lg text-[var(--primary)] mb-2">
             Carrers
@@ -131,7 +131,7 @@ const Footer = () => {
               </Link>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         {/* Recursos */}
         <div>
