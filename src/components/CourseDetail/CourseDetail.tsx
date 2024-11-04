@@ -27,6 +27,11 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
           (purchasedCourse) => purchasedCourse.id === course.id
         );
         setIsPurchased(purchased);
+
+        // Obtener las órdenes del usuario
+        const orders = await getOrders();
+        const pending = orders.find((order: Order) => order.courseId === course.id && !order.status);
+        setPendingOrder(pending || null);
       }
     };
     checkIfPurchased();
