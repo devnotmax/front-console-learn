@@ -35,7 +35,7 @@ const ReviewsContainer: React.FC = () => {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <ReviewList reviews={reviews} onDelete={handleDelete} />
+                <ReviewList  reviews={reviews} onDelete={handleDelete} />
             )}
         </div>
     );
