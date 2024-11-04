@@ -22,6 +22,7 @@ export interface Review {
     userId: string;
     course: Course;
     user: User;
+    createdAt: Date;
 }
 
 interface ReviewListProps {
