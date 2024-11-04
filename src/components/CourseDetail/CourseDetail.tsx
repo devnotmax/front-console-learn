@@ -7,19 +7,43 @@ import { useAuth } from "@/contexts/authContext";
 import { useRouter } from "next/navigation";
 import ReviewForm from "../UserReview/ReviewForm";
 import ReviewCourse from "../UserReview/ReviewCourse";
+import { getOrders } from "@/services/OrderService";
+import { IOrderDetails } from "@/interfaces/Orders";
 
 interface CourseDetailProps {
   course: Course;
+}
+
+interface Order {
+  id: string;
+  userId: string;
+  status: boolean;
+  courseId: string;
+  createdAt: string;
+  updatedAt: string;
+  details: IOrderDetails[];
+  course: {
+    id: string;
+    title: string;
+    description: string;
+    thumbnail: string;
+    technologies: string[];
+    price: number;
+    rating: number;
+    isfree: boolean;
+    isAvailable: boolean;
+  };
 }
 
 const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
   const { dataUser } = useAuth();
   const router = useRouter();
   const [isPurchased, setIsPurchased] = useState(false);
+  const [pendingOrder, setPendingOrder] = useState<Order | null>(null);
   const [reviewRefreshKey, setReviewRefreshKey] = useState(0); // Estado para refrescar ReviewsContainer
 
   useEffect(() => {
-    // Función para verificar si el curso ha sido comprado
+    // Función para verificar si el curso ha sido comprado o si hay una orden pendiente
     const checkIfPurchased = async () => {
       if (dataUser) {
         const purchasedCourses = await getMyCourses();
@@ -29,8 +53,10 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
         setIsPurchased(purchased);
 
         // Obtener las órdenes del usuario
-        const orders = await getOrders();
-        const pending = orders.find((order: Order) => order.courseId === course.id && !order.status);
+        const orders: Order[] = await getOrders();
+        const pending = orders.find(
+          (order) => order.courseId === course.id && !order.status
+        );
         setPendingOrder(pending || null);
       }
     };
@@ -122,7 +148,7 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
             ${course.price}
           </div>
 
-          {/* Purchase Button or Purchased Message */}
+          {/* Purchase Button, Pending Order, or Purchased Message */}
           {isPurchased ? (
             <div>
               <div className="mt-4 text-green-200 font-semibold opacity-45">
@@ -130,9 +156,20 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
                   Course already purchased
                 </span>
               </div>
-              {/* Watch course Button */}
-              <button onClick={() => router.push(`/course/${course.id}/content`)} className="mt-4 bg-[var(--background)] text-white py-2 px-6 rounded-lg hover:bg-[var(--primary)] flex justify-center items-center gap-1">Watch course <i className='bx bxs-log-in-circle text-xl'></i></button>
+              <button
+                onClick={() => router.push(`/course/${course.id}/content`)}
+                className="mt-4 bg-[var(--background)] text-white py-2 px-6 rounded-lg hover:bg-[var(--primary)] flex justify-center items-center gap-1"
+              >
+                Watch course <i className="bx bxs-log-in-circle text-xl"></i>
+              </button>
             </div>
+          ) : pendingOrder ? (
+            <button
+              onClick={() => handlePayOrder(pendingOrder.id)}
+              className="mt-4 bg-yellow-500 text-yellow-700 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-600 hover:text-yellow-300 shadow-md"
+            >
+              Pending order <i className="bx bx-info-circle"></i>
+            </button>
           ) : (
             <button
               className="mt-4 bg-[var(--background)] text-white py-2 px-6 rounded-lg hover:bg-[var(--primary)]"
@@ -162,18 +199,19 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
         </h3>
 
         <div className="container p-6 mx-auto">
-          <ReviewCourse courseId={course.id} key={reviewRefreshKey} /> {/* Usa reviewRefreshKey para forzar renderizado */}
+          <ReviewCourse courseId={course.id} key={reviewRefreshKey} />
         </div>
 
-
-        {/* Formulario de reseñas, se muestra solo si el curso ha sido comprado */}
         {isPurchased && (
           <div className="mt-6">
             <h3 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
               Leave a Review
             </h3>
-            
-            <ReviewForm courseId={course.id} onReviewSubmitted={handleReviewSubmitted} /> {/* Pasa courseId y onReviewSubmitted */}
+
+            <ReviewForm
+              courseId={course.id}
+              onReviewSubmitted={handleReviewSubmitted}
+            />
           </div>
         )}
       </div>
