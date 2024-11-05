@@ -26,13 +26,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ courseId, onReviewSubmitted }) 
                 
                 // Verificar si el usuario ya tiene una reseña en este curso
                 const userReviewExists = reviews.some((review: Reviews) => review.userId === dataUser?.user.id);
-
-                if (userReviewExists) {
-                    console.log("El usuario ya ha agregado una reseña y no puede añadir otra.");
-                } else {
-                    console.log("El usuario puede agregar una nueva reseña.");
-                }
-
                 setHasUserReview(userReviewExists);
             } catch (error) {
                 console.error("Error al obtener las reseñas:", error);
@@ -67,7 +60,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ courseId, onReviewSubmitted }) 
 
             // Actualizar el estado para que el usuario no pueda crear otra reseña
             setHasUserReview(true);
-            Swal.fire("Success", "Review submitted successfully.");
+            Swal.fire( "Success", "Review submitted successfully." , "success");
         } catch (error) {
             console.error("Error creating review:", error);
             setError("There was a problem submitting your review. Please try again.");
