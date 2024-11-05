@@ -164,3 +164,20 @@ export const createCourse = async (
   const data = await res.json();
   return data;
 };
+
+export const deleteCourse = async (id: string) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const token = getAuthToken();
+
+  const res = await fetch(`${apiUrl}/course/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    console.error("Error al eliminar el curso:", res.statusText);
+    throw new Error("Error al eliminar el curso");
+  }
+};
