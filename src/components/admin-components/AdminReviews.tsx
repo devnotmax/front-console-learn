@@ -1,39 +1,63 @@
-import React, { useState } from 'react';
+// src/components/UserReview/ReviewsContainer.tsx
+import React, { useEffect, useState } from "react";
+import { getReviews } from "@/services/reviewService";
+import { Review } from "@/components/UserReview/ReviewList";
+import CardReview from "../UserReview/CardReview";
+import ReactLoading from "react-loading";
 
 const AdminReviews = () => {
-  // Datos simulados de reseñas
-  const [reviews, setReviews] = useState([
-    { id: 1, username: "Usuario1", content: "Excelente curso, muy recomendado!" },
-    { id: 2, username: "Usuario2", content: "El contenido es claro y útil." },
-    { id: 3, username: "Usuario3", content: "Buena experiencia, pero se puede mejorar." },
-    { id: 4, username: "Usuario4", content: "No me gustó tanto, esperaba más profundidad." }
-  ]);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Función mock para eliminar una reseña
-  const handleDelete = (id: number) => {
-    setReviews(reviews.filter((review) => review.id !== id));
+  const fetchAllReviews = async () => {
+    try {
+      setLoading(true);
+      const data = await getReviews();
+      setReviews(data); // Guarda las reseñas en el estado
+    } catch (error) {
+      console.error("Error", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleDelete = (id: string) => {
+    setReviews((prevReviews) =>
+      prevReviews.filter((review) => review.id !== id)
+    );
+  };
+
+  useEffect(() => {
+    fetchAllReviews();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <ReactLoading
+          type="spin"
+          color="blue"
+          height={50}
+          width={50}
+        ></ReactLoading>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full p-4 border-black border-opacity-15 rounded-xl border-[3px] overflow-y-auto max-h-96">
-      <h2 className="text-xl font-semibold mb-4">Últimas Reseñas</h2>
-      {reviews.map((review) => (
-        <div
-          key={review.id}
-          className="flex justify-between items-center p-3 mb-3 bg-gray-100 rounded-lg shadow-sm"
-        >
-          <div>
-            <p className="text-lg font-medium text-primary-color">{review.username}</p>
-            <p className="text-sm text-secondary-color">{review.content}</p>
+      <h2 className="text-xl font-semibold mb-4">Latest reviews</h2>
+      <div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="flex flex-col gap-4">
+            {reviews.map((review) => (
+              <CardReview key={review.id} review={review} onDelete={handleDelete} />
+            ))}
           </div>
-          <button
-            onClick={() => handleDelete(review.id)}
-            className="text-red-500 hover:text-red-700"
-          >
-            Eliminar
-          </button>
-        </div>
-      ))}
+        )}
+      </div>
     </div>
   );
 };
