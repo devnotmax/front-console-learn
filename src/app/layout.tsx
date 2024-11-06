@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 
-//provider
+// Contexto de autenticación
 import { AuthProvider } from "@/contexts/authContext";
+import { Providers } from "@/redux/providers";
 
-// componentes
+// Componentes
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 
@@ -22,7 +23,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "ConsoLearn",
-  description: "La mejor plataforma de cursos despues de Henry",
+  description: "La mejor plataforma de cursos después de Henry",
 };
 
 export default function RootLayout({
@@ -33,10 +34,14 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="en">
-        <body className={`${inter.className} ${poppins.className} min-h-screen`}>
-          <Navbar />
-          {children}
-          <Footer />
+        <body
+          className={`${inter.className} ${poppins.className} min-h-screen`}
+        >
+          <Providers>
+            <Navbar />
+            {children}
+            <Footer />
+          </Providers>
         </body>
       </html>
     </AuthProvider>
