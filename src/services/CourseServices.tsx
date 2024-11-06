@@ -181,3 +181,22 @@ export const deleteCourse = async (id: string) => {
     throw new Error("Error al eliminar el curso");
   }
 };
+
+export const editCourse = async (id: string, formData: FormData) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const token = getAuthToken();
+
+  // Enviar el FormData en lugar de JSON
+  const res = await fetch(`${apiUrl}/course/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData, // Pasar el formData en el cuerpo de la solicitud
+  });
+
+  if (!res.ok) {
+    console.error("Error al editar el curso:", res.statusText);
+    throw new Error("Error al editar el curso");
+  }
+};
