@@ -15,7 +15,6 @@ export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  // Simular carga de datos
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -44,23 +43,22 @@ export default function AdminPanel() {
     );
   }
 
-  // Si el usuario no es admin, mostramos un contenedor vacío para mantener el layout
   if (dataUser?.user?.role !== "ADMIN") {
     return (
       <div className="h-screen flex items-center justify-center">
-        {/* Aquí puedes mostrar algún mensaje o dejar el contenedor vacío */}
+        {/* Puedes dejar un mensaje aquí */}
       </div>
     );
   }
 
   return (
-    <div className="h-screen overflow-hidden">
-      <div className="grid grid-cols-11 grid-rows-8 gap-4 h-full">
-        <div className="col-span-2 row-span-8">
+    <div className="min-h-screen overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-11 grid-rows-8 gap-4 min-h-screen">
+        <div className="col-span-1 md:col-span-2 row-span-8">
           <SideBarMenu />
         </div>
-        <div className="col-span-9 row-span-8 col-start-3 p-4">
-          <div className="grid grid-cols-2 gap-4">
+        <div className="col-span-1 md:col-span-9 row-span-8 md:col-start-3 p-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1">
               <AdminReviews />
             </div>
