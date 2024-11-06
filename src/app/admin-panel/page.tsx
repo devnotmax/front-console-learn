@@ -9,6 +9,8 @@ import PurchaseStatistics from "@/components/admin-components/Chart";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import AdminUserSearch from "@/components/admin-components/adminSearch";
+
 
 export default function AdminPanel() {
   const { dataUser } = useAuth();
@@ -54,12 +56,15 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="h-screen overflow-hidden">
+    
+    
+    <div className="min-h-screen overflow-hidden">
+      <AdminUserSearch  />
       <div className="grid grid-cols-11 grid-rows-8 gap-4 h-full">
-        <div className="col-span-2 row-span-8">
+        <div className="col-span-3 row-span-8">
           <SideBarMenu />
         </div>
-        <div className="col-span-9 row-span-8 col-start-3 p-4">
+        <div className="col-span-8 row-span-8 col-start-4 p-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-1">
               <AdminReviews />

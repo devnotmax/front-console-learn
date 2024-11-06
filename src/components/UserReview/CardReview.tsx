@@ -4,7 +4,7 @@ import { Review } from "./ReviewList";
 import { useAuth } from "@/contexts/authContext";
 import { deleteReview } from "@/services/reviewService";
 import Swal from "sweetalert2";
-import { time } from "console";
+
 
 interface CardReviewProps {
     review: Review;
