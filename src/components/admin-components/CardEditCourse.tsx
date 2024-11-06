@@ -9,7 +9,6 @@ interface EditCourseFormProps {
 }
 
 const EditCourseForm = ({ courseId, onClose }: EditCourseFormProps) => {
-  const [courseData, setCourseData] = useState<ICourse | null>(null);
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
@@ -22,7 +21,6 @@ const EditCourseForm = ({ courseId, onClose }: EditCourseFormProps) => {
     const fetchCourseData = async () => {
       const data = await getCourseById(courseId);
       if (data) {
-        setCourseData(data);
         setFormValues({
           title: data.title || "",
           description: data.description || "",
@@ -64,7 +62,7 @@ const EditCourseForm = ({ courseId, onClose }: EditCourseFormProps) => {
     formData.append("isAvailable", formValues.isAvailable ? "true" : "false");
 
     if (thumbnail) {
-      formData.append("image", thumbnail); // Agregar con el prefijo 'image:'
+      formData.append("image", thumbnail);
     }
 
     try {
@@ -72,8 +70,9 @@ const EditCourseForm = ({ courseId, onClose }: EditCourseFormProps) => {
       Swal.fire("Success!", "The course has been updated.", "success");
       onClose();
     } catch (error) {
-      Swal.fire("Error!", "Failed to update the course.", "error");
+      Swal.fire("Error!", `Failed to update the course: ${error}`, "error");
     }
+    
   };
 
   return (
@@ -153,7 +152,6 @@ const EditCourseForm = ({ courseId, onClose }: EditCourseFormProps) => {
     </div>
   );
 };
-
 
 const CardEditCourse = ({ course }: { course: ICourse }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
