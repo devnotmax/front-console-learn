@@ -1,14 +1,14 @@
 "use client";
 import ReactLoading from "react-loading";
 import { useAuth } from "@/contexts/authContext";
-import SideBarMenu from "@/components/admin-components/SideBarMenu";
-import AdminReviews from "@/components/admin-components/AdminReviews";
-import Stadistics from "@/components/admin-components/Stadistics";
-import Sells from "@/components/admin-components/Sells";
-import PurchaseStatistics from "@/components/admin-components/Chart";
 import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+
+//components
+import AdminPanelContainer from "@/components/admin-components/AdminPanelContainer";
+import SideBarMenu from "@/components/admin-components/SideBarMenu";
+import AdminSearch from "@/components/admin-components/AdminSearch";
 
 export default function AdminPanel() {
   const { dataUser } = useAuth();
@@ -58,18 +58,12 @@ export default function AdminPanel() {
           <SideBarMenu />
         </div>
         <div className="col-span-1 md:col-span-9 row-span-8 md:col-start-3 p-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="col-span-1">
-              <AdminReviews />
-            </div>
-            <div className="col-span-1">
-              <Stadistics />
-            </div>
-            <div className="col-span-1">
-              <Sells />
-            </div>
-            <div className="col-span-1">
-              <PurchaseStatistics />
+          <div className="w-3/4">
+            <AdminSearch />
+          </div>
+          <div className="grid grid-cols-9 grid-rows-9">
+            <div className="col-span-9 row-span-8 row-start-1">
+              <AdminPanelContainer />
             </div>
           </div>
         </div>

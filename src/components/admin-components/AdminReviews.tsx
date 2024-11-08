@@ -45,7 +45,7 @@ const AdminReviews = () => {
   }
 
   return (
-    <div className="w-full p-4 border-black border-opacity-15 rounded-xl border-[3px] overflow-y-auto max-h-96">
+    <div className="w-full p-6 border-black border-opacity-15 rounded-xl border overflow-y-auto max-h-96">
       <h2 className="text-xl font-semibold mb-4">Latest reviews</h2>
       <div>
         {loading ? (
