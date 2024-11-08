@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { searchUsers } from "@/services/searchService";
+import BanButton from "../Baneo/BanButton";
+
 
 interface User {
     id: string;
     name: string;
     email: string;
     image: string;
+    isBanned: boolean;
 }
 
 const AdminSearch = () => {
@@ -31,6 +34,13 @@ const AdminSearch = () => {
             setShowResults(false);
         }
     };
+    const handleBanStatusChange = (userId: string, newStatus: boolean) => {
+        setFilteredUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === userId ? { ...user, isBanned: newStatus } : user
+          )
+        );
+      };
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -39,7 +49,7 @@ const AdminSearch = () => {
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside );
     }, []);
 
     return (
@@ -72,7 +82,10 @@ const AdminSearch = () => {
                             />
                             <p className="font-medium text-gray-900">{user.name}</p>
                             <p className="text-sm text-gray-500">{user.email}</p>
-                        </li>
+                            <div>
+                                <BanButton userId={user.id} currentStatus={user.isBanned} role="ADMIN" onBanStatusChange={handleBanStatusChange}/>
+                            </div>
+                        </li>                        
                     ))}
                 </ul>
             )}
