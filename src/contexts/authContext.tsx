@@ -24,18 +24,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true); // Nuevo estado para el indicador de carga
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("userSession");
-    if (storedUser) {
-      setDataUser(JSON.parse(storedUser));
+    // Solo intentar acceder a localStorage en el cliente
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("userSession");
+      if (storedUser) {
+        setDataUser(JSON.parse(storedUser));
+      }
+      setIsLoading(false); // Cambia el indicador de carga a falso después de cargar
     }
-    setIsLoading(false); // Cambia el indicador de carga a falso después de cargar
   }, []);
 
   useEffect(() => {
-    if (dataUser) {
-      localStorage.setItem("userSession", JSON.stringify(dataUser));
-    } else {
-      localStorage.removeItem("userSession");
+    // Solo intentar guardar en localStorage en el cliente
+    if (typeof window !== "undefined") {
+      if (dataUser) {
+        localStorage.setItem("userSession", JSON.stringify(dataUser));
+      } else {
+        localStorage.removeItem("userSession");
+      }
     }
   }, [dataUser]);
 
@@ -66,7 +72,10 @@ export const useAuth = () => {
 };
 
 export const getAuthToken = () => {
-  const storedUser = localStorage.getItem("userSession");
-  const dataUser = storedUser ? JSON.parse(storedUser) : null;
-  return dataUser?.token || ""; // Ajusta según la propiedad que contiene el token
+  if (typeof window !== "undefined") {
+    const storedUser = localStorage.getItem("userSession");
+    const dataUser = storedUser ? JSON.parse(storedUser) : null;
+    return dataUser?.token || ""; // Ajusta según la propiedad que contiene el token
+  }
+  return ""; // Devuelve un valor por defecto si no está en el cliente
 };

@@ -9,7 +9,6 @@ import {
   filterByTechnologyAndPrice,
 } from "@/services/CourseServices";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import Link from "next/link";
 
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<ICourse[]>([]);
@@ -66,7 +65,7 @@ const Courses: React.FC = () => {
   return (
     <div className="grid grid-cols-4 gap-4 p-4">
       {/* SideBar */}
-      <div className="col-span-1 h-full bg-slate-100 p-4 rounded-lg shadow-md">
+      {/* <div className="col-span-1 h-full bg-slate-100 p-4 rounded-lg shadow-md">
         <h2 className="text-lg font-bold mb-4">SideBar</h2>
         <ul className="space-y-4">
           <li>
@@ -82,10 +81,10 @@ const Courses: React.FC = () => {
             <Link href="#">tag 4</Link>
           </li>
         </ul>
-      </div>
+      </div> */}
 
       {/* Contenido Principal */}
-      <div className="col-span-3 grid gap-4">
+      <div className="col-span-4 grid gap-4">
         {/* Filtros y barra de búsqueda */}
         <div className="flex w-full justify-center items-center gap-4">
           <SearchBar onSearch={handleSearch} />  {/* Pasar la función de búsqueda */}
@@ -132,7 +131,7 @@ const Courses: React.FC = () => {
         </div>
 
         {/* Renderizado de los cursos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6">
           
           {filteredCourses.length > 0 ? (
             filteredCourses.map((course) => (
