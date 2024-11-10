@@ -13,7 +13,7 @@ const AdminReviews = () => {
     try {
       setLoading(true);
       const data = await getReviews();
-      setReviews(data); // Guarda las reseñas en el estado
+      setReviews(Array.isArray(data) ? data : []); // Asegura que reviews sea siempre un array
     } catch (error) {
       console.error("Error", error);
     } finally {
@@ -39,7 +39,7 @@ const AdminReviews = () => {
           color="blue"
           height={50}
           width={50}
-        ></ReactLoading>
+        />
       </div>
     );
   }
