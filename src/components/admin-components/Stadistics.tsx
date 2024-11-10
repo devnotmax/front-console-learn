@@ -50,8 +50,6 @@ const Stadistics = () => {
         const usersData = await getUsers();
         const reviewsData = await getReviews();
 
-        console.log(usersData.data.length);
-
         setStats({
           courses: coursesData.length,
           closedSales: ordersData.length,

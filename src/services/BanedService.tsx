@@ -7,7 +7,7 @@ const token = getAuthToken();
 export async function BanStatus(userId: string, newStatus: boolean): Promise<void> {
   try {
     const response = await fetch(`${apiUrl}/users/${userId}`, {
-      method: 'PATCH',
+      method: 'DELETE',
       headers: { 'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
        },
@@ -15,10 +15,29 @@ export async function BanStatus(userId: string, newStatus: boolean): Promise<voi
     });
 
     if (!response.ok) {
-      throw new Error('No se pudo actualizar el estado de baneo');
+      throw new Error('Could not update ban status');
     }
   } catch (error) {
-    console.error('Error al cambiar el estado de baneo:', error);
+    console.error('Error when changing ban status:', error);
+    throw error;
+  }
+}
+
+export async function BanedFalse(userId: string, newStatus: boolean): Promise<void> {
+  try {
+    const response = await fetch(`${apiUrl}/users/${userId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+       },
+      body: JSON.stringify({ isBanned: newStatus }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Could not update ban status');
+    }
+  } catch (error) {
+    console.error('Error when changing ban status:', error);
     throw error;
   }
 }
