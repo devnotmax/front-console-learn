@@ -9,63 +9,17 @@ import { ICourse, IVideo } from "@/interfaces/Course";
 import VideoPlayer from "@/components/ContentCourse/VideoPlayer";
 import Playlist from "@/components/ContentCourse/Playlist";
 import TakeNotes from "@/components/ContentCourse/TakeNotes";
-import { getMyCourses } from "@/services/CourseServices";
 
-// Datos del curso mock
-const mockCourseData: ICourse = {
-  id: "7f5356e7-29ac-4c19-aaba-2a0dd01e3716",
-  title: "Tailwind CSS Course",
-  description:
-    "Learn how to build modern and responsive web designs using Tailwind CSS.",
-  thumbnail:
-    "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg",
-  technologies: ["Tailwind", "Front-end"],
-  price: 99.99,
-  rating: 5,
-  isAvailable: true,
-  available: true,
-  videos: [
-    {
-      id: "6b22abb9-58d3-4d76-8105-9374c2347204",
-      title: "Introduction to Tailwind CSS",
-      description:
-        "Get started with Tailwind CSS for building modern web designs.",
-      url: "https://www.youtube.com/embed/MPD8wiNVPDU",
-      courseId: "7f5356e7-29ac-4c19-aaba-2a0dd01e3716",
-      duration: "34:20",
-    },
-    {
-      id: "2b22abb9-58d3-4d76-8105-9374c2347205",
-      title: "Intermediate Tailwind CSS",
-      description: "Learn more advanced Tailwind CSS techniques.",
-      url: "https://www.youtube.com/embed/pvxp0CQbUhE?si=IPhSG1YI66lqbBB3",
-      courseId: "7f5356e7-29ac-4c19-aaba-2a0dd01e3716",
-      duration: "23:16",
-    },
-    {
-      id: "2b22abb9-58d3-4d76-8105-9374c2674465",
-      title: "Tailwind configuration",
-      description: "Learn more advanced Tailwind CSS techniques.",
-      url: "https://www.youtube.com/embed/Tx0dqvcN_9A?si=F4ozPEtXLaSVWWCT",
-      courseId: "7f5356e7-29ac-4c19-aaba-2a0dd01e3716",
-      duration: "45:42",
-    },
-    // Otros videos...
-  ],
-  reviews: [],
-  orderDetails: [],
-  users: [],
-};
+//servicios
+import { getMyCourses, getCourseById } from "@/services/CourseServices";
 
 const CourseContent: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { dataUser, isLoading } = useAuth();
   const [hasAccess, setHasAccess] = useState(false);
-  const [courseData] = useState<ICourse | null>(mockCourseData); // Quita 'setCourseData'
-  const [currentVideo, setCurrentVideo] = useState<IVideo | null>(
-    courseData?.videos[0] || null
-  ); // Video actual
+  const [courseData, setCourseData] = useState<ICourse | null>(null);
+  const [currentVideo, setCurrentVideo] = useState<IVideo | null>(null);
 
   const id = pathname.split("/")[2];
 
@@ -80,6 +34,13 @@ const CourseContent: React.FC = () => {
         );
         if (purchased) {
           setHasAccess(true);
+
+          // Llama a fetchCourseData para cargar los datos del curso después de verificar el acceso
+          const course = await fetchCourseData();
+          if (course) {
+            setCourseData(course);
+            setCurrentVideo(course.videos[0] || null); // Establece el primer video
+          }
         } else {
           Swal.fire({
             title: "Oops! It seems you don't have access to this course",
@@ -104,6 +65,17 @@ const CourseContent: React.FC = () => {
 
     checkCourseAccess();
   }, [dataUser, isLoading, id, router]);
+
+  // Función para obtener los datos del curso
+  const fetchCourseData = async () => {
+    try {
+      const response = await getCourseById(id);
+      return response;
+    } catch (error) {
+      console.error("Error al obtener los datos del curso:", error);
+      return null;
+    }
+  };
 
   if (!hasAccess || !courseData) {
     return null;
