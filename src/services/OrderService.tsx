@@ -19,6 +19,26 @@ export const getOrders = async () => {
   return data;
 };
 
+export const getMyOrders = async () => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const token = getAuthToken();
+
+  const res = await fetch(`${apiUrl}/orders`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
+  }
+
+  const data = await res.json();
+  return data;
+}
+
 export const getPaidOrders = async () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const token = getAuthToken();

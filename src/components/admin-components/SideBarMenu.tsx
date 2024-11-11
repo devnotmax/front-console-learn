@@ -5,8 +5,9 @@ import DeleteCoursesModal from "./DeleteCoursesModal";
 import CountCourses from "./CountCourses";
 import EditCoursesModal from "./EditCoursesModal";
 import UploadVideoModal from "./UploadVideoModal"; // Cambio de nombre
+import VideoManagementModal from "./VideoManagmentModal";
 
-type ModalName = "addCourse" | "editCourse" | "deleteCourse" | "publishVideo";
+type ModalName = "addCourse" | "editCourse" | "deleteCourse" | "publishVideo" | "editVideo";
 
 const SideBarMenu = () => {
   const [openModal, setOpenModal] = useState<ModalName | null>(null);
@@ -36,9 +37,8 @@ const SideBarMenu = () => {
         className="absolute top-4 left-4 md:hidden p-2 bg-gray-200 rounded-full focus:outline-none"
       >
         <i
-          className={`bx ${
-            isMenuOpen ? "bx-chevron-left" : "bx-chevron-right"
-          } text-2xl`}
+          className={`bx ${isMenuOpen ? "bx-chevron-left" : "bx-chevron-right"
+            } text-2xl`}
         ></i>
       </button>
 
@@ -91,6 +91,17 @@ const SideBarMenu = () => {
             {isMenuOpen && <span>Publish Videos</span>}
           </button>
         </li>
+        <li className="w-full px-6">
+          <button
+            onClick={() => handleOpenModal("editVideo")}
+            className={`flex items-center justify-center w-full gap-2 py-2 text-lg font-medium text-gray-700 transition-all 
+                        bg-slate-100 rounded-lg shadow-md hover:bg-[var(--accent-color)] hover:text-white 
+                        ${!isMenuOpen && "justify-center"}`}
+          >
+            <i className="bx bx-video-plus text-xl"></i>
+            {isMenuOpen && <span>Edit Videos</span>}
+          </button>
+        </li>
       </ul>
 
       {/* Modals */}
@@ -105,6 +116,9 @@ const SideBarMenu = () => {
       )}
       {openModal === "publishVideo" && (
         <UploadVideoModal isOpen={true} onClose={handleCloseModal} />
+      )}
+      {openModal === "editVideo" && (
+        <VideoManagementModal isOpen={true} onClose={handleCloseModal} />
       )}
 
       {isMenuOpen && <CountCourses />}
