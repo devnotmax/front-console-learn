@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getOrders, cancelOrder, getMyOrders } from "@/services/OrderService";
+import { cancelOrder, getMyOrders } from "@/services/OrderService";
 import { useAuth } from "@/contexts/authContext";
 import { payOrder } from "@/services/BuyServices";
 import { ICourse } from "@/interfaces/Course";
@@ -89,11 +89,10 @@ const ProfileOrders = () => {
                 </td>
                 <td className="p-2">
                   <span
-                    className={`w-24 h-8 px-4 py-1 flex justify-center items-center text-base rounded-lg ${
-                      order.status
+                    className={`w-24 h-8 px-4 py-1 flex justify-center items-center text-base rounded-lg ${order.status
                         ? "bg-green-700 text-[var(--principal-text)]"
                         : "bg-yellow-700 text-[var(--principal-text)]"
-                    }`}
+                      }`}
                   >
                     {order.status ? (
                       "Payed"
