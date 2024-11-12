@@ -1,135 +1,104 @@
-// "use client";
-// import React, { useEffect, useState } from "react";
-// import { usePathname, useRouter } from "next/navigation";
-// import { getMyCourses, getCourseById } from "@/services/CourseServices";
-// import { useAuth } from "@/contexts/authContext";
-// import Swal from "sweetalert2";
-
-// const CourseContent: React.FC = () => {
-//   const pathname = usePathname();
-//   const router = useRouter();
-//   const { dataUser } = useAuth();
-//   const [hasAccess, setHasAccess] = useState(false);
-
-//   // Extrae el ID desde la ruta
-//   const id = pathname.split("/")[2]; // "/course/[id]/content" toma el segundo elemento después de dividir por "/"
-
-
-//   useEffect(() => {
-//     const checkCourseAccess = async () => {
-//       if (dataUser) {
-//         const purchasedCourses = await getMyCourses();
-//         const purchased = purchasedCourses.some(
-//           (purchasedCourse) => purchasedCourse.id === id
-//         );
-
-//         if (purchased) {
-//           setHasAccess(true);
-//         } else {
-//           Swal.fire(
-//             "Access Denied",
-//             "You need to buy this course to access its content.",
-//             "error"
-//           );
-//           router.push(`/course/${id}`);
-//         }
-//       } else {
-//         Swal.fire("Error", "Please login to access the course content.", "error");
-//         router.push("/login");
-//       }
-//     };
-
-//     checkCourseAccess();
-//   }, [dataUser, id, router]);
-
-//   if (!hasAccess) {
-//     return null; // Muestra una pantalla en blanco mientras se verifica el acceso
-//   }
-
-
-//   return (
-//     <div className="container mx-auto px-4 py-6">
-//       <h1 className="text-3xl font-bold mb-4">Course Content</h1>
-//       <p>Welcome to the content of the course! You now have access.</p>
-
-//       {/* Carga el contenido del curso */}
-//       <h2>Course Content</h2>
-//       {/* Aquí puedes cargar el contenido del curso, como videos, lecciones, etc. */}
-//     </div>
-//   );
-// };
-
-// export default CourseContent;
 "use client";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { getMyCourses, getCourseById } from "@/services/CourseServices";
 import { useAuth } from "@/contexts/authContext";
 import Swal from "sweetalert2";
-import { ICourse } from "@/interfaces/Course";
+import { ICourse, IVideo } from "@/interfaces/Course";
+
+//componentes
+import VideoPlayer from "@/components/ContentCourse/VideoPlayer";
+import Playlist from "@/components/ContentCourse/Playlist";
+import TakeNotes from "@/components/ContentCourse/TakeNotes";
+
+//servicios
+import { getMyCourses, getCourseById } from "@/services/CourseServices";
 
 const CourseContent: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { dataUser } = useAuth();
+  const { dataUser, isLoading } = useAuth();
   const [hasAccess, setHasAccess] = useState(false);
   const [courseData, setCourseData] = useState<ICourse | null>(null);
+  const [currentVideo, setCurrentVideo] = useState<IVideo | null>(null);
 
-  // Extrae el ID desde la ruta
-  const id = pathname.split("/")[2]; // "/course/[id]/content" toma el segundo elemento después de dividir por "/"
+  const id = pathname.split("/")[2];
 
   useEffect(() => {
+    if (isLoading) return;
+
     const checkCourseAccess = async () => {
       if (dataUser) {
         const purchasedCourses = await getMyCourses();
         const purchased = purchasedCourses.some(
           (purchasedCourse) => purchasedCourse.id === id
         );
-
         if (purchased) {
           setHasAccess(true);
-          // Cargar los datos del curso si el usuario tiene acceso
-          const course = await getCourseById(id);
-          setCourseData(course);
+
+          // Llama a fetchCourseData para cargar los datos del curso después de verificar el acceso
+          const course = await fetchCourseData();
+          if (course) {
+            setCourseData(course);
+            setCurrentVideo(course.videos[0] || null); // Establece el primer video
+          }
         } else {
-          Swal.fire(
-            "Access Denied",
-            "You need to buy this course to access its content.",
-            "error"
-          );
-          router.push(`/course/${id}`);
+          Swal.fire({
+            title: "Oops! It seems you don't have access to this course",
+            text: "You need to purchase this course to access it.",
+            icon: "error",
+            confirmButtonText: "Go to courses",
+          }).then(() => {
+            router.push("/course");
+          });
         }
-      }
-      if (!dataUser) {
-        Swal.fire("Error", "Please login to access the course content.", "error");
-        router.push("/login");
+      } else {
+        Swal.fire({
+          title: "Oops! You need to be logged in to access this course",
+          text: "Please log in to access this course.",
+          icon: "warning",
+          confirmButtonText: "Login",
+        }).then(() => {
+          router.push("/login");
+        });
       }
     };
 
     checkCourseAccess();
-  }, [dataUser, id, router]);
+  }, [dataUser, isLoading, id, router]);
+
+  // Función para obtener los datos del curso
+  const fetchCourseData = async () => {
+    try {
+      const response = await getCourseById(id);
+      return response;
+    } catch (error) {
+      console.error("Error al obtener los datos del curso:", error);
+      return null;
+    }
+  };
 
   if (!hasAccess || !courseData) {
-    return null; // Muestra una pantalla en blanco mientras se verifica el acceso o se carga el curso
+    return null;
   }
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <h1 className="text-3xl font-bold mb-4">{courseData.title}</h1>
-      <img src={courseData.thumbnail} alt={courseData.title} className="mb-4 rounded-lg" />
-      <p className="mb-6">{courseData.description}</p>
-
-      <h2 className="text-xl font-semibold mb-2">Technologies Covered</h2>
-      <ul className="list-disc ml-6 mb-6">
-        {courseData.technologies.map((tech, index) => (
-          <li key={index}>{tech}</li>
-        ))}
-      </ul>
-
-      <h3 className="text-lg font-semibold mb-2">Price</h3>
-      <p className="mb-6">${courseData.price}</p>
-
-      {/* Aquí puedes cargar contenido adicional del curso, como videos o lecciones */}
+    <div className="mx-auto bg-[var(--foreground)] min-h-screen w-full">
+      <div className="grid grid-cols-10 grid-rows-10 gap-0 w-full h-full">
+        <div className="col-span-7 row-span-4 h-full">
+          <VideoPlayer url={currentVideo?.url} />
+        </div>
+        <div className="col-span-3 row-span-10 col-start-8 h-full">
+          <Playlist
+            title={courseData.title}
+            videos={courseData.videos}
+            onVideoSelect={setCurrentVideo}
+            currentVideoId={currentVideo?.id}
+          />
+        </div>
+        <div className="col-span-7 row-span-6 row-start-5 h-full">
+          <TakeNotes />
+        </div>
+      </div>
     </div>
   );
 };

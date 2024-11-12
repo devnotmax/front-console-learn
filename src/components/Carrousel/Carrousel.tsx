@@ -8,6 +8,7 @@ import ProductCard from "@/components/ProductCard/ProductCard";
 import { NextArrow, PrevArrow } from "./FlechasCarrusel";
 import { getCourses } from "@/services/CourseServices";
 import Link from "next/link";
+import ReactLoading from "react-loading";
 
 // Define la interfaz para los datos del curso
 interface Course {
@@ -74,8 +75,9 @@ const Carousel = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[var(--accent-color)]"></div>
+      <div className="flex items-center justify-center h-screen">
+        <ReactLoading type="spin" color="blue" height={50} width={50}>
+        </ReactLoading>
       </div>
     );
   }  
