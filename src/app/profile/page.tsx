@@ -28,7 +28,7 @@ const ProfilePage = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row sm:space-x-4 mb-4 border-b border-[var(--secondary-text)]">
-        {["Orders", "My courses", "My certifications"].map((tab) => (
+        {["Orders", "My courses"].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
