@@ -215,29 +215,6 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
           </div>
         )}
       </div>
-
-      {/* Newsletter Subscription */}
-      <div className="mt-10 text-center">
-        <h2 className="text-xl font-bold mb-4 text-[var(--foreground)]">
-          Follow the latest trends
-        </h2>
-        <p className="text-[var(--foreground)] mb-4">
-          With our daily newsletter
-        </p>
-        <form className="flex justify-center items-center">
-          <input
-            type="email"
-            placeholder="you@example.com"
-            className="border p-2 rounded-l-lg focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="bg-[var(--accent-color)] text-white py-2 px-4 rounded-r-lg"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
     </div>
   );
 };

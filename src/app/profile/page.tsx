@@ -12,31 +12,33 @@ const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("Orders");
   const [isClient, setIsClient] = useState(false);
 
-  // Verifica si el componente se está ejecutando en el cliente
+
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Solo renderiza si estamos en el cliente
   if (!isClient) {
     return null;
   }
 
+  const userName = dataUser?.user.name ;
+  const userEmail = dataUser?.user.email ;
+  const userPhone = dataUser?.user.phone;
+
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-[var(--background)] rounded-lg text-[var(--principal-text)] mb-8 mt-8 min-h-[70vh]">
       <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
-        {/* Componente para cargar la imagen de perfil */}
         <ProfileImageUploader />
 
         <div className="text-center sm:text-left">
           <h2 className="text-xl sm:text-2xl font-semibold">
-            {dataUser?.user.name}
+            {userName}
           </h2>
           <p className="text-[var(--secondary-text)] text-sm sm:text-base">
-            @{dataUser?.user.email}
+            @{userEmail}
           </p>
           <p className="text-[var(--secondary-text)] text-sm sm:text-base">
-            {dataUser?.user.phone}
+            {userPhone}
           </p>
         </div>
       </div>
@@ -47,9 +49,7 @@ const ProfilePage = () => {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`py-2 px-4 text-sm sm:text-base ${
-              activeTab === tab
-                ? "text-[var(--accent-color)] border-b-2 border-[var(--accent-color)]"
-                : "text-[var(--principal-text)]"
+              activeTab === tab ? "text-[var(--accent-color)] border-b-2 border-[var(--accent-color)]" : "text-[var(--principal-text)]"
             }`}
           >
             {tab}
