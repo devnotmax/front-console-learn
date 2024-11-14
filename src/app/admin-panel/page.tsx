@@ -1,19 +1,14 @@
+// src/pages/admin/AdminPanel.tsx
 "use client";
 import ReactLoading from "react-loading";
-import { useAuth } from "@/contexts/authContext";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
-
-//components
 import AdminPanelContainer from "@/components/admin-components/AdminPanelContainer";
 import SideBarMenu from "@/components/admin-components/SideBarMenu";
 import AdminSearch from "@/components/admin-components/AdminSearch";
+import withAuth from "@/hoc/withAuth";
 
-export default function AdminPanel() {
-  const { dataUser } = useAuth();
+function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,30 +18,10 @@ export default function AdminPanel() {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (dataUser && dataUser.user.role !== "ADMIN") {
-      Swal.fire({
-        title: "Oops! You need to be admin to access this page",
-        text: "You need to purchase this course to access it.",
-        icon: "error",
-      }).then(() => {
-        router.push("/course");
-      });
-    }
-  }, [dataUser, router]);
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <ReactLoading type="spin" color="blue" height={50} width={50} />
-      </div>
-    );
-  }
-
-  if (dataUser?.user?.role !== "ADMIN") {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        {/* Puedes dejar un mensaje aquí */}
       </div>
     );
   }
@@ -71,3 +46,6 @@ export default function AdminPanel() {
     </div>
   );
 }
+
+// Envolvemos el componente en el HOC para proteger la ruta
+export default withAuth(AdminPanel, "ADMIN");
