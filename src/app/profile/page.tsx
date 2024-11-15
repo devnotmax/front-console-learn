@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { useAuth } from "@/contexts/authContext";
 import ProfileOrders from "@/components/ProfileOrder/ProfileOrders";
 import ProfileCourses from "@/components/ProfileCourse/ProfileCourse";
-import ProfileCertifications from "@/components/ProfileCertifications/ProfileCertifications";
 import ProfileImageUploader from "@/components/uploadProfile/updateProfile";
 import withAuth from "@/hoc/withAuth";
 
@@ -29,7 +28,7 @@ const ProfilePage = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row sm:space-x-4 mb-4 border-b border-[var(--secondary-text)]">
-        {["Orders", "My courses", "My certifications"].map((tab) => (
+        {["Orders", "My courses"].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -45,7 +44,7 @@ const ProfilePage = () => {
       <div>
         {activeTab === "Orders" && <ProfileOrders />}
         {activeTab === "My courses" && <ProfileCourses />}
-        {activeTab === "My certifications" && <ProfileCertifications />}
+        {/* {activeTab === "My certifications" && <ProfileCertifications />} */}
       </div>
     </div>
   );
