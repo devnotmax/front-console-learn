@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { createCourse } from "@/services/CourseServices";
+import Swal from "sweetalert2";
 
 interface CourseModalProps {
   isOpen: boolean;
@@ -52,9 +53,11 @@ const CourseModal: React.FC<CourseModalProps> = ({ isOpen, onClose }) => {
     try {
       await createCourse(formData, technologies);
       console.log("Curso creado exitosamente");
-      //   onClose();
+      Swal.fire("Success!", "The course has been created.", "success");
+      onClose();
     } catch (error) {
       console.error("Error al crear el curso:", error);
+      Swal.fire("Error!", "Failed to create the course.", "error");
     }
   };
 
