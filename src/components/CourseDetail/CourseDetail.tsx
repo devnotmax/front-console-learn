@@ -120,7 +120,7 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 font-inter">
+    <div className="container min-h-screen mx-auto px-4 py-6 font-inter">
       {/* Course Header */}
       <div className="flex">
         {/* Course Image */}
@@ -136,7 +136,7 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course }) => {
 
           {/* Tags */}
           <div className="flex items-center space-x-2">
-            <span className="bg-[var(--primary)] text-[var(--principal-text)] text-xs font-semibold px-2 py-1 rounded-full">
+            <span className="bg-[#0d1117] text-[var(--principal-text)] text-xs font-semibold px-2 py-1 rounded-full">
               {Array.isArray(course.technologies)
                 ? course.technologies.join(", ")
                 : course.technologies}
