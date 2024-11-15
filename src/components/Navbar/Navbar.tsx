@@ -38,7 +38,6 @@ const Navbar = () => {
             <ActiveLink href="/course">Courses</ActiveLink>
             <ActiveLink href="/comunity">Comunity</ActiveLink>
             <ActiveLink href="/about">About us</ActiveLink>
-            <ActiveLink href="/contact">Contact</ActiveLink>
         </ul>
         {/* Botones */}
         <div className="flex flex-col md:flex-row md:space-x-3 space-y-2 md:space-y-0 mt-4 md:mt-0">

@@ -35,7 +35,7 @@ const CoursePage: React.FC = () => {
   }
 
   if (!course) {
-    return <div>No se encontró el curso.</div>;
+    return <div>Course not found.</div>;
   }
 
   return <CourseDetail course={course} />;
