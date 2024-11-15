@@ -24,7 +24,7 @@ const TakeNotes = () => {
         <h1 className="px-6 justify-start text-2xl font-medium">Take Notes <i className='bx bx-notepad'></i></h1>
         <div className="p-6">
           <Editor
-            apiKey="5b1gotwnrux0q9bb0o9uc1zd47wfndq6hcvzcicpegy9lgid" // Reemplaza con tu API Key de TinyMCE
+            apiKey="wcvandctsex02fep6nlx14y0jrfw9ckcpf0q3r1ap7q3u2rl" // Reemplaza con tu API Key de TinyMCE
             onInit={(_evt, editor) => (editorRef.current = editor)}
             initialValue="<p>This is the initial content of the editor.</p>"
             init={{
